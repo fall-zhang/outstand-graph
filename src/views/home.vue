@@ -1,6 +1,5 @@
 <template>
   <div>
-    正常
     <AntVGraph />
   </div>
 </template>

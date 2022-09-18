@@ -10,10 +10,8 @@
   <!-- 点击连接节点时，显示1/2/3 作为先后点击的内容 -->
   <div>
     <div class="tool-bar">
-      <!-- 来大佬大佬大佬大佬 {{ JSON.stringify(baorr.gogo) }} -->
-      <!-- <button type="primary" @click="onAddNode">添加单个图形</button> -->
       <div style="margin-right: 10px;">
-        <el-button size="small" type="primary">保存</el-button>
+        <el-button size="small" type="primary" @click="onDownload">保存</el-button>
         <el-button size="small" type="primary">导入</el-button>
         <el-button size="small" type="primary">撤销</el-button>
         <el-button size="small" type="primary">重做</el-button>
@@ -27,16 +25,16 @@
       </div>
     </div>
     <div class="graph-container" :class="setting.showPort ? '' : 'hidePort'">
-      <div ref="antVAdder" class="graph-adder"></div>
-      <div ref="antVContainer" class="graph-editor"></div>
-      <div ref="antVAdder2" class="graph-adder">
+      <div ref="antZoneLeft" class="graph-adder"></div>
+      <div ref="antGraphDOM" class="graph-editor"></div>
+      <div ref="antZoneLeft2" class="graph-adder">
         <div style="height: 80%">
           <el-form ref="form" label-width="60px">
             <el-form-item label="ID">
               <el-input size="small"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button size="small" type="primary" @click="onSaveCellInfo">保存</el-button>
+              <el-button size="small" type="primary">保存</el-button>
               <el-button size="small">取消</el-button>
             </el-form-item>
           </el-form>
@@ -46,7 +44,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { Graph, DataUri, Addon } from '@antv/x6'
+import { DataUri, Addon, Graph } from '@antv/x6'
 import { getSpecialCircle } from './shape/specialGraph.js'
 // import moment from 'dayjs'
 import graphData from './graphData.js'
@@ -61,13 +59,12 @@ const setting = reactive({
   canZoom: true,
   deleteEdgeConfirm: true
 })
-const graph = ref(null)
+const graph = ref<Graph>()
 
-const selectCell = ref(null)
-const antVAdder = ref(null)
-
-const antVContainerDOM = ref(null)
+const antZoneLeft = ref<HTMLElement>()
+const antGraphDOM = ref<HTMLElement>()
 onMounted(() => {
+  console.log(antGraphDOM)
   // 图形编辑区域
   initGraphZone()
   initGraphAdder()
@@ -75,7 +72,7 @@ onMounted(() => {
 })
 function initGraphZone() {
   graph.value = new Graph({
-    container: antVContainerDOM.value,
+    container: antGraphDOM.value,
     panning: true,
     mousewheel: {
       enabled: true,
@@ -119,76 +116,24 @@ function initGraphAdder() {
   const circle = getSpecialCircle()
   stencil.load([circle], 'specialShape')
   // stencil
-  antVAdder.value.appendChild(stencil.container)
+  if (antZoneLeft.value) {
+    antZoneLeft.value.appendChild(stencil.container)
+  }
 }
 function registerEvents() {
-  const graphEvent = graph.value.on
-  graphEvent('cell:selected', (args) => {
-  })
-  graphEvent('cell:click', ({ cell }) => {
-    graph.value.select(cell)
-    this.selectCell.cell = cell
-  })
-  graphEvent('node:mouseenter', ({ node }) => {
-    this.selectCell.mouseOverCell = node
-    this.showPort(node, true)
-  })
-  graphEvent('node:mouseleave', () => {
-    this.selectCell.mouseOverCell = null
-  })
-  graphEvent('node:click', ({ node }) => {
-    this.selectCell.node = node
-  })
-  graphEvent('edge:mouseenter', ({ edge }) => {
-    edge.addTools([
-      // { name: 'segments' },
-      // { name: 'source-arrowhead' },
-      // { name: 'target-arrowhead' }
-    ])
-  })
-  graphEvent('edge:mouseleave', ({ edge }) => {
-    edge.removeTools()
-  })
-  graphEvent('edge:mouseup', ({ edge }) => {
-    // console.log(edge)
-    const degeInfo = edge.store.data
-    if (degeInfo.source.cell === degeInfo.target.cell) {
-      this.graph.removeNode(edge)
+  if (!graph.value) {
+    throw new Error('未定义 graph')
+  }
+  const graphEvent = graph.value
+  // graphEvent('cell:click', ({ cell }) => {
+  //   // graph.value.select(cell)
+  // })
+  graphEvent.on('edge:mouseup', ({ edge }) => {
+    const degeInfo = edge.getData()
+    console.log(degeInfo)
+    if (degeInfo.source.cell === degeInfo.target.cell && graph.value) {
+      graph.value.removeNode(degeInfo)
     }
-  })
-  graphEvent('edge:dblclick', ({ edge }) => {
-    graph.removeNode(edge)
-  })
-  graphEvent('blank:click', () => {
-    // this.controlType = 'graph'
-  })
-  graphEvent('selection:changed', (args) => {
-    args.added.forEach((cell) => {
-      this.selectCell.cell = cell
-      if (cell.isEdge() && this.isLineEdit) {
-        return
-      }
-      if (
-        cell.getData() === undefined ||
-        cell.getData().name === undefined
-      ) {
-        cell.setData({
-          name: ''
-        })
-      }
-      if (cell.isNode()) {
-        const pos = cell.position()
-        const size = cell.size()
-        this.nodeStatus = {
-          x: Number(pos.x),
-          y: Number(pos.y),
-          width: Number(size.width),
-          height: Number(size.height)
-        }
-      } else {
-        this.verticesTable = cell.getVertices()
-      }
-    })
   })
 }
 function onSmartConnect() {
@@ -200,6 +145,8 @@ function onSmartConnect() {
   }
 }
 function onToggleZoom() {
+  connectRect('d', 'fd')
+  addConnect('dd', 'ff')
   // graph.value.toJSON()
 }
 function onDownload() {
@@ -241,15 +188,6 @@ function onToggleGrid() {
   } else {
     graph.hideGrid()
   }
-}
-function onAddCellRelationship(node) {
-  const { x, y } = node.position()
-  const shape1 = getSpecialCircle('名字', {
-    x: x,
-    y: y
-  })
-  const node2 = graph.addNode(shape1)
-  connectRect(node, node2)
 }
 // 重新移动链接两个 rect
 function connectRect(rect1, rect2) {
@@ -328,7 +266,6 @@ function connectRect(rect1, rect2) {
   // 对两个 rect 进行连接默认上、右、下、左，如果都已经有内容，则，右上，右下，左下，左上
 }
 function onConnectRelativeRect() {
-  // console.log(graph.getSelectedCells())
   const selectNodes = graph.getSelectedCells().filter((item) => {
     if (item.isNode()) {
       return true
@@ -354,7 +291,7 @@ function onConnectRelativeRect() {
 }
 function addConnect(rect1, rect2) {
   const { graph } = this
-  let rect1Ports = {
+  const rect1Ports = {
     left: 'left-3',
     top: 'top-3',
     bottom: 'bottom-2',
@@ -364,7 +301,7 @@ function addConnect(rect1, rect2) {
     'right-bottom': 'bottom-1',
     'left-bottom': 'left-1'
   }
-  let connectMap = {
+  const connectMap = {
     'top-1': { relative: 'left-4', target: 'right-4', x: -200, y: -200 },
     'top-2': { relative: 'top-3', target: 'bottom-3', x: 0, y: -200 },
     'top-3': { relative: 'top-2', target: 'bottom-2', x: 0, y: -200 },
@@ -418,9 +355,6 @@ function addConnect(rect1, rect2) {
     }
   })
 }
-function onSaveCellInfo() {
-
-}
 </script>
 
 <style scoped lang="scss">
@@ -436,21 +370,21 @@ function onSaveCellInfo() {
   display: flex;
   align-items: center;
   justify-content: center;
-
 }
 
 .graph-container {
   border: 1px solid #ccc;
   border-radius: 6px;
-  height: 90vh;
+  height: 84vh;
   width: calc(100% - 40px);
   overflow: hidden;
+  background-color: #fff;
   display: flex;
   // justify-content: flex-start;
   margin: 20px;
 
   .graph-adder {
-    height: 90vh;
+    height: 84vh;
     position: relative;
     width: 260px;
     background-color: pink;
