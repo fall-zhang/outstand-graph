@@ -11,7 +11,7 @@ module.exports = {
     reactive: true,
     onMounted: true
   },
-  extends: ['plugin:vue/vue3-strongly-recommended', 'standard', 'prettier'],
+  extends: ['plugin:vue/vue3-strongly-recommended', 'prettier'],
   parserOptions: {
     ecmaVersion: 'latest',
     parser: '@typescript-eslint/parser',
@@ -37,6 +37,7 @@ module.exports = {
       }
     ],
     semi: [2, 'never'],
-    'no-irregular-whitespace': 2
+    'no-irregular-whitespace': 2,
+    '@typescript-eslint/no-explicit-any': 1
   }
 }

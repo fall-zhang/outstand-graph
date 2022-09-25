@@ -7,9 +7,35 @@
   <!-- 添加图例功能，帮助用户使用 -->
   <!-- 配置滚轮缩放还是，ctrl 缩放 -->
   <!-- 配置直接可以拖动，还是长按空格可拖动 -->
-  <!-- 点击连接节点时，显示1/2/3 作为先后点击的内容 -->
+  <!-- 使用快速连接后，点击第一个节点，再点击第二个节点直接连接 -->
   <div>
     <div class="tool-bar">
+      <el-dropdown>
+        <span class="el-dropdown-link">
+          <el-button type="primary">
+            画布设置
+            <down theme="outline" size="24" fill="#333" />
+          </el-button>
+          <el-icon class="el-icon--right">
+            <arrow-down />
+          </el-icon>
+        </span>
+        <template #dropdown>
+          <el-dropdown-menu>
+            <el-dropdown-item>
+              <el-checkbox v-model="setting.showPort">连接功能</el-checkbox>
+            </el-dropdown-item>
+            <el-dropdown-item>
+              <el-checkbox v-model="setting.dragGraph" @change="onToggleDrag">拖拽画布</el-checkbox>
+            </el-dropdown-item>
+            <el-dropdown-item>
+              <el-checkbox v-model="setting.showGrid" @change="onToggleGrid">显示网格</el-checkbox>
+            </el-dropdown-item>
+            <el-dropdown-item disabled>滚轮缩放</el-dropdown-item>
+            <el-dropdown-item divided>恢复默认</el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
       <div style="margin-right: 10px;">
         <el-button size="small" type="primary" @click="onDownload">保存</el-button>
         <el-button size="small" type="primary">导入</el-button>
@@ -17,10 +43,8 @@
         <el-button size="small" type="primary">重做</el-button>
       </div>
       <div style="border-left:1px solid #aaa;padding-left: 10px;">
-        <el-checkbox v-model="setting.showPort"> 连接功能</el-checkbox>
-        <el-checkbox v-model="setting.dragGraph" @change="onToggleDrag">移动画布</el-checkbox>
-        <el-checkbox v-model="setting.smartConnect" @change="onSmartConnect">智能连接</el-checkbox>
-        <el-checkbox v-model="setting.showGrid" @change="onToggleGrid">显示网格</el-checkbox>
+        <el-checkbox v-model="setting.smartConnect" @change="onSmartConnect">
+          {{setting.smartConnect?"快速连接":'取消连接'}}</el-checkbox>
         <el-checkbox v-model="setting.canZoom" @change="onToggleZoom">缩放功能</el-checkbox>
       </div>
     </div>
@@ -31,7 +55,7 @@
         <div style="height: 80%">
           <el-form ref="form" label-width="60px">
             <el-form-item label="ID">
-              <el-input size="small"></el-input>
+              <el-input size="small" style="width:80%"></el-input>
             </el-form-item>
             <el-form-item>
               <el-button size="small" type="primary">保存</el-button>
@@ -45,6 +69,7 @@
 </template>
 <script lang="ts" setup>
 import { DataUri, Addon, Graph } from '@antv/x6'
+import type { Shape } from '@antv/x6'
 import { getSpecialCircle } from './shape/specialGraph.js'
 // import moment from 'dayjs'
 import graphData from './graphData.js'
@@ -125,9 +150,6 @@ function registerEvents() {
     throw new Error('未定义 graph')
   }
   const graphEvent = graph.value
-  // graphEvent('cell:click', ({ cell }) => {
-  //   // graph.value.select(cell)
-  // })
   graphEvent.on('edge:mouseup', ({ edge }) => {
     const degeInfo = edge.getData()
     console.log(degeInfo)
@@ -137,12 +159,15 @@ function registerEvents() {
   })
 }
 function onSmartConnect() {
-  const { setting, graph } = this
-  if (setting.smartConnect) {
-    graph.enableMultipleSelection()
-  } else {
-    graph.disableMultipleSelection()
+  if (!graph.value) {
+    return
   }
+  if (setting.smartConnect) {
+    graph.value.enableMultipleSelection()
+  } else {
+    graph.value.disableMultipleSelection()
+  }
+  // 只要改变状态，就清空快速连接的内容
 }
 function onToggleZoom() {
   connectRect('d', 'fd')
@@ -168,29 +193,31 @@ function onDownload() {
 
 function onToggleDrag() {
   // console.log(this.setting.dragGraph)
-  // console.log(value)
-  const { graph } = this
-  if (this.setting.dragGraph) {
-    graph.enablePanning()
-    graph.disableRubberband()
-    graph.disableSelection()
+  if (!graph.value) {
+    throw Error('获取不到 graph')
+  }
+  if (setting.dragGraph) {
+    graph.value.enablePanning()
+    graph.value.disableRubberband()
+    graph.value.disableSelection()
   } else {
-    graph.disablePanning()
-    graph.enableSelection()
-    graph.enableRubberband()
+    graph.value.disablePanning()
+    graph.value.enableSelection()
+    graph.value.enableRubberband()
   }
 }
 function onToggleGrid() {
-  const { graph } = this
-  // console.log(this.setting.showGrid)
+  if (!graph.value) {
+    return
+  }
   if (setting.showGrid) {
-    graph.showGrid()
+    graph.value.showGrid()
   } else {
-    graph.hideGrid()
+    graph.value.hideGrid()
   }
 }
 // 重新移动链接两个 rect
-function connectRect(rect1, rect2) {
+function connectRect(rect1: any, rect2: any) {
   const { graph } = this
   let rect1Ports = {}
   // let rect2Ports = {}
@@ -266,11 +293,10 @@ function connectRect(rect1, rect2) {
   // 对两个 rect 进行连接默认上、右、下、左，如果都已经有内容，则，右上，右下，左下，左上
 }
 function onConnectRelativeRect() {
-  const selectNodes = graph.getSelectedCells().filter((item) => {
-    if (item.isNode()) {
-      return true
-    }
-  })
+  if (!graph.value) {
+    throw new Error('未获取到 graph')
+  }
+  const selectNodes = graph.value.getSelectedCells().filter((item) => item.isNode())
   // console.log(selectNodes)
   for (let i = 0; i < selectNodes.length; i++) {
     console.log('执行了', i)
@@ -289,7 +315,7 @@ function onConnectRelativeRect() {
     edge.on('change:position', update(edge))
   })
 }
-function addConnect(rect1, rect2) {
+function addConnect(rect1: Shape.Rect, rect2) {
   const { graph } = this
   const rect1Ports = {
     left: 'left-3',
