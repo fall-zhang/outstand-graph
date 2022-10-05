@@ -5,7 +5,7 @@ import { PageLayout } from './layout'
 </script>
 
 <template>
-  <PageLayout title="模块查看系统" no-side>
+  <PageLayout title="脑图绘制" no-side>
     <router-view></router-view>
   </PageLayout>
 </template>

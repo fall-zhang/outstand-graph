@@ -16,13 +16,6 @@ const constRouters: RouteRecordRaw[] = [
   }, {
     path: '/home',
     component: () => import('@V/home.vue'),
-    // children: [
-    //   {
-    //     path: '/redirect/:path*',
-    //     component: () => import('@V/home.vue'),
-    //     meta: {}
-    //   }
-    // ]
   }, {
     path: '/',
     redirect: '/home',
