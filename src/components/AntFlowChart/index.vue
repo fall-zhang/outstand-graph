@@ -44,7 +44,7 @@
       </div>
       <div style="border-left:1px solid #aaa;padding-left: 10px;">
         <el-checkbox v-model="setting.smartConnect" @change="onSmartConnect">
-          {{setting.smartConnect?"快速连接":'取消连接'}}</el-checkbox>
+          {{ setting.smartConnect ? "快速连接" : '取消连接' }}</el-checkbox>
         <el-checkbox v-model="setting.canZoom" @change="onToggleZoom">缩放功能</el-checkbox>
       </div>
     </div>
@@ -170,12 +170,10 @@ function onSmartConnect() {
   // 只要改变状态，就清空快速连接的内容
 }
 function onToggleZoom() {
-  connectRect('d', 'fd')
-  addConnect('dd', 'ff')
-  // graph.value.toJSON()
+
 }
 function onDownload() {
-  graph.value.toPNG(
+  (graph.value as Graph).toPNG(
     (dataUri) => {
       // 下载
       DataUri.downloadDataUri(dataUri, 'chart.png')
@@ -215,171 +213,6 @@ function onToggleGrid() {
   } else {
     graph.value.hideGrid()
   }
-}
-// 重新移动链接两个 rect
-function connectRect(rect1: any, rect2: any) {
-  const { graph } = this
-  let rect1Ports = {}
-  // let rect2Ports = {}
-  let connectMap = {
-    'top-1': { relative: 'left-4', target: 'right-4', x: -200, y: -200 },
-    'top-2': { relative: 'top-3', target: 'bottom-3', x: 0, y: -200 },
-    'top-3': { relative: 'top-2', target: 'bottom-2', x: 0, y: -200 },
-    'top-4': { relative: 'right-1', target: 'left-1', x: 200, y: -200 },
-    'right-1': { relative: 'top-4', target: 'bottom-4', x: 200, y: -200 },
-    'right-2': { relative: 'right-3', target: 'left-3', x: 200, y: 0 },
-    'right-3': { relative: 'right-2', target: 'left-2', x: 200, y: 0 },
-    'right-4': { relative: 'bottom-1', target: 'top-1', x: 200, y: 200 },
-    'bottom-1': { relative: 'right-4', target: 'left-4', x: 200, y: 200 },
-    'bottom-2': { relative: 'bottom-3', target: 'top-3', x: 0, y: 200 },
-    'bottom-3': { relative: 'bottom-2', target: 'top-2', x: 0, y: 200 },
-    'bottom-4': { relative: 'left-1', target: 'right-1', x: -200, y: 200 },
-    'left-1': { relative: 'bottom-4', target: 'top-4', x: -200, y: 200 },
-    'left-2': { relative: 'left-3', target: 'right-3', x: -200, y: 0 },
-    'left-3': { relative: 'left-2', target: 'right-2', x: -200, y: 0 },
-    'left-4': { relative: 'bottom-1', target: 'right-1', x: -200, y: -200 }
-  }
-  const { x: rect1X, y: rect1Y } = rect1.position()
-  // const result = graph.findViewsInArea(rect1X, rect1Y)
-  Object.keys(connectMap).forEach((port) => {
-    rect1Ports[port] = true
-  })
-  Object.entries(connectMap).find(([key, value]) => {
-    const result = graph.findViewsInArea(
-      rect1X + value.x,
-      rect1Y + value.y,
-      60,
-      60
-    )
-    if (result.length > 0) {
-      delete rect1Ports[key]
-    }
-  })
-  // const allEdges = graph.getEdges()
-  // allEdges.forEach((edge) => {
-  //   const target = edge.getTarget()
-  //   const source = edge.getSource()
-  //   if (target.cell == rect1.id && rect1Ports[target.port]) {
-  //     let relativePorts = connectMap[target.port].relative
-  //     delete rect1Ports[target.port]
-  //     delete rect1Ports[relativePorts]
-  //   }
-  //   if (source.cell == rect1.id && rect1Ports[source.port]) {
-  //     let relativePorts = connectMap[source.port].relative
-  //     delete rect1Ports[source.port]
-  //     delete rect1Ports[relativePorts]
-  //   }
-  // })
-  // console.log('剩余未使用节点', rect1Ports)
-  let connectPortSource = Object.keys(rect1Ports).find((item) => item)
-  if (!connectPortSource) {
-    console.error('没有额外节点提供连接')
-    graph.removeNode(rect2)
-    return
-  }
-  let connectTarget = connectMap[connectPortSource]
-  // console.log(connectPortSource)
-  // console.log(connectTarget)
-  // console.log(rect2.position())
-  let { x: locateX, y: locateY } = rect2.position()
-  rect2.position(locateX + connectTarget.x, locateY + connectTarget.y)
-  // console.log(locateX + connectTarget.x)
-  // console.log(rect2.position())
-  graph.addEdge({
-    shape: 'edge', // 指定使用何种图形，默认值为 'edge'
-    source: { cell: rect1, port: connectPortSource },
-    target: { cell: rect2, port: connectTarget.target }
-  })
-  // 对两个 rect 进行连接默认上、右、下、左，如果都已经有内容，则，右上，右下，左下，左上
-}
-function onConnectRelativeRect() {
-  if (!graph.value) {
-    throw new Error('未获取到 graph')
-  }
-  const selectNodes = graph.value.getSelectedCells().filter((item) => item.isNode())
-  // console.log(selectNodes)
-  for (let i = 0; i < selectNodes.length; i++) {
-    console.log('执行了', i)
-    if (i + 1 === selectNodes.length) {
-      addConnect(selectNodes.at(i), selectNodes.at(0))
-    } else {
-      addConnect(selectNodes[i], selectNodes[i + 1])
-    }
-  }
-  const update = (edge) => {
-    const edgeView = graph.findViewByCell(edge)
-    console.log('update')
-    edgeView.update()
-  }
-  selectNodes.forEach((edge) => {
-    edge.on('change:position', update(edge))
-  })
-}
-function addConnect(rect1: Shape.Rect, rect2) {
-  const { graph } = this
-  const rect1Ports = {
-    left: 'left-3',
-    top: 'top-3',
-    bottom: 'bottom-2',
-    right: 'right-3',
-    'right-top': 'top-4',
-    'left-top': 'top-1',
-    'right-bottom': 'bottom-1',
-    'left-bottom': 'left-1'
-  }
-  const connectMap = {
-    'top-1': { relative: 'left-4', target: 'right-4', x: -200, y: -200 },
-    'top-2': { relative: 'top-3', target: 'bottom-3', x: 0, y: -200 },
-    'top-3': { relative: 'top-2', target: 'bottom-2', x: 0, y: -200 },
-    'top-4': { relative: 'right-1', target: 'left-1', x: 200, y: -200 },
-    'right-1': { relative: 'top-4', target: 'bottom-4', x: 200, y: -200 },
-    'right-2': { relative: 'right-3', target: 'left-3', x: 200, y: 0 },
-    'right-3': { relative: 'right-2', target: 'left-2', x: 200, y: 0 },
-    'right-4': { relative: 'bottom-1', target: 'top-1', x: 200, y: 200 },
-    'bottom-1': { relative: 'right-4', target: 'left-4', x: 200, y: 200 },
-    'bottom-2': { relative: 'bottom-3', target: 'top-3', x: 0, y: 200 },
-    'bottom-3': { relative: 'bottom-2', target: 'top-2', x: 0, y: 200 },
-    'bottom-4': { relative: 'left-1', target: 'right-1', x: -200, y: 200 },
-    'left-1': { relative: 'bottom-4', target: 'top-4', x: -200, y: 200 },
-    'left-2': { relative: 'left-3', target: 'right-3', x: -200, y: 0 },
-    'left-3': { relative: 'left-2', target: 'right-2', x: -200, y: 0 },
-    'left-4': { relative: 'bottom-1', target: 'right-1', x: -200, y: -200 }
-  }
-  // 得出节点二在节点一的哪个位置，然后根据位置，选择对应的节点进行添加
-  const { x: rect1X, y: rect1Y } = rect1.position()
-  const { x: rect2X, y: rect2Y } = rect2.position()
-  let position = []
-  // rect1 在 rect2 的哪个方向
-  if (rect1X - rect2X > 30) {
-    position.push('left')
-  } else if (rect1X - rect2X < -30) {
-    position.push('right')
-  }
-  if (rect1Y - rect2Y > 30) {
-    position.push('top')
-  } else if (rect1Y - rect2Y < -30) {
-    position.push('bottom')
-  }
-  position = position.join('-')
-  console.log(position)
-  let connectPortSource = rect1Ports[position]
-  if (!connectPortSource) {
-    console.error('没有额外节点提供连接')
-    return
-  }
-  let connectTarget = connectMap[connectPortSource]
-  graph.addEdge({
-    shape: 'edge', // 指定使用何种图形，默认值为 'edge'
-    source: { cell: rect1, port: connectPortSource },
-    target: { cell: rect2, port: connectTarget.target },
-    router: {
-      name: 'manhattan',
-      args: {
-        startDirections: position.split('-'),
-        endDirections: position.split('-')
-      }
-    }
-  })
 }
 </script>
 
