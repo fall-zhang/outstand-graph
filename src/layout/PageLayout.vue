@@ -62,6 +62,9 @@ defineProps<{
 
   .main {
     background-color: #ccc;
+    --el-main-padding: 0;
+    display: flex;
+    flex-flow: column;
   }
 }
 
