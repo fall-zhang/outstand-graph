@@ -1,5 +1,18 @@
-## Vite+TypeScript+Vue3+Element
+# Vue3 Graph
 
-### 配置好工具包，开箱即用
+> 本应用使用该模板搭建而成：https://github.com/fall-zhang/vite-vue3-TS-lint
 
-本应用使用该模板搭建而成：https://github.com/Fall-zhang/vite-vue3-TS-lint
+## 项目启动
+
+- `pnpm i` 安装依赖
+- `pnpm dev` & `pnpm serve` 启动项目
+
+## 项目内容
+
+- 实现导入导出数据图
+
+## 待完善内容
+
+- [ ] 快速连接的具体实现
+- [ ] 添加
+- [ ] 快速连接的具体实现
