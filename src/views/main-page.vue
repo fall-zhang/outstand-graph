@@ -20,7 +20,9 @@ import HeadTool from './head-panel/head-tool.vue'
 import RightProperty from './right-property/right-property.vue'
 import { Addon, Graph, Shape } from '@antv/x6'
 import type { Cell } from '@antv/x6'
-import { getBasicCircle } from './shape/basicShape'
+import { getBasicCircle, getBasicRect, getBasicSquare } from './shape/basicShape'
+import { GateWay, CheckOut } from './shape/bpmnShape'
+import { startShape } from './shape/flowShape'
 import './shape/bpmnShape'
 import graphData from './testData/bpmnData.json'
 import './registerComponents.ts'
@@ -82,10 +84,10 @@ function initGraphZone() {
 //  左侧菜单对象
 function initGraphAdder() {
   const stencil = new Addon.Stencil({
-    search: true,
+    // search: true,
+    // placeholder: '按照名称搜索',
     target: graph.value,
     stencilGraphWidth: 200,
-    stencilGraphHeight: 800,
     groups: [
       {
         name: 'basicShape',
@@ -96,31 +98,22 @@ function initGraphAdder() {
       {
         name: 'bpmnShape',
         title: 'bpmn组件',
+        // collapsed: true,
         graphWidth: 200,
         graphHeight: 300
       },
       {
         name: 'specialShape',
+        collapsed: true,
         title: '特定组件',
         graphWidth: 200,
         graphHeight: 300
       }
     ]
   })
-  stencil.load([getBasicCircle()], 'basicShape')
-  stencil.load([new Shape.Circle({
-    inherit: 'circle',
-    'width': 40,
-    'height': 40,
-    attrs: {
-      body: {
-        strokeWidth: 2,
-        stroke: '#5F95FF',
-        fill: '#FFF',
-      }
-    }
-  })], 'specialShape')
-  stencil.load([], 'bpmnShape')
+  stencil.load([getBasicCircle(), getBasicRect(), getBasicSquare()], 'basicShape')
+  stencil.load([GateWay, CheckOut], 'bpmnShape')
+  stencil.load([startShape], 'specialShape')
   // stencil
   if (antZoneLeft.value) {
     antZoneLeft.value.appendChild(stencil.container)
