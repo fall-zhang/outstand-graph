@@ -12,30 +12,23 @@
   <div class="graph-container" :class="setting.showPort ? '' : 'hidePort'">
     <div ref="antZoneLeft" class="graph-adder"></div>
     <div ref="antGraphDOM" class="graph-editor"></div>
-    <RightProperty></RightProperty>
+    <RightProperty :cell="selectCell"></RightProperty>
   </div>
 </template>
 <script lang="ts" setup>
 import HeadTool from './head-panel/head-tool.vue'
 import RightProperty from './right-property/right-property.vue'
-import { Addon, Graph, Shape } from '@antv/x6'
-import type { Cell } from '@antv/x6'
-import { getBasicCircle, getBasicRect, getBasicSquare } from './shape/basicShape'
+import { Addon, Edge, Graph, Shape } from '@antv/x6'
+import type { Cell, Node } from '@antv/x6'
+import basicShapes from './shape/basicShape'
 import { GateWay, CheckOut } from './shape/bpmnShape'
 import { startShape } from './shape/flowShape'
 import './shape/bpmnShape'
 import graphData from './testData/bpmnData.json'
 import './registerComponents.ts'
 // 引入自定义组件文件
-defineEmits(['selectCell'])
 const setting = reactive({
   showPort: true, // 显示连接
-  dragGraph: true, // 移动画布
-  showGrid: true, // 展示网格
-  smartConnect: false, // 智能连接
-  canZoom: true,
-  history: true,
-  deleteEdgeConfirm: true
 })
 const headTool = ref(null)
 const graph = ref<Graph>()
@@ -48,19 +41,26 @@ onMounted(() => {
   initGraphAdder()
   registerEvents()
 })
+const selectCell = ref<Edge | Node>()
 function initGraphZone() {
   graph.value = new Graph({
     container: antGraphDOM.value,
     panning: true,
-    history: {
+    clipboard: true,
+    grid: true,
+    snapline: {
       enabled: true,
-      // undo: ['ctrl', 'z'],
-      // redo: ['ctrl', 'y'],
+    },
+    history: {
+      enabled: true
     },
     mousewheel: {
       enabled: true,
-      modifiers: []
+      modifiers: [],
+      minScale: 0.4,
+      maxScale: 3,
     },
+    resizing: true,
     connecting: {
       snap: true
     },
@@ -111,8 +111,14 @@ function initGraphAdder() {
       }
     ]
   })
-  stencil.load([getBasicCircle(), getBasicRect(), getBasicSquare()], 'basicShape')
-  stencil.load([GateWay, CheckOut], 'bpmnShape')
+  const bpmn = graph.value?.createNode({
+    shape: 'activity',
+    'width': 100,
+    'height': 60,
+    'label': '领导审批'
+  })
+  stencil.load(basicShapes, 'basicShape')
+  stencil.load([GateWay, bpmn!], 'bpmnShape')
   stencil.load([startShape], 'specialShape')
   // stencil
   if (antZoneLeft.value) {
@@ -131,8 +137,15 @@ function registerEvents() {
       graph.value.removeNode(degeInfo)
     }
   })
+  graphEvent.on('node:click', ({ node }) => {
+    const cellInfo = node.getData()
+    selectCell.value = node
+    console.log(cellInfo)
+    if (cellInfo.source.cell === cellInfo.target.cell && graph.value) {
+      graph.value.removeNode(cellInfo)
+    }
+  })
 }
-
 
 </script>
 
