@@ -143,6 +143,4 @@ defineExpose({
   align-items: center;
   justify-content: center;
 }
-
-.config-graph {}
 </style>

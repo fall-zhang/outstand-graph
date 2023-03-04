@@ -100,43 +100,18 @@ export const StartCircle = new Shape.Circle({
   }
 })
 export const CheckOut = new Shape.Rect({
-  markup: [
-    {
-      tagName: 'rect',
-      selector: 'outline',
-    },
-    {
-      tagName: 'image',
-      selector: 'img',
-    },
-    {
-      tagName: 'text',
-      selector: 'label',
-    },
-  ],
+  inherit: 'activity',
   attrs: {
-    outline: {
-      rx: 6,
-      ry: 6,
-      width: 100,
-      height: 60,
-      stroke: '#5F95FF',
-      // fill: '#000',
-      strokeWidth: 1,
-    },
-    img: {
-      x: 6,
-      y: 6,
-      width: 16,
-      height: 16,
-      'xlink:href':
-        'https://gw.alipayobjects.com/mdn/rms_43231b/afts/img/A*pwLpRr7QPGwAAAAAAAAAAAAAARQnAQ',
-    },
-    label: {
-      fontSize: 12,
-      fill: '#262626',
-    },
-  },
+    body: {
+      'width': 100,
+      'height': 60,
+      'position': {
+        'x': 300,
+        'y': 240
+      },
+      'label': '领导审批'
+    }
+  }
 })
 export const GateWay = new Shape.Circle({
   shape: 'rect',

@@ -15,13 +15,18 @@
 <script lang="ts" setup>
 import graphEvent from '@/store/graph-event'
 // import { Node } from '@antv/x6'
-import type { Node, Cell } from '@antv/x6'
-defineProps<{
-  rect?: Cell
+import type { Node, Edge } from '@antv/x6'
+const props = defineProps<{
+  cell?: Node | Edge
 }>()
 const nodeInfo = ref()
 graphEvent.on('select-node', (node: Node) => {
   nodeInfo.value = node
+})
+watch(props, (newVal, oldVal) => {
+  if (props.cell) {
+
+  }
 })
 </script>
 
