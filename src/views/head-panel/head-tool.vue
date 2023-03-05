@@ -142,5 +142,7 @@ defineExpose({
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 1px 3px 10px 0px #727272aa, 1px 0px 14px 0px #727272cc;
+  z-index: 1;
 }
 </style>

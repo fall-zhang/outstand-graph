@@ -1,12 +1,4 @@
-<!-- 用户可进行的操作：单机，双击，鼠标滚轮 -->
-  <!-- 图形类型：边，节点，节点上的port -->
-  <!-- 删除功能：点击图像后，左上角展示一个按钮，添加 -->
-  <!-- 双击：弹出确认框，提供选择（不再弹出） -->
-  <!-- 点击图像后，展示图像的功能然后删除点击图像后，左上角展示一个按钮，添加 -->
-  <!-- 添加图例功能，帮助用户使用 -->
-  <!-- 配置滚轮缩放还是，ctrl 缩放 -->
-  <!-- 配置直接可以拖动，还是长按空格可拖动 -->
-  <!-- 使用快速连接后，点击第一个节点，再点击第二个节点直接连接 -->
+
 <template>
   <HeadTool ref="headTool" />
   <div class="graph-container" :class="setting.showPort ? '' : 'hidePort'">
@@ -38,7 +30,9 @@ const antGraphDOM = ref<HTMLElement>()
 onMounted(() => {
   // 图形编辑区域
   initGraphZone()
+  // 左侧组件拖拽区域
   initGraphAdder()
+  // 事件注册区域
   registerEvents()
 })
 const selectCell = ref<Edge | Node>()
@@ -131,22 +125,36 @@ function registerEvents() {
   }
   const graphEvent = graph.value
   graphEvent.on('edge:mouseup', ({ edge }) => {
-    const degeInfo = edge.getData()
-    console.log(degeInfo)
-    if (degeInfo.source.cell === degeInfo.target.cell && graph.value) {
-      graph.value.removeNode(degeInfo)
-    }
+    selectCell.value = edge
+    console.log(edge)
+    // if (degeInfo.source.cell === degeInfo.target.cell && graph.value) {
+    //   graph.value.removeNode(degeInfo)
+    // }
   })
   graphEvent.on('node:click', ({ node }) => {
-    const cellInfo = node.getData()
     selectCell.value = node
-    console.log(cellInfo)
-    if (cellInfo.source.cell === cellInfo.target.cell && graph.value) {
-      graph.value.removeNode(cellInfo)
+  })
+  graphEvent.on('cell:mouseleave', ({ cell }) => {
+    cell.removeTools()
+  })
+  graphEvent.on('cell:mouseenter', ({ cell }) => {
+    if (cell.isNode()) {
+      cell.addTools([
+        {
+          name: 'button-remove',
+          args: {
+            x: '100%',
+            y: 0,
+            offset: { x: -10, y: 10 },
+          },
+        },
+      ])
+    } else {
+      // cell.addTools(['vertices', 'segments'])
+      cell.addTools(['vertices', 'segments'])
     }
   })
 }
-
 </script>
 
 <style scoped lang="scss">
@@ -169,10 +177,11 @@ function registerEvents() {
   // justify-content: flex-start;
 
   .graph-adder {
+    z-index: 2;
     height: 100%;
     position: relative;
     width: 260px;
-    background-color: pink;
+    background-color: #f5f5f5;
   }
 
   .graph-editor {
