@@ -46,7 +46,9 @@ function initGraphZone() {
       enabled: true,
     },
     history: {
-      enabled: true
+      enabled: true,
+      ignoreAdd: true,
+      ignoreRemove: true,
     },
     mousewheel: {
       enabled: true,
@@ -132,6 +134,7 @@ function registerEvents() {
     // }
   })
   graphEvent.on('node:click', ({ node }) => {
+    node.removeTools()
     selectCell.value = node
   })
   graphEvent.on('cell:mouseleave', ({ cell }) => {

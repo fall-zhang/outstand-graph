@@ -97,5 +97,23 @@ export function getRhombic(label?: string, config?: NodeView.Options) {
     ...configObj
   })
 }
+export function getDataQuadrangle(label?: string, config?: NodeView.Options) {
+  let configObj = {}
+  if (config && typeof config === 'object') {
+    configObj = config
+  }
+  return new Shape.Polygon({
+    width: 64,
+    height: 40,
+    attrs: {
+      body: {
+        refPoints: '10,0 40,0 30,20 0,20',
+      },
+    },
+    label: label || '',
+    zIndex: 2,
+    ...configObj
+  })
+}
 
-export default [getBasicCircle(), getRoundRect(), getOptionalRect(), getBasicRect(), getBasicSquare(), getRhombic(),]
+export default [getBasicCircle('连接'), getRoundRect('开始'), getOptionalRect('可选过程'), getBasicRect('过程'), getDataQuadrangle('数据'), getRhombic('决策'),]
