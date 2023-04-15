@@ -47,8 +47,18 @@ function initGraphZone() {
     },
     history: {
       enabled: true,
-      ignoreAdd: true,
-      ignoreRemove: true,
+      // ignoreChange: true,
+      beforeAddCommand(event, args) {
+        // console.log(event)
+        // console.log(args)
+        // 能读取到 key 但会报错
+        if (args && args.key === 'tools') {
+          return false
+        }
+        return true
+      }
+      // ignoreAdd: true,
+      // ignoreRemove: true,
     },
     mousewheel: {
       enabled: true,
@@ -77,7 +87,8 @@ function initGraphZone() {
   })
   graph.value.resetCells(cells)
 }
-//  左侧菜单对象
+
+/** 左侧菜单对象 */
 function initGraphAdder() {
   const stencil = new Addon.Stencil({
     // search: true,
@@ -121,6 +132,7 @@ function initGraphAdder() {
     antZoneLeft.value.appendChild(stencil.container)
   }
 }
+
 function registerEvents() {
   if (!graph.value) {
     throw new Error('未定义 graph')
@@ -158,6 +170,7 @@ function registerEvents() {
     }
   })
 }
+
 </script>
 
 <style scoped lang="scss">
