@@ -1,5 +1,5 @@
 <template>
-  <div v-bind="$attrs" class="graph-adder">
+  <div v-bind="$attrs">
     <h2>属性</h2>
     {{ cell?.getAttrs() }}
     <el-form ref="form" label-width="80px" class="property-form" size="small">

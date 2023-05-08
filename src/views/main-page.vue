@@ -4,7 +4,10 @@
   <div class="graph-container" :class="setting.showPort ? '' : 'hidePort'">
     <div ref="antZoneLeft" class="graph-adder"></div>
     <div ref="antGraphDOM" class="graph-editor"></div>
-    <RightProperty :cell="selectCell"></RightProperty>
+    <div class="graph-right-zone">
+      <RightProperty class="graph-adder" :cell="selectCell"></RightProperty>
+      <div ref="antGraphMiniMap" class="graph-minimap"></div>
+    </div>
   </div>
 </template>
 <script lang="ts" setup>
@@ -15,6 +18,7 @@ import type { Cell, Node } from '@antv/x6'
 import basicShapes from './shape/basicShape'
 import { GateWay, CheckOut } from './shape/bpmnShape'
 import { startShape } from './shape/flowShape'
+import { useMagicKeys } from '@vueuse/core'
 import './shape/bpmnShape'
 import graphData from './testData/bpmnData.json'
 import './registerComponents.ts'
@@ -22,11 +26,20 @@ import './registerComponents.ts'
 const setting = reactive({
   showPort: true, // 显示连接
 })
+const { space } = useMagicKeys()
+// 按下 ctrl 时
+watch(space, () => {
+  if (space) {
+    console.log('开启')
+    graph.value?.enablePanning()
+  }
+})
 const headTool = ref(null)
 const graph = ref<Graph>()
 provide('graph', graph)
 const antZoneLeft = ref<HTMLElement>()
 const antGraphDOM = ref<HTMLElement>()
+const antGraphMiniMap = ref<HTMLElement>()
 onMounted(() => {
   // 图形编辑区域
   initGraphZone()
@@ -45,6 +58,13 @@ function initGraphZone() {
     snapline: {
       enabled: true,
     },
+    // scroller: {
+    //   enabled: true,
+    // },
+    // minimap: {
+    //   enabled: true,
+    //   container: antGraphMiniMap.value,
+    // },
     history: {
       enabled: true,
       // ignoreChange: true,
@@ -76,7 +96,6 @@ function initGraphZone() {
       multiple: false
     }
   })
-  // graph.value.fromJSON(graphData)
   const cells: Cell[] = []
   graphData.forEach(item => {
     if (item.shape === 'bpmn-edge') {
@@ -132,18 +151,18 @@ function initGraphAdder() {
     antZoneLeft.value.appendChild(stencil.container)
   }
 }
-
+// 获取图像上
 function registerEvents() {
   if (!graph.value) {
     throw new Error('未定义 graph')
   }
   const graphEvent = graph.value
+  graphEvent.on('cell:selected', () => {
+    graph.value?.getSelectedCells()
+  })
   graphEvent.on('edge:mouseup', ({ edge }) => {
     selectCell.value = edge
     console.log(edge)
-    // if (degeInfo.source.cell === degeInfo.target.cell && graph.value) {
-    //   graph.value.removeNode(degeInfo)
-    // }
   })
   graphEvent.on('node:click', ({ node }) => {
     node.removeTools()
@@ -191,6 +210,21 @@ function registerEvents() {
   display: flex;
   box-sizing: border-box;
   // justify-content: flex-start;
+  position: relative;
+
+  .graph-minimap {
+    height: 90px;
+    width: 100%;
+    z-index: 10;
+    bottom: 20px;
+  }
+
+  .graph-right-zone {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+
+  }
 
   .graph-adder {
     z-index: 2;

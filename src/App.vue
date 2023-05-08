@@ -5,7 +5,7 @@ import { PageLayout } from './layout'
 </script>
 
 <template>
-  <PageLayout title="脑图绘制" no-side>
+  <PageLayout title="云飞脑图" no-side>
     <router-view></router-view>
   </PageLayout>
 </template>
