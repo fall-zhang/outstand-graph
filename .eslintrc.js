@@ -5,13 +5,13 @@ module.exports = {
   },
   globals: {
     // 定义 vue 自动引入的全局变量，防止报错
-    defineProps: true,
-    defineEmits: true,
-    ref: true,
-    reactive: true,
-    onMounted: true
+    // defineProps: true,
+    // defineEmits: true,
+    // ref: true,
+    // reactive: true,
+    // onMounted: true
   },
-  extends: ['plugin:vue/vue3-strongly-recommended', 'prettier'],
+  extends: ['plugin:vue/vue3-recommended', 'standard'],
   parserOptions: {
     ecmaVersion: 'latest',
     parser: '@typescript-eslint/parser',
@@ -20,7 +20,12 @@ module.exports = {
   plugins: ['vue', '@typescript-eslint'],
   rules: {
     'vue/first-attribute-linebreak': 0,
+    // 交给 TS 处理未命名的变量
+    'no-undef': 0,
     'vue/no-multiple-template-root': 0,
+    'vue/html-self-closing': 0,
+    'space-before-function-paren': 0,
+    'no-unused-vars': 1,
     'vue/max-attributes-per-line': [
       2,
       {
