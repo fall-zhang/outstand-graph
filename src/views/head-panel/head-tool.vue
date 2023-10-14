@@ -10,21 +10,33 @@
       <template #dropdown>
         <el-dropdown-menu>
           <el-dropdown-item>
-            <el-checkbox v-model="setting.canZoom" @change="onToggleZoom">滚轮缩放</el-checkbox>
+            <el-checkbox v-model="setting.canZoom" @change="onToggleZoom">
+              滚轮缩放
+            </el-checkbox>
           </el-dropdown-item>
           <el-dropdown-item>
-            <el-checkbox v-model="setting.dragGraph" @change="onToggleDrag">画布可拖拽</el-checkbox>
+            <el-checkbox v-model="setting.dragGraph" @change="onToggleDrag">
+              画布可拖拽
+            </el-checkbox>
           </el-dropdown-item>
           <el-dropdown-item>
-            <el-checkbox v-model="setting.showGrid" @change="onToggleGrid">显示网格</el-checkbox>
+            <el-checkbox v-model="setting.showGrid" @change="onToggleGrid">
+              显示网格
+            </el-checkbox>
           </el-dropdown-item>
-          <el-dropdown-item divided>默认设置</el-dropdown-item>
+          <el-dropdown-item divided>
+            默认设置
+          </el-dropdown-item>
         </el-dropdown-menu>
       </template>
     </el-dropdown>
     <div style="margin: 0 12px;">
-      <el-button size="small" type="primary" @click="onDownload">保存</el-button>
-      <el-button size="small" type="primary" @click="onImport">导入</el-button>
+      <el-button size="small" type="primary" @click="onDownload">
+        保存
+      </el-button>
+      <el-button size="small" type="primary" @click="onImport">
+        导入
+      </el-button>
       <el-tooltip class="box-item" :open-delay="400" effect="dark" content="上一步：Ctrl+z" placement="bottom">
         <el-button size="small" circle type="primary" @click="onPreStep">
           <IconUndo></IconUndo>
@@ -36,8 +48,8 @@
         </el-button>
       </el-tooltip>
     </div>
-    <el-checkbox v-model="setting.smartConnect" @change="onSmartConnect"
-      style="border-left:1px solid #aaa;padding-left: 10px;">
+    <el-checkbox v-model="setting.smartConnect" style="border-left:1px solid #aaa;padding-left: 10px;"
+      @change="onSmartConnect">
       <span style="display: flex">
         <span>快速连接</span>
         <el-tooltip class="box-item" :open-delay="400" effect="dark" content="快速连接：点击两个节点即可实现连接" placement="bottom">
@@ -51,6 +63,7 @@
 <script setup lang="ts">
 import { DataUri } from '@antv/x6'
 import { Down as IconDown, Redo as IconRedo, Undo as IconUndo, Help as IconHelp } from '@icon-park/vue-next'
+import { Export } from '@antv/x6-plugin-export'
 import type { Graph } from '@antv/x6'
 defineEmits(['updateConfig', 'onExport', 'onInport', 'onClear'])
 const graph = inject<{ value: Graph }>('graph')!
@@ -100,13 +113,10 @@ function onNextStep() {
   graph.value!.redo()
 }
 function onDownload() {
-  console.log(graph.value);
-
-  (graph.value as Graph).toPNG(
-    (dataUri) => {
-      // 下载
-      DataUri.downloadDataUri(dataUri, 'chart.png')
-    },
+  console.log(graph.value)
+  // 下载
+  graph.value.use(new Export()).toPNG(
+    (dataUri: string) => DataUri.downloadDataUri(dataUri, 'chart.png'),
     {
       padding: {
         top: 20,
@@ -114,8 +124,7 @@ function onDownload() {
         bottom: 40,
         left: 50
       }
-    }
-  )
+    })
 }
 
 function onSmartConnect() {

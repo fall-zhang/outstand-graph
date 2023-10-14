@@ -33,7 +33,7 @@
     <el-col :span="12">
       <h5 class="mb-2">Custom colors</h5>
       <el-menu active-text-color="#ffd04b" background-color="#545c64" class="el-menu-vertical-demo" default-active="2"
-        text-color="#fff" @open="handleOpen" @close="handleClose">
+               text-color="#fff" @open="handleOpen" @close="handleClose">
         <el-sub-menu index="1">
           <template #title>
             <span>Navigator One</span>

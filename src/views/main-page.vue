@@ -1,30 +1,40 @@
-
 <template>
-  <HeadTool ref="headTool" />
-  <div class="graph-container" :class="setting.showPort ? '' : 'hidePort'">
-    <div ref="antZoneLeft" class="graph-adder"></div>
-    <div ref="antGraphDOM" class="graph-editor"></div>
-    <div class="graph-right-zone">
-      <RightProperty class="graph-adder" :cell="selectCell"></RightProperty>
-      <div ref="antGraphMiniMap" class="graph-minimap"></div>
+  <PageLayout title="云飞脑图" no-side>
+    <template #header-icon>
+      <BachelorDegreeIcon />
+    </template>
+    <HeadTool ref="headTool" />
+    <div class="graph-container" :class="setting.showPort ? '' : 'hidePort'">
+      <div ref="antZoneLeft" class="graph-adder"></div>
+      <div ref="antGraphDOM" class="graph-editor"></div>
+      <div class="graph-right-zone">
+        <RightProperty class="graph-adder" :cell="selectCell"></RightProperty>
+        <div ref="antGraphMiniMap" class="graph-minimap"></div>
+      </div>
     </div>
-  </div>
+  </PageLayout>
 </template>
 <script lang="ts" setup>
+import BachelorDegreeIcon from '@/components/icons/BachelorDegree.vue'
+import { PageLayout } from '@/layout'
 import HeadTool from './head-panel/head-tool.vue'
 import RightProperty from './right-property/right-property.vue'
-import { Addon, Edge, Graph, Shape } from '@antv/x6'
+import { Edge, Graph } from '@antv/x6'
+import { Stencil } from '@antv/x6-plugin-stencil'
 import type { Cell, Node } from '@antv/x6'
 import basicShapes from './shape/basicShape'
+import { History } from '@antv/x6-plugin-history'
+import { Transform } from '@antv/x6-plugin-transform'
+import { Selection } from '@antv/x6-plugin-selection'
 import { GateWay, CheckOut } from './shape/bpmnShape'
 import { startShape } from './shape/flowShape'
 import { useMagicKeys } from '@vueuse/core'
-import './shape/bpmnShape'
+
 import graphData from './testData/bpmnData.json'
-import './registerComponents.ts'
+import './registerComponents'
 // 引入自定义组件文件
-const setting = reactive({
-  showPort: true, // 显示连接
+const setting = reactive<any>({
+  showPort: true // 显示连接
 })
 const { space } = useMagicKeys()
 // 按下 ctrl 时
@@ -53,49 +63,48 @@ function initGraphZone() {
   graph.value = new Graph({
     container: antGraphDOM.value,
     panning: true,
-    clipboard: true,
     grid: true,
-    snapline: {
+    mousewheel: {
       enabled: true,
+      modifiers: [],
+      minScale: 0.4,
+      maxScale: 3
     },
-    // scroller: {
-    //   enabled: true,
-    // },
-    // minimap: {
-    //   enabled: true,
-    //   container: antGraphMiniMap.value,
-    // },
-    history: {
+    connecting: {
+      snap: true
+    }
+  })
+  graph.value.use(
+    new History({
       enabled: true,
       // ignoreChange: true,
-      beforeAddCommand(event, args) {
+      // eslint-disable-next-line
+      // ignoreAdd: true,
+      // ignoreRemove: true,
+      beforeAddCommand(event: string, args: any) {
         // console.log(event)
         // console.log(args)
         // 能读取到 key 但会报错
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/ban-types
         if (args && args.key === 'tools') {
           return false
         }
         return true
       }
-      // ignoreAdd: true,
-      // ignoreRemove: true,
-    },
-    mousewheel: {
-      enabled: true,
-      modifiers: [],
-      minScale: 0.4,
-      maxScale: 3,
-    },
-    resizing: true,
-    connecting: {
-      snap: true
-    },
-    selecting: {
+    })
+  )
+  graph.value.use(
+    new Transform({
+      resizing: true
+    })
+  )
+  graph.value.use(
+    new Selection({
       enabled: false,
       showNodeSelectionBox: true,
       multiple: false
-    }
-  })
+    })
+  )
   const cells: Cell[] = []
   graphData.forEach(item => {
     if (item.shape === 'bpmn-edge') {
@@ -109,7 +118,7 @@ function initGraphZone() {
 
 /** 左侧菜单对象 */
 function initGraphAdder() {
-  const stencil = new Addon.Stencil({
+  const stencil = new Stencil({
     // search: true,
     // placeholder: '按照名称搜索',
     target: graph.value,
@@ -139,9 +148,9 @@ function initGraphAdder() {
   })
   const bpmn = graph.value?.createNode({
     shape: 'activity',
-    'width': 100,
-    'height': 60,
-    'label': '领导审批'
+    width: 100,
+    height: 60,
+    label: '领导审批'
   })
   stencil.load(basicShapes, 'basicShape')
   stencil.load([GateWay, bpmn!], 'bpmnShape')
@@ -151,27 +160,31 @@ function initGraphAdder() {
     antZoneLeft.value.appendChild(stencil.container)
   }
 }
-// 获取图像上
+// 注册图像上的事件
 function registerEvents() {
   if (!graph.value) {
     throw new Error('未定义 graph')
   }
   const graphEvent = graph.value
-  graphEvent.on('cell:selected', () => {
-    graph.value?.getSelectedCells()
+  registerGraphEvent(graphEvent)
+}
+
+function registerGraphEvent(graph: Graph) {
+  graph.on('cell:selected', () => {
+    graph.getSelectedCells()
   })
-  graphEvent.on('edge:mouseup', ({ edge }) => {
+  graph.on('edge:mouseup', ({ edge }: Record<string, any>) => {
     selectCell.value = edge
     console.log(edge)
   })
-  graphEvent.on('node:click', ({ node }) => {
+  graph.on('node:click', ({ node }: Record<string, any>) => {
     node.removeTools()
     selectCell.value = node
   })
-  graphEvent.on('cell:mouseleave', ({ cell }) => {
+  graph.on('cell:mouseleave', ({ cell }: Record<string, any>) => {
     cell.removeTools()
   })
-  graphEvent.on('cell:mouseenter', ({ cell }) => {
+  graph.on('cell:mouseenter', ({ cell }: Record<string, any>) => {
     if (cell.isNode()) {
       cell.addTools([
         {
@@ -179,9 +192,9 @@ function registerEvents() {
           args: {
             x: '100%',
             y: 0,
-            offset: { x: -10, y: 10 },
-          },
-        },
+            offset: { x: -10, y: 10 }
+          }
+        }
       ])
     } else {
       // cell.addTools(['vertices', 'segments'])
@@ -192,6 +205,11 @@ function registerEvents() {
 
 </script>
 
+<script lang="ts">
+export default {
+  name: 'AntV6Chart'
+}
+</script>
 <style scoped lang="scss">
 @keyframes ant-line {
   to {
@@ -245,8 +263,3 @@ function registerEvents() {
   }
 }
 </style>
-<script lang="ts">
-export default {
-  name: 'AntV6Chart'
-}
-</script>
