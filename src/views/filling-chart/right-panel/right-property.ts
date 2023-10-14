@@ -22,11 +22,11 @@
 // 嵌套类型，组件嵌套组件
 // object 以 children 的 keyId 作为 key 的对象
 // array 数组（以 children 的 keyId 作为 key 的对象构成）
-import xAxisConfig from './charts-config/xAxis.js'
-import titleConfig from './charts-config/title.js'
-import yAxisConfig from './charts-config/yAxis.js'
-import legendConfig from './charts-config/legend.js'
-import { textStyle } from './charts-config/dictionary/common-option.js'
+import xAxisConfig from './charts-config/xAxis'
+import titleConfig from './charts-config/title'
+import yAxisConfig from './charts-config/yAxis'
+import legendConfig from './charts-config/legend'
+import { textStyle } from './charts-config/dictionary/common-option'
 export default [
   {
     keyId: 'xAxis',

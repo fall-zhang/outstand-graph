@@ -2,7 +2,7 @@
 // 如果数组内容只有一个，那么转换成为对象
 // 如果数组中没有内容，删除该属性
 // 如果为 show false，压缩会去掉该属性
-import { genTemplateCode } from './genSplitPart.js'
+import { genTemplateCode } from './genSplitPart'
 export function genVue3Code(option) {
   const templateCode = genTemplateCode(option)
   const jsCode = `
