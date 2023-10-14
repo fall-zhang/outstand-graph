@@ -25,8 +25,8 @@ module.exports = {
     'vue/html-self-closing': 0,
     'space-before-function-paren': 0,
     'vue/singleline-html-element-content-newline': 0,
-    // 'vue/html-closing-bracket-newline': 0,
-    // 'vue/html-indent': 0,
+    'vue/html-closing-bracket-newline': 0,
+    'vue/html-indent': 0,
     'no-unused-vars': 1,
     'eol-last': 0,
     'vue/max-attributes-per-line': [

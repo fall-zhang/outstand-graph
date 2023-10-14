@@ -13,9 +13,10 @@ module.exports = {
     { value: '⏪回滚', name: '回滚:    代码回退' }
   ],
   scopes: [
-    { name: 'javascript' },
+    { name: 'css' },
     { name: 'typescript' },
-    { name: 'Vue' },
+    { name: 'vue' },
+    { name: 'assets' },
     { name: 'markdown' }
   ],
   // override the messages, defaults are as follows
