@@ -49,7 +49,7 @@ graphEvent.on('select-node', (node: Node) => {
 })
 watch(props, (newVal, oldVal) => {
   if (props.cell) {
-
+    console.log(props.cell)
   }
 })
 </script>

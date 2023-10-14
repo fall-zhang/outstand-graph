@@ -4,7 +4,7 @@ const portConifg = {
       magnet: true,
       r: 6
     }
-  },
+  }
 }
 export default {
   // 节点

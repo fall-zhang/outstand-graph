@@ -6,9 +6,9 @@ Graph.registerNode('event',
       body: {
         strokeWidth: 2,
         stroke: '#5F95FF',
-        fill: '#FFF',
-      },
-    },
+        fill: '#FFF'
+      }
+    }
   },
   true)
 
@@ -19,16 +19,16 @@ Graph.registerNode(
     markup: [
       {
         tagName: 'rect',
-        selector: 'body',
+        selector: 'body'
       },
       {
         tagName: 'image',
-        selector: 'img',
+        selector: 'img'
       },
       {
         tagName: 'text',
-        selector: 'label',
-      },
+        selector: 'label'
+      }
     ],
     attrs: {
       body: {
@@ -36,7 +36,7 @@ Graph.registerNode(
         ry: 6,
         stroke: '#5F95FF',
         fill: '#EFF4FF',
-        strokeWidth: 1,
+        strokeWidth: 1
       },
       img: {
         x: 6,
@@ -44,17 +44,17 @@ Graph.registerNode(
         width: 16,
         height: 16,
         'xlink:href':
-          'https://gw.alipayobjects.com/mdn/rms_43231b/afts/img/A*pwLpRr7QPGwAAAAAAAAAAAAAARQnAQ',
-        // 也可以为 base64 
+          'https://gw.alipayobjects.com/mdn/rms_43231b/afts/img/A*pwLpRr7QPGwAAAAAAAAAAAAAARQnAQ'
+        // 也可以为 base64
         // 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDQ4IDQ4IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNNiAxMUwxMSA2TDI0IDE5TDM3IDZMNDIgMTFMMjkgMjRMNDIgMzdMMzcgNDJMMjQgMjlMMTEgNDJMNiAzN0wxOSAyNEw2IDExWiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjwvc3ZnPg=='
       },
       label: {
         fontSize: 12,
-        fill: '#262626',
-      },
-    },
+        fill: '#262626'
+      }
+    }
   },
-  true,
+  true
 )
 
 Graph.registerNode(
@@ -66,16 +66,16 @@ Graph.registerNode(
         refPoints: '0,10 10,0 20,10 10,20',
         strokeWidth: 2,
         stroke: '#5F95FF',
-        fill: '#EFF4FF',
+        fill: '#EFF4FF'
       },
       label: {
         text: 'x',
         fontSize: 40,
-        fill: '#5F95FF',
-      },
-    },
+        fill: '#5F95FF'
+      }
+    }
   },
-  true,
+  true
 )
 
 Graph.registerEdge(
@@ -85,11 +85,11 @@ Graph.registerEdge(
     attrs: {
       line: {
         stroke: '#A2B1C3',
-        strokeWidth: 2,
-      },
-    },
+        strokeWidth: 2
+      }
+    }
   },
-  true,
+  true
 )
 export const StartCircle = new Shape.Circle({
   inherit: 'circle',
@@ -97,7 +97,7 @@ export const StartCircle = new Shape.Circle({
     body: {
       strokeWidth: 2,
       stroke: '#5F95FF',
-      fill: '#FFF',
+      fill: '#FFF'
     }
   }
 })
@@ -105,13 +105,13 @@ export const CheckOut = new Shape.Rect({
   inherit: 'activity',
   attrs: {
     body: {
-      'width': 100,
-      'height': 60,
-      'position': {
-        'x': 300,
-        'y': 240
+      width: 100,
+      height: 60,
+      position: {
+        x: 300,
+        y: 240
       },
-      'label': '领导审批'
+      label: '领导审批'
     }
   }
 })
@@ -147,7 +147,7 @@ export const GateWay = new Shape.Circle({
       width: 16,
       height: 16,
       x: 12,
-      y: 12,
+      y: 12
     },
     body: {
       strokeWidth: 2,
@@ -159,7 +159,7 @@ export const GateWay = new Shape.Circle({
           width: 40,
           strokeWidth: 2,
           stroke: '#000'
-        },
+        }
       }
     }
   }

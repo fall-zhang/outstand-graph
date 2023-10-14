@@ -6,12 +6,6 @@ circleBlueWord()
 greenWord()
 breaker()
 // 运行时加载的图形
-// 未用到的图形
-// circleBlue()
-// circleGreen()
-// circleRed()
-// circleYellow()
-// circleBlack()
 export function circleBlueWord() {
   const CircleBlueWord = Circle.define({
     shape: 'circle-blue-word',

@@ -1,9 +1,9 @@
 import { Shape } from '@antv/x6'
 import type { NodeView } from '@antv/x6'
 /**
- * 
- * 
- * 
+ *
+ *
+ *
  */
 const ports = {
   groups: {
@@ -17,10 +17,10 @@ const ports = {
           strokeWidth: 1,
           fill: '#fff',
           style: {
-            visibility: 'hidden',
-          },
-        },
-      },
+            visibility: 'hidden'
+          }
+        }
+      }
     },
     right: {
       position: 'right',
@@ -32,10 +32,10 @@ const ports = {
           strokeWidth: 1,
           fill: '#fff',
           style: {
-            visibility: 'hidden',
-          },
-        },
-      },
+            visibility: 'hidden'
+          }
+        }
+      }
     },
     bottom: {
       position: 'bottom',
@@ -47,10 +47,10 @@ const ports = {
           strokeWidth: 1,
           fill: '#fff',
           style: {
-            visibility: 'hidden',
-          },
-        },
-      },
+            visibility: 'hidden'
+          }
+        }
+      }
     },
     left: {
       position: 'left',
@@ -62,17 +62,17 @@ const ports = {
           strokeWidth: 1,
           fill: '#fff',
           style: {
-            visibility: 'hidden',
-          },
-        },
-      },
-    },
+            visibility: 'hidden'
+          }
+        }
+      }
+    }
   },
   items: [
     { id: 'left', group: 'left' },
     { id: 'top', group: 'top' },
     { id: 'right', group: 'right' },
-    { id: 'bottom', group: 'bottom' },
+    { id: 'bottom', group: 'bottom' }
   ]
 }
 export function getBasicRect(label?: string, config?: NodeView.Options) {
@@ -83,7 +83,7 @@ export function getBasicRect(label?: string, config?: NodeView.Options) {
   return new Shape.Rect({
     width: 64,
     height: 40,
-    label: label,
+    label,
     zIndex: 2,
     ...configObj
   })
@@ -96,7 +96,7 @@ export function getBasicSquare(label?: string, config?: NodeView.Options) {
   return new Shape.Rect({
     width: 40,
     height: 40,
-    label: label,
+    label,
     zIndex: 2,
     ...configObj
   })
@@ -126,8 +126,8 @@ export function getRoundRect(label?: string, config?: NodeView.Options) {
     attrs: {
       body: {
         rx: 20,
-        ry: 26,
-      },
+        ry: 26
+      }
     },
     label: label || '',
     zIndex: 2,
@@ -145,8 +145,8 @@ export function getOptionalRect(label?: string, config?: NodeView.Options) {
     attrs: {
       body: {
         rx: 6,
-        ry: 6,
-      },
+        ry: 6
+      }
     },
     label: label || '',
     zIndex: 2,
@@ -164,8 +164,8 @@ export function getRhombic(label?: string, config?: NodeView.Options) {
     height: 40,
     attrs: {
       body: {
-        refPoints: '0,10 10,0 20,10 10,20',
-      },
+        refPoints: '0,10 10,0 20,10 10,20'
+      }
     },
     label: label || '',
     zIndex: 2,
@@ -183,8 +183,8 @@ export function getDataQuadrangle(label?: string, config?: NodeView.Options) {
     height: 40,
     attrs: {
       body: {
-        refPoints: '10,0 40,0 30,20 0,20',
-      },
+        refPoints: '10,0 40,0 30,20 0,20'
+      }
     },
     label: label || '',
     zIndex: 2,
