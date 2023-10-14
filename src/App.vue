@@ -1,13 +1,10 @@
 <script setup lang="ts">
 // import ToDoList from '@C/ToDoList.vue'
 // import CollectionItem from '@/components/_collection/CollectionItem.vue'
-import { PageLayout } from './layout'
 </script>
 
 <template>
-  <PageLayout title="云飞脑图" no-side>
-    <router-view></router-view>
-  </PageLayout>
+  <router-view></router-view>
 </template>
 
 <style lang="scss">

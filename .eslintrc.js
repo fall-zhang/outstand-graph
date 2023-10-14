@@ -11,7 +11,7 @@ module.exports = {
     // reactive: true,
     // onMounted: true
   },
-  extends: ['plugin:vue/vue3-recommended', 'standard'],
+  extends: ['plugin:vue/vue3-strongly-recommended', 'standard'],
   parserOptions: {
     ecmaVersion: 'latest',
     parser: '@typescript-eslint/parser',
@@ -20,20 +20,19 @@ module.exports = {
   plugins: ['vue', '@typescript-eslint'],
   rules: {
     'vue/first-attribute-linebreak': 0,
-    // 交给 TS 处理未命名的变量
-    'no-undef': 0,
+    'no-undef': 0, // 交给 TS 处理未命名的变量
     'vue/no-multiple-template-root': 0,
     'vue/html-self-closing': 0,
     'space-before-function-paren': 0,
     'vue/singleline-html-element-content-newline': 0,
-    'vue/html-closing-bracket-newline': 0,
-    'vue/html-indent': 0,
+    // 'vue/html-closing-bracket-newline': 0,
+    // 'vue/html-indent': 0,
     'no-unused-vars': 1,
     'eol-last': 0,
     'vue/max-attributes-per-line': [
       2,
       {
-        singleline: 5,
+        singleline: 6,
         multiline: 4
       }
     ],

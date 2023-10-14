@@ -10,6 +10,8 @@ declare module '@vue/runtime-core' {
     _collection: typeof import('./../components/_collection/index.vue')['default']
     AntFlowChart: typeof import('./../components/AntFlowChart/index.vue')['default']
     AntVPageLower: typeof import('./../components/AntFlowChart/AntVPageLower.vue')['default']
+    BachelorDegree: typeof import('./../components/icons/BachelorDegree.vue')['default']
+    BachlarDegree: typeof import('./../components/icons/BachlarDegree.vue')['default']
     CollectionItem: typeof import('./../components/_collection/CollectionItem.vue')['default']
     Dev: typeof import('./../components/AntFlowChart/shape/Dev.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']

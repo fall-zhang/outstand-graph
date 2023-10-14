@@ -8,8 +8,10 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+
   server: {
-    host: true, // 表示可以通过 ip 进行访问
+    port: 6090,
+    host: true // 表示可以通过 ip 进行访问
   },
   resolve: {
     alias: {
