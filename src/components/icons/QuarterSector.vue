@@ -11,7 +11,7 @@
     </svg>
   </div>
 </template>
-<script>
+<script lang="ts">
 export default {
   props: {
     fill: { type: String, default: '' },
@@ -20,7 +20,7 @@ export default {
     stroke: { type: String, default: '' },
     type: {
       type: String,
-      validator(val) {
+      validator(val: string) {
         return ['left', 'right', 'top', 'bottom', ''].includes(val)
       },
       default: ''
@@ -39,33 +39,10 @@ export default {
     }
   },
   watch: {
-    color() {
-      this.changeOpacity()
-    },
-    border() {
-      this.changeOpacity()
-    }
   },
   mounted() {
-    this.changeOpacity()
   },
   methods: {
-    changeOpacity() {
-      if (this.border) {
-        this.format.opacity = '1'
-        return
-      }
-      if (this.color) {
-        if (this.color.toLowerCase() === '#ffffff') {
-          this.format.border = '#0D867F'
-          this.format.opacity = '0.11'
-        } else {
-          this.format.opacity = '1'
-        }
-      } else {
-        this.format.opacity = '0.11'
-      }
-    }
   }
 }
 </script>
