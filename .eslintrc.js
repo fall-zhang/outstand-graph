@@ -1,7 +1,7 @@
 module.exports = {
   env: {
     browser: true,
-    es2021: true
+    es2022: true
   },
   globals: {
     // 定义 vue 自动引入的全局变量，防止报错
@@ -11,7 +11,7 @@ module.exports = {
     // reactive: true,
     // onMounted: true
   },
-  extends: ['plugin:vue/vue3-strongly-recommended', 'standard'],
+  extends: ['plugin:vue/vue3-strongly-recommended', 'eslint:recommended'],
   parserOptions: {
     ecmaVersion: 'latest',
     parser: '@typescript-eslint/parser',
@@ -19,23 +19,65 @@ module.exports = {
   },
   plugins: ['vue', '@typescript-eslint'],
   rules: {
+    // vue
+    'vue/html-self-closing': 'off',
+    'vue/html-indent': ['off', 2],
+    'vue/singleline-html-element-content-newline': 'off',
+    'vue/multiline-html-element-content-newline': 'off',
+    'vue/html-quotes': ['error', 'double'],
+    'vue/multi-word-component-names': ['off'],
     'vue/first-attribute-linebreak': 0,
-    'no-undef': 0, // 交给 TS 处理未命名的变量
-    'vue/no-multiple-template-root': 0,
-    'vue/html-self-closing': 0,
-    'space-before-function-paren': 0,
-    'vue/singleline-html-element-content-newline': 0,
     'vue/html-closing-bracket-newline': 0,
-    'vue/html-indent': 0,
+    'vue/max-attributes-per-line': 0,
+    'vue/attribute-hyphenation': 0, // 使用 - 分割去代替标签中大写的属性
+    'vue/no-multiple-template-root': 0,
+    // js
+    indent: ['warn', 2], // 2 行缩进
+    semi: ['error', 'never'], // 禁止使用分号
+    'no-debugger': 'warn', // 使用 debugger 会警告
     'no-unused-vars': 1,
-    'eol-last': 0,
-    'vue/max-attributes-per-line': [
-      2,
+    'no-else-return': 'error', // 如果 if 语句里面有 return ,后面不能跟 else 语句
+    'space-infix-ops': ['error', { int32Hint: false }], // 要求操作符周围有空格
+    'no-multi-spaces': 'warn', // 禁止多个空格
+    'no-multiple-empty-lines': ['error', { max: 2 }], // 空行最多不能超过2行
+    'no-whitespace-before-property': 'error', // 禁止在属性前使用空格
+    'space-before-blocks': 'error', // 在块之前强制保持一致的间距
+    'no-trailing-spaces': 'error', // 一行结束后面不要有空格
+    'space-in-parens': ['error', 'never'], // 强制括号左右的不加空格
+    'spaced-comment': ['error', 'always'], // 注释间隔
+    'template-tag-spacing': ['error', 'always'], // 在模板标签及其文字之间需要空格
+    'no-var': 'error', // 禁止使用 var
+    'prefer-destructuring': [
+      'error',
       {
-        singleline: 6,
-        multiline: 4
+        // 优先使用数组和对象解构
+        array: false,
+        object: false
+      },
+      {
+        enforceForRenamedProperties: false
       }
     ],
+    // 组件名称为多个单词，忽略的组件名称
+    'comma-dangle': ['off', 'never'], // 最后一个属性不允许有逗号
+    'arrow-spacing': 'error', // 箭头函数空格
+    'template-curly-spacing': 'error',
+    'quote-props': ['error', 'as-needed'], // 对象字面量属性名称使用引号
+    'object-curly-spacing': ['error', 'always'], // 强制在花括号中使用一致的空格
+    'no-unneeded-ternary': 'error', // 禁止可以表达为更简单结构的三元操作符
+    // 禁止 with/in 语句
+    'no-restricted-syntax': [
+      'error',
+      'WithStatement',
+      'BinaryExpression[operator="in"]'
+    ],
+    'no-lonely-if': 'error', // 禁止 if 语句作为唯一语句出现在 else 语句块中
+    'newline-per-chained-call': ['error', { ignoreChainWithDepth: 2 }], // 要求方法链中每个调用都有一个换行符
+    // 路径别名设置
+    'no-submodule-imports': ['off', '/@'],
+    'no-implicit-dependencies': ['off', ['/@']],
+    'space-before-function-paren': 0,
+    'eol-last': 0,
     quotes: [
       2,
       'single',
@@ -44,8 +86,9 @@ module.exports = {
         allowTemplateLiterals: true
       }
     ],
-    semi: [2, 'never'],
     'no-irregular-whitespace': 2,
+    // ts
+    'no-undef': 0, // 交给 TS 处理未命名的变量
     '@typescript-eslint/no-explicit-any': 1
   }
 }
