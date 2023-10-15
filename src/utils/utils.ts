@@ -1,5 +1,5 @@
-import Clipboard from 'clipboard'
 import { v4 as uuid } from 'uuid'
+import { isRef } from 'vue'
 
 export function isNull(value: unknown) {
   return (value === null) || (value === undefined)
@@ -9,18 +9,18 @@ export function isNotNull(value: unknown) {
   return (value !== null) && (value !== undefined)
 }
 
-export function isEmptyStr(str: unknown) {
-  return (str === undefined) || (!str && (str !== 0) && (str !== '0')) || (!/[^\s]/.test(str))
-}
 export function deepClone(receive: unknown) {
-  // console.log(receive);
-  // console.log(receive.toString());
+  let middle: unknown = ''
+  console.log(isProxy(receive))
+  if (isProxy(receive)) {
+    middle = toRaw(receive)
+  }
   if (structuredClone) {
     let result = null
     try {
-      result = structuredClone(receive)
+      result = structuredClone(middle)
     } catch (err) {
-      result = goClone(receive)
+      result = goClone(middle)
     }
     return result
   }
