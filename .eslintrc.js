@@ -47,6 +47,7 @@ module.exports = {
     'spaced-comment': ['error', 'always'], // 注释间隔
     'template-tag-spacing': ['error', 'always'], // 在模板标签及其文字之间需要空格
     'no-var': 'error', // 禁止使用 var
+    'no-console': 'warn', // 使用 console 警告
     'prefer-destructuring': [
       'error',
       {
