@@ -1,0 +1,81 @@
+.selectGroup {
+  display: flex;
+
+  >a {
+    margin: 0 4px 12px 24px;
+    padding: 4px;
+    cursor: pointer;
+    color: #313131;
+
+    // background-color: aqua;
+    &.select {
+      color: #337ecc;
+    }
+  }
+}
+
+.chartFileGroup {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+
+  .chartItem {
+    display: flex;
+    border-radius: 8px;
+    height: 180px;
+    flex: 1;
+    box-sizing: border-box;
+    min-width: 280px;
+    border: 1px solid var(--gary-1);
+    margin: 12px;
+    flex-direction: column;
+    max-width: 280px;
+    cursor: pointer;
+
+    >.itemImg {
+      display: flex;
+      padding: 16px;
+      flex: 1;
+    }
+
+    >.itemText {
+      border-top: 1px solid var(--gary-1);
+      display: flex;
+      padding: 8px 18px 12px;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+}
+
+.option {
+  width: 40px;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  margin-right: 6px;
+
+  .star {
+    display: flex;
+    padding: 4px;
+    align-items: center;
+    transition: 0.2s;
+
+    &:hover {
+      color: orange;
+    }
+  }
+
+  .more {
+    font-size: 18px;
+    display: flex;
+    padding: 4px;
+    align-items: center;
+    border-radius: 4px;
+
+    &:hover {
+      background-color: var(--gary-1);
+    }
+
+  }
+}

@@ -14,15 +14,9 @@ const constRouters: RouteRecordRaw[] = [
     path: '/flow-page',
     component: () => /* 流程设计 */import('@V/flow-page/flow-page.vue')
   },
-
   {
-    path: '/',
-    name: 'home',
-    component: () => import('@V/filling-chart/MainView.vue'),
-  },
-  {
-    path: '/about',
-    name: 'about',
+    path: '/chart-editor',
+    name: 'chart-editor',
     // route level code-splitting
     // this generates a separate chunk (About.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
