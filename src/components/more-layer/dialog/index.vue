@@ -8,7 +8,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import MyDialog from './MyDialog.vue'
 export default {
   name: 'DialogWord',
