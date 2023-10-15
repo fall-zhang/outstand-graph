@@ -4,9 +4,9 @@
     <div class="panel-title">
       <h3>当前的属性</h3>
       <div>
-        <a class="links" href="#" @click="onChangeOption">上一个</a>
-        <a class="links" href="#" @click="onChangeOption">/当前的</a>
-        <a class="links" href="#" @click="onChangeOption">/编辑的</a>
+        <a class="links" @click="onChangeOption">上一个</a>
+        <a class="links" @click="onChangeOption">/当前的</a>
+        <a class="links" @click="onChangeOption">/编辑的</a>
       </div>
     </div>
     <ul class="cell-group">
@@ -67,7 +67,7 @@ function onChangeOption() {
 
 <style scoped lang="scss">
 .right-panel {
-  border-left: 1px solid #ccc;
+  // border-left: 1px solid #ccc;
   background-color: white;
   // z-index: 2000;
   height: 100vh;
