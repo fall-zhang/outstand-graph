@@ -1,5 +1,4 @@
 import { v4 as uuid } from 'uuid'
-import { isRef } from 'vue'
 
 export function isNull(value: unknown) {
   return (value === null) || (value === undefined)
@@ -9,22 +8,18 @@ export function isNotNull(value: unknown) {
   return (value !== null) && (value !== undefined)
 }
 
-export function deepClone(receive: unknown) {
+export function deepClone<T>(receive: T): T {
   let middle: unknown = ''
-  console.log(isProxy(receive))
   if (isProxy(receive)) {
     middle = toRaw(receive)
   }
-  if (structuredClone) {
-    let result = null
-    try {
-      result = structuredClone(middle)
-    } catch (err) {
-      result = goClone(middle)
-    }
-    return result
+  let result = null
+  try {
+    result = structuredClone(middle)
+  } catch (err) {
+    result = goClone(middle)
   }
-  return goClone(receive)
+  return result as T
 }
 
 function goClone(receive: unknown) {

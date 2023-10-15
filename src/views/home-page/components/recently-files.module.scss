@@ -16,11 +16,11 @@
     height: 32px;
     line-height: 32px;
     padding-left: 32px;
-    background-color: var(--gary-2);
+    background-color: var(--gray-2);
     transition: .3s;
 
     &:hover {
-      background-color: var(--gary-3);
+      background-color: var(--gray-3);
     }
 
     :first-child {
@@ -36,7 +36,7 @@
       margin-right: 6px;
 
       &:hover {
-        background-color: var(--gary-1);
+        background-color: var(--gray-1);
       }
     }
   }

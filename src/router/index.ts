@@ -5,7 +5,7 @@ import constRoute from './constRouter'
 import asyncRoute from './asyncRouter'
 
 let routeSum = asyncRoute.concat(constRoute) as RouteRecordRaw[]
-console.log(routeSum)
+// console.log(routeSum)
 
 const router = createRouter({
   history: createWebHashHistory(),
