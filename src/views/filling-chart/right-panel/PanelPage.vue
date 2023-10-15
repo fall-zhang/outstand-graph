@@ -2,11 +2,12 @@
 <template>
   <div class="right-panel">
     <div class="panel-title">
-      <h3>当前的属性</h3>
+      <h3>{{ currentPath.at(-1)?.keyName || "Echarts 属性" }}</h3>
       <div>
-        <a class="links" @click="onChangeOption">上一个</a>
-        <a class="links" @click="onChangeOption">/当前的</a>
-        <a class="links" @click="onChangeOption">/编辑的</a>
+        <a @click="onChangeOption"> {{ currentPath.at(-1)?.keyName || "Echarts 属性" }} </a>
+        <a v-show="currentPath.length > 1" @click="onChangeOption">
+          / 当前的
+        </a>
       </div>
     </div>
     <ul class="cell-group">
@@ -16,7 +17,7 @@
           <ArrowRight />
         </el-icon>
       </li>
-      <!-- 标题文字小于六个，将会换行 -->
+      <!-- 标题文字大于六个，将会换行 -->
       <li class="cell-item basic-cell">
         <div class="basic-label">{{ '钮，箭头钮箭' }}
           <el-tooltip placement="top">
@@ -29,13 +30,16 @@
       </li>
       <li class="cell-item complex-cell">
         <div class="complex-label">{{ '钮，箭头钮箭' }}
-          <el-tooltip placement="top" content="这里面有一些信息，可能有些长，但是你必须展示出来">
+          <el-tooltip placement="top">
+            <template #content>
+              <div style="width: 280px;">{{ "这里面有一些信息，可能有些长，但是你必须展示出来这里面有一些信息，可能有些长，但是你必须展示出来" }}</div>
+            </template>
             <el-icon>
               <QuestionFilled />
             </el-icon>
           </el-tooltip>
         </div>
-        <el-input size="small" type="textarea" @input="onChangeInput" />
+        <el-input size="small" type="textarea" :autosize="{ minRows: 2, maxRows: 6 }" @input="onChangeInput" />
       </li>
     </ul>
   </div>
@@ -44,18 +48,35 @@
 <script setup lang="ts">
 import { ArrowRight, QuestionFilled } from '@element-plus/icons-vue'
 import FormPageItem from './PanelPageItem.vue'
+import formOption from './right-property'
+
 import { ref } from 'vue'
-defineProps({
-  title: {
-    default: '这是标题',
-    type: String
-  },
-  subTitle: {
-    default: '这是小标题',
-    type: String
-  }
+// const prop = defineProps({
+//   subTitle: {
+//     default: '这是小标题',
+//     type: String
+//   }
+// })
+console.log(formOption)
+const currentPath = ref([{
+  keyName: '横轴',
+  keyId: 'xAxis'
+}])
+const currentOptionList = ref<Array<any>>([])
+watch(currentPath, () => {
+  let newVal: unknown = formOption
+  currentPath.value.forEach(path => {
+    formOption.forEach(option => {
+      if (path.keyId === option.keyId) {
+        console.log(option)
+        newVal = option
+      }
+    })
+  })
+  currentOptionList.value = newVal as []
+}, {
+  immediate: true
 })
-const currentPath = ref([])
 const popupVisible = ref(false)
 function onChangeInput() {
   popupVisible.value = false
@@ -82,9 +103,6 @@ function onChangeOption() {
       font-weight: 600;
     }
 
-    .links {
-      text-decoration: none;
-    }
   }
 }
 
@@ -94,20 +112,21 @@ function onChangeOption() {
 
 .cell-item {
   padding: 4px 16px;
-  border-bottom: 1px solid #ccc;
+  // border-bottom: 1px solid;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  transition: 1.2s;
+  transition: .3s;
 
-  &:hover {
-    background-color: rgba(194, 212, 211, 0.15);
-  }
 
   &.link-cell {
     cursor: pointer;
-    height: 40px;
+    height: 36px;
     min-width: 110px;
+
+    &:hover {
+      background-color: var(--gray-2);
+    }
   }
 
   &.basic-cell {
@@ -122,6 +141,14 @@ function onChangeOption() {
     display: block;
     min-width: 110px;
     height: auto;
+
+    .complex-label {
+      margin-bottom: 4px;
+    }
   }
+}
+
+:deep(.el-textarea__inner) {
+  max-height: 120px;
 }
 </style>

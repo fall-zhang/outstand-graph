@@ -1,4 +1,15 @@
+type ChartSettersSimple = 'input'
+type ChartSettersComplex = 'function' | 'json'
 
+type EchartsOption = {
+  keyId: string, // ehcarts 中的属性名称
+  keyName: string, // 当前内容高度
+  setters: Array<ChartSettersSimple | ChartSettersComplex>, // 多个设置方式，如果是数值，可以采用 slider，滑块
+  optionalVal: [], // 提供 select 或者级联选择调取，可选值
+  tips?: string, // 提供的详情介绍
+  default?: unknown, // 默认内容同 echarts 提供的内容
+  children?: EchartsOption, // 子属性节点
+}
 // {
 //   keyId: "show", // ehcarts 中的属性名称
 //   keyName: "高度", // 当前内容高度
