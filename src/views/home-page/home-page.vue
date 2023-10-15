@@ -4,7 +4,6 @@
       <BachelorDegreeIcon />
     </template>
     <template #aside>
-
       <RecentlyFiles />
     </template>
     <main>

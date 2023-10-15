@@ -5,12 +5,12 @@
       <span class="add-text">新建导图</span>
       <IconPlus class="menu-icon"></IconPlus>
     </div>
-    <div class="add-item">
+    <div class="add-item" @click="onAddNewChart('图表生成')">
       <IconKagiMap class="menu-icon left" />
       <span class="add-text">图表生成</span>
       <IconPlus class="menu-icon"></IconPlus>
     </div>
-    <div class="add-item">
+    <div class="add-item" @click="onAddNewChart('图表编辑')">
       <ChartHistogram class="menu-icon left" />
       <span class="add-text">创建图表</span>
       <IconPlus class="menu-icon"></IconPlus>
@@ -20,14 +20,24 @@
 
 <script lang="ts" setup>
 import { Plus as IconPlus, MindmapMap as MindmapMapIcon, ChartHistogram, KagiMap as IconKagiMap } from '@icon-park/vue-next'
-
+import { useRouter } from 'vue-router'
+const router = useRouter()
 const onAddNewChart = (type: string) => {
   let link = ''
   switch (type) {
     case '导图':
-      link = '/'
+      link = '/mind-map'
+      break
+    case '图表生成':
+      link = '/chart-generate'
+      break
+    case '图表编辑':
+      link = '/filling-chart'
+      break
+    default:
+      console.warn('未找到匹配内容')
   }
-
+  router.push(link)
 }
 </script>
 
@@ -41,10 +51,10 @@ const onAddNewChart = (type: string) => {
   display: flex;
   align-items: center;
   border-radius: 10px;
-  border: 1px solid var(--gary-1);
+  border: 1px solid var(--gray-1);
 
   &:hover {
-    background-color: var(--gary-1);
+    background-color: var(--gray-1);
     transition: .5s;
   }
 
