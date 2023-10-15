@@ -6,13 +6,15 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 
 export default {
   name: 'FormJSON',
   emits: ['update:modelValue'],
   props: {
     modelValue: {
+      type: String,
+      default: '',
       require: true
     }
   },
@@ -46,7 +48,8 @@ export default {
         this.boundValue = new Function(this.jsonValue)
       } catch (e) {
         this.boundValue = () => ''
-        throw new Error('写入的方法出错', { cause: e })
+        throw new Error('写入的方法出错')
+        // throw new Error('写入的方法出错', { cause: e })
       }
       // console.log('更新值', this.boundValue);
       this.$emit('change', this.boundValue)

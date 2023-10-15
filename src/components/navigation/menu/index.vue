@@ -1,16 +1,16 @@
 <template>
   <el-menu :default-openeds="openedMenu" @select="onSelectMenu">
     <el-sub-menu v-for="route in pageRoutes" :key="route.path" :index="route.path">
-      <template #title>{{ route.meta.menuName }}</template>
+      <template #title>{{ route.meta?.menuName }}</template>
       <el-menu-item v-for="children in route.children" :key="children.path" :index="children.path">
-        {{ children.meta.menuName }}
+        {{ children.meta?.menuName }}
       </el-menu-item>
     </el-sub-menu>
   </el-menu>
 </template>
 
-<script>
-import pageRoutes from '@/router/pageRoutes.js'
+<script lang="ts">
+import pageRoutes from '@/router/constRouter'
 export default {
   name: 'MainMenu',
   components: {
@@ -18,9 +18,10 @@ export default {
   },
   props: {},
   data() {
+    const openedMenu: string[] = []
     return {
       pageRoutes,
-      openedMenu: []
+      openedMenu
     }
   },
   computed: {},
@@ -35,7 +36,7 @@ export default {
     // console.log(pageRoutes);
   },
   methods: {
-    onSelectMenu(path) {
+    onSelectMenu(path: string) {
       console.log(this.$route.path)
       if (this.$route.path !== path) {
         this.$router.push({ path: path })

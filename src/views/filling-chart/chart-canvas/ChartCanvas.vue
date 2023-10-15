@@ -6,7 +6,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { deepClone } from '@/utils/utils'
 import { init } from 'echarts'
 export default {

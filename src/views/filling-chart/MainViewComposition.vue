@@ -14,7 +14,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import ChartCanvas from './chart-canvas/ChartCanvas.vue'
 import RightPanel from './right-panel/RightPanel.vue'
 import HeaderTools from './header-tools/HeaderTools.vue'

@@ -91,24 +91,25 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { deepClone } from '@/utils/utils'
 import FormJSON from './components/FormJSON.vue'
 import { QuestionFilled, Refresh } from '@element-plus/icons-vue'
 // import FormZone from './FormZone.vue';
 // import FormZone from './FormZone.vue'
-import { defineAsyncComponent } from 'vue'
+import { defineAsyncComponent, DefineComponent } from 'vue'
+const FormZone = () => import('./FormZone.vue')
 export default {
   name: 'FormItem',
   components: {
     FormJSON,
     QuestionFilled,
     Refresh,
-    FormZone: defineAsyncComponent(() => import('./FormZone.vue'))
+    FormZone
   },
   props: {
     formOption: {
-      require: true,
+      type: Object,
       default: () => ({
         type: 'input',
         optional: []
@@ -116,15 +117,18 @@ export default {
     },
     receiveValue: {
       require: true,
+      type: Object,
+      default: () => ({})
     }
   },
   emits: ['change'],
   data() {
+    const formValue: any = {}
     return {
       setterIndex: 0,
       currentSetter: '',
       allSetters: [],
-      formValue: '',
+      formValue,
       timberFun: null,
       basicSetterType: ['input', 'color', 'switch', 'slider', 'number', 'select'],
       complexSetterType: ['json', 'textarea'],

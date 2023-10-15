@@ -12,7 +12,7 @@
   <!-- <el-button size="small" @click="onChangeData"> 切换 </el-button> -->
 </template>
 
-<script>
+<script lang="ts">
 // import ChartCanvas from './chart-canvas/ChartCanvas.vue'
 // import RightPanel from './right-panel/PanelPage.vue'
 import RightPanel from './right-panel/RightPanel.vue'

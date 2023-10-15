@@ -48,18 +48,30 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
-defineProps({
-  title: {
-    default: '这是标题',
-    type: String
-  },
-  subTitle: {
-    default: '这是小标题',
-    type: String
-  }
-})
+defineProps<{
+  title: string
+  subTitle: string
+  formOption: any
+}>()
+const formValue = ref<any>({})
+const currentSetter = ref('')
+const allSetters = ref('')
+const basicSetterType = ref(['dd', 'aa'])
+const complexSetterType = ref(['dd', 'aa'])
+function onChangeComplexValue() {
+
+}
+function onChangeInput() {
+
+}
+function onChangeSetter() {
+
+}
+function onChangeValue() {
+
+}
 </script>
 
 <style scoped lang="scss">

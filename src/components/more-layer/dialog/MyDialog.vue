@@ -27,7 +27,7 @@
   </dialog>
 </template>
 
-<script>
+<script lang="ts">
 import IconBaseline from '@C/icons/IconBaseline.vue'
 import IconClose from '@C/icons/IconClose.vue'
 import IconOutline from '@C/icons/IconOutline.vue'

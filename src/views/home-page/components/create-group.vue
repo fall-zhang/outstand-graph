@@ -1,6 +1,6 @@
 <template>
   <div class="fun-main">
-    <div class="add-item">
+    <div class="add-item" @click="onAddNewChart('导图')">
       <MindmapMapIcon class="menu-icon left" />
       <span class="add-text">新建导图</span>
       <IconPlus class="menu-icon"></IconPlus>
@@ -20,6 +20,15 @@
 
 <script lang="ts" setup>
 import { Plus as IconPlus, MindmapMap as MindmapMapIcon, ChartHistogram, KagiMap as IconKagiMap } from '@icon-park/vue-next'
+
+const onAddNewChart = (type: string) => {
+  let link = ''
+  switch (type) {
+    case '导图':
+      link = '/'
+  }
+
+}
 </script>
 
 <style lang="scss" scoped>

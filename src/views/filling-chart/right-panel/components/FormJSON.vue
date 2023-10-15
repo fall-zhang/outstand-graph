@@ -6,17 +6,19 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, shallowRef, toRaw, onMounted } from 'vue'
 const emit = defineEmits(['update:modelValue', 'change'])
 const prop = defineProps({
   modelValue: {
+    type: String,
+    default: '',
     require: true
   }
 })
 const jsonValue = shallowRef('')
 const boundValue = ref('')
-let timberFun = null
+let timberFun: number | null = null
 // const
 const originValue = toRaw(prop.modelValue)
 JSON.stringify(originValue)
@@ -26,8 +28,10 @@ onMounted(() => {
   // console.log("🚀 ~ file: FormJSON.vue:22 ~ jsonValue.value:", jsonValue.value)
 })
 function onChangeJSONValue() {
-  clearTimeout(timberFun)
-  timberFun = setTimeout(parseValue, 500)
+  if (timberFun) {
+    clearTimeout(timberFun)
+    timberFun = setTimeout(parseValue, 500)
+  }
 }
 
 function parseValue() {

@@ -41,7 +41,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ArrowRight, QuestionFilled } from '@element-plus/icons-vue'
 import FormPageItem from './PanelPageItem.vue'
 import { ref } from 'vue'

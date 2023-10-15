@@ -11,14 +11,15 @@
   </el-dialog>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api'
+import type { editor } from 'monaco-editor/esm/vs/editor/editor.api'
 import 'monaco-editor/esm/vs/basic-languages/javascript/javascript.contribution'
 import { onMounted, ref, provide, inject, shallowRef } from 'vue'
 import { genVue2Code, genVue3Code, genVue3SetupCode } from '../tools/genVueCode'
 const codeGenShow = ref(false)
 const codeView = ref(null)
-const monacoEditor = shallowRef(null)
+const monacoEditor = shallowRef<editor.IStandaloneCodeEditor>()
 const chartOption = inject('chartOption')
 
 function onGenCode() {
@@ -40,7 +41,9 @@ onMounted(() => {
 function onSelectTab(label) {
   if (label.props.label === 'Vue2') {
     const code = genVue2Code(chartOption)
-    monacoEditor.value.getModel().setValue(code)
+    if (monacoEditor.value) {
+      monacoEditor.value.getModel()?.setValue(code)
+    }
   } else if (label.props.label === 'Vue3') {
     const code = genVue3Code(chartOption)
     monacoEditor.value.getModel().setValue(code)

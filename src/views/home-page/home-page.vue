@@ -4,16 +4,12 @@
       <BachelorDegreeIcon />
     </template>
     <template #aside>
+
       <RecentlyFiles />
     </template>
     <main>
       <CreateGroup />
-      <div class="select">
-        <div>全部</div>
-        <div>图表</div>
-        <div>视图</div>
-        <div>收藏</div>
-      </div>
+      <FileList></FileList>
     </main>
   </PageLayout>
 </template>
@@ -22,6 +18,7 @@
 import BachelorDegreeIcon from '@/components/icons/BachelorDegree.vue'
 import CreateGroup from './components/create-group.vue'
 import RecentlyFiles from './components/recently-files'
+import FileList from './components/file-list'
 import { PageLayout } from '@/layout'
 
 </script>

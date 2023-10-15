@@ -20,10 +20,11 @@
   </el-tabs>
 </template>
 
-<script>
+<script lang="ts">
 import { v4 as uuid } from 'uuid'
 import { toRaw } from 'vue'
-import rightProperty from './right-property.js'
+import rightProperty from './right-property'
+import formOption from './right-property'
 import { deepClone } from '@/utils/utils'
 import FormJSON from './components/FormJSON.vue'
 import FormItem from './FormItem.vue'
@@ -51,17 +52,20 @@ export default {
   },
   emits: ['change'],
   data() {
+    const option: any = {}
     return {
-      option: {},
+      option: option,
+      formOption,
+      dataProperty: {},
       rightProperty
     }
   },
   created() {
-    this.option = deepClone(toRaw(this.chartOption))
+    this.option = deepClone(toRaw(this.chartOption)) as any
     this.dataProperty = JSON.stringify(this.option.series[0].data)
   },
   methods: {
-    onChangeSimpleValue(option, newVal) {
+    onChangeSimpleValue(option: any, newVal: object) {
       // console.log('新的配置', option)
       this.option[option.keyId] = newVal
       // 开发计划：移除 series.data 中的 id，避免二次渲染错误

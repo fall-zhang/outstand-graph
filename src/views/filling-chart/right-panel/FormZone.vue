@@ -53,23 +53,24 @@
         </el-collapse-item>
       </el-collapse>
       <div v-if="formOption.setters[0] === 'array'">
-        <el-button text style="width: 100%;" size="small" icon="el-icon-plus" @click="() => onAddMoreConfig()">添加{{
-          formOption.keyName }}</el-button>
+        <el-button text style="width: 100%;" size="small" icon="el-icon-plus" @click="() => onAddMoreConfig()">添加
+          {{ formOption.keyName }}</el-button>
       </div>
     </template>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 // 可以实现添加多个内容
+import { defineComponent } from 'vue'
 import { v4 as uuid } from 'uuid'
 import { deepClone } from '@/utils/utils'
 import { QuestionFilled } from '@element-plus/icons-vue'
 // import { defineAsyncComponent } from 'vue'
-import rightSeries from './right-series.js'
+import rightSeries from './right-series'
 import FormItem from './FormItem.vue'
 // import LinkCell from './link-cell/link-cell.vue';
-export default {
+export default defineComponent({
   name: 'FormZone',
   components: {
     QuestionFilled,
@@ -90,9 +91,11 @@ export default {
       })
     },
   },
+  emits: ['change'],
   data() {
+    const currentData: any = []
     return {
-      currentData: [],
+      currentData,
       rightSeries
     }
   },
@@ -104,14 +107,11 @@ export default {
     //   if (!item.id) item.id = uuid()
     //   return item
     // })
-    this.currentData = cloneData
+    this.currentData = cloneData as []
     // console.log(this.currentData);
   },
-  mounted() {
-
-  },
   methods: {
-    onChangeFormValue(index, option, newVal) {
+    onChangeFormValue(index: number, option: any, newVal: any) {
       if (index < 0) {
         this.currentData[option.keyId] = newVal
       }
@@ -130,7 +130,7 @@ export default {
       // console.log('接受', option);
       this.$emit('change', this.formOption, deepClone(this.currentData))
     },
-    onRemoveConfig(index) {
+    onRemoveConfig(index: number) {
       // console.log(this.currentData);
       // console.log(this.currentData.length);
       if (this.currentData.length === 2) {
@@ -142,21 +142,21 @@ export default {
       }
       this.$emit('change', this.formOption, deepClone(this.currentData))
     },
-    onSpecifyAdd(command) {
+    onSpecifyAdd(command?: string) {
       let chartType = ''
       switch (command) {
-      case '柱状图': chartType = 'bar'
-        break
-      case '折线图': chartType = 'line'
-        break
-      case '饼图': chartType = 'pie'
-        break
-      case '矩形树图': chartType = 'treeMap'
-        break
-      default:
-        // console.error('未知类型');
-        chartType = 'bar'
-        break
+        case '柱状图': chartType = 'bar'
+          break
+        case '折线图': chartType = 'line'
+          break
+        case '饼图': chartType = 'pie'
+          break
+        case '矩形树图': chartType = 'treeMap'
+          break
+        default:
+          // console.error('未知类型');
+          chartType = 'bar'
+          break
       }
       // console.log(chartType);
       const currentId = uuid()
@@ -165,7 +165,7 @@ export default {
         type: chartType
       })
     },
-    onAddMoreConfig(type) {
+    onAddMoreConfig() {
       const currentId = uuid()
       if (!Array.isArray(this.currentData)) {
         this.currentData = [this.currentData]
@@ -175,7 +175,7 @@ export default {
       })
     }
   }
-}
+})
 </script>
 
 <style scoped lang="scss">
