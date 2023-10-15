@@ -32,7 +32,7 @@ module.exports = {
     'vue/attribute-hyphenation': 0, // 使用 - 分割去代替标签中大写的属性
     'vue/no-multiple-template-root': 0,
     // js
-    indent: ['warn', 2], // 2 行缩进
+    indent: ['off', 2], // 2 行缩进
     semi: ['error', 'never'], // 禁止使用分号
     'no-debugger': 'warn', // 使用 debugger 会警告
     'no-unused-vars': 1,
@@ -72,7 +72,7 @@ module.exports = {
       'BinaryExpression[operator="in"]'
     ],
     'no-lonely-if': 'error', // 禁止 if 语句作为唯一语句出现在 else 语句块中
-    'newline-per-chained-call': ['error', { ignoreChainWithDepth: 2 }], // 要求方法链中每个调用都有一个换行符
+    'newline-per-chained-call': ['off', { ignoreChainWithDepth: 2 }], // 要求方法链中每个调用都有一个换行符
     // 路径别名设置
     'no-submodule-imports': ['off', '/@'],
     'no-implicit-dependencies': ['off', ['/@']],
@@ -89,6 +89,7 @@ module.exports = {
     'no-irregular-whitespace': 2,
     // ts
     'no-undef': 0, // 交给 TS 处理未命名的变量
+    // 使用 any 时警告
     '@typescript-eslint/no-explicit-any': 1
   }
 }

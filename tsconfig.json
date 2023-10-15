@@ -7,6 +7,7 @@
     "moduleResolution": "node",
     "strict": true,
     "jsx": "preserve",
+    "jsxImportSource": "vue",
     "sourceMap": true,
     "resolveJsonModule": true,
     // "isolatedModules": true, // 因为 esbuild 暂时不支持 enum，所以，暂时设置为 false
