@@ -4,15 +4,18 @@
 -->
 <!-- type 类型为 array 或者 object 时，调用 FormZone -->
 <template>
-  {{ currentSetter }}
-  <div class="form-item">
+  <!-- {{ currentSetter }} -->
+  <div class="form-item" :class="basicSetterType.includes(currentSetter) && formOption.keyName.length < 7 && 'on-line'">
     <!-- 简单类型的数据处理 -->
+    <div class="basic-label">{{ formOption.keyName }}
+      <el-tooltip v-if="formOption.tips" placement="top">
+        <IconHelp theme="filled" class="g-icon-center" />
+        <template #content>
+          <div v-html="formOption.tips"></div>
+        </template>
+      </el-tooltip>
+    </div>
     <template v-if="basicSetterType.includes(currentSetter)">
-      <div class="basic-label">{{ formOption.keyName }}
-        <el-tooltip v-if="formOption.tips" :content="formOption.tips" placement="top">
-          <IconHelp theme="filled" class="g-icon-center" />
-        </el-tooltip>
-      </div>
       <div class="basic-form-item">
         <el-input v-if="currentSetter == 'input'" v-model="formValue" type="text" size="small"
           @input="onChangeInput"></el-input>
@@ -40,26 +43,15 @@
     </template>
     <!-- 复杂数据处理，标题会独占一行 -->
     <div v-else class="default-container">
-      <div style="display: flex;align-items: center;">
-        {{ formOption.keyName }}
-        <el-tooltip v-if="formOption.tips" placement="top">
-          <IconHelp theme="filled" class="g-icon-center" />
-          <template #content>
-            <div v-html="formOption.tips"></div>
-          </template>
-        </el-tooltip>
-      </div>
       <div v-if="allSetters.length > 1" class="toggle-icon" :class="setterIndex % 2 == 0 ? 'reverse' : ''"
         @click="onChangeSetter">
         <IconRefresh class="g-icon-center" />
       </div>
-      <template>
-        <el-input v-if="currentSetter == 'textarea'" v-model="formValue" size="small" type="textarea"
-          style="max-height: 72px;" @input="onChangeInput"></el-input>
-        <FormJSON v-else-if="currentSetter == 'json'" v-model="formValue" class="complex-container"
-          @change="onChangeComplexValue">
-        </FormJSON>
-      </template>
+      <el-input v-if="currentSetter === 'textarea'" v-model="formValue" size="small" type="textarea"
+        style="max-height: 72px;" @input="onChangeInput"></el-input>
+      <FormJSON v-else-if="currentSetter === 'json'" v-model="formValue" class="complex-container"
+        @change="onChangeComplexValue">
+      </FormJSON>
     </div>
   </div>
 </template>
@@ -153,10 +145,13 @@ function onChangeSetter() {
 <style lang="scss" scoped>
 .form-item {
   padding: 4px 16px;
-  display: flex;
   align-items: center;
-  height: 26px;
   margin-bottom: 12px;
+
+  &.on-line {
+    height: 26px;
+    display: flex;
+  }
 
   .basic-form-item {
     flex: 1;
@@ -164,7 +159,7 @@ function onChangeSetter() {
 
   .basic-label {
     display: flex;
-    width: 100px;
+    width: 110px;
   }
 }
 
