@@ -65,9 +65,9 @@
 import { defineComponent } from 'vue'
 import { v4 as uuid } from 'uuid'
 import { deepClone } from '@/utils/utils'
-import { QuestionFilled } from '@element-plus/icons-vue'
+import { Help as QuestionFilled } from '@icon-park/vue-next'
 // import { defineAsyncComponent } from 'vue'
-import rightSeries from './right-series'
+import rightSeries from '../right-series'
 import FormItem from './FormItem.vue'
 // import LinkCell from './link-cell/link-cell.vue';
 export default defineComponent({

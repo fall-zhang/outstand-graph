@@ -94,7 +94,7 @@
 <script lang="ts">
 import { deepClone } from '@/utils/utils'
 import FormJSON from './components/FormJSON.vue'
-import { QuestionFilled, Refresh } from '@element-plus/icons-vue'
+import { Refresh as Refresh, Help as QuestionFilled } from '@icon-park/vue-next'
 // import FormZone from './FormZone.vue';
 // import FormZone from './FormZone.vue'
 import { defineAsyncComponent, DefineComponent } from 'vue'
@@ -194,7 +194,7 @@ export default {
     onChangeComplexValue() {
       this.$emit('change', this.formOption, this.formValue)
     },
-    onChangeZone(option, value) {
+    onChangeZone(option: any, value: any) {
       // console.log(JSON.stringify(this.formValue, null, 2));
       this.formValue = value
       // console.log(JSON.stringify(this.formValue, null, 2));

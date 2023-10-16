@@ -15,7 +15,6 @@
 <script lang="ts">
 import GenCodeDialog from './copmponents/GenCodeDialog.vue'
 import history from '@/utils/history'
-// import {} from '@element-plus/icons-vue'
 export default {
   name: 'HeaderTools',
   components: {

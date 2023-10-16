@@ -44,9 +44,6 @@ dependencies:
   '@antv/x6-vue-shape':
     specifier: ^2.1.1
     version: 2.1.1(@antv/x6@2.15.2)(vue@3.3.4)
-  '@element-plus/icons-vue':
-    specifier: ^2.1.0
-    version: 2.1.0(vue@3.3.4)
   '@icon-park/vue-next':
     specifier: ^1.4.2
     version: 1.4.2(vue@3.3.4)
