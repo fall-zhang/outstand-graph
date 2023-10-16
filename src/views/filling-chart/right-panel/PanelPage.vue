@@ -19,29 +19,6 @@
           <IconRight class="g-icon-center" size="18px" />
         </li>
         <FormItem v-else :receive-value="cloneData[option.keyId]" :form-option="option" />
-        <!-- 标题文字大于六个，将会换行 -->
-        <!-- <template v-if="simpleFormSet.has(item.type)">
-          <li class="cell-item basic-cell">
-            <div class="basic-label">{{ '钮，箭头钮箭' }}
-              <el-tooltip placement="top">
-                <IconHelp class="g-icon-center" theme="filled" />
-              </el-tooltip>
-            </div>
-            <el-input size="small" @input="onChangeInput" />
-          </li>
-        </template>
-        <li v-else class="cell-item complex-cell">
-          <div class="complex-label">
-            {{ '钮，箭头钮箭' }}
-            <el-tooltip placement="top">
-              <template #content>
-                <div style="width: 280px;">{{ "这里面有一些信息，可能有些长，但是你必须展示出来这里面有一些信息，可能有些长，但是你必须展示出来" }}</div>
-              </template>
-              <IconHelp class="g-icon-center" theme="filled" />
-            </el-tooltip>
-          </div>
-          <el-input size="small" type="textarea" :autosize="{ minRows: 2, maxRows: 6 }" @input="onChangeInput" />
-        </li> -->
       </template>
     </ul>
   </div>

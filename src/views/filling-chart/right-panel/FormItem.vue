@@ -6,21 +6,6 @@
 <template>
   {{ currentSetter }}
   <div class="form-item">
-    <!-- label -->
-    <!-- <div v-if="formOption.keyName.length < 5 && basicSetterType.includes(currentSetter)">
-      <div class="basic-label">{{ formOption.keyName }}
-        <el-tooltip v-if="formOption.tips" :content="formOption.tips" placement="top">
-          <IconHelp theme="filled" class="g-icon-center" />
-        </el-tooltip>
-      </div>
-    </div>
-    <div v-else>
-      <div class="lang-label">{{ formOption.keyName }}
-        <el-tooltip v-if="formOption.tips" :content="formOption.tips" placement="top">
-          <IconHelp theme="filled" class="g-icon-center" />
-        </el-tooltip>
-      </div>
-    </div> -->
     <!-- 简单类型的数据处理 -->
     <template v-if="basicSetterType.includes(currentSetter)">
       <div class="basic-label">{{ formOption.keyName }}
