@@ -12,6 +12,8 @@ export function deepClone<T>(receive: T): T {
   let middle: unknown = ''
   if (isProxy(receive)) {
     middle = toRaw(receive)
+  } else {
+    middle = receive
   }
   let result = null
   try {
