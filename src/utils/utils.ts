@@ -9,7 +9,13 @@ export function isNotNull(value: unknown) {
 }
 
 export function deepClone<T>(receive: T): T {
-  let middle: unknown = toRaw(receive)
+  let middle: unknown = null
+  if (isRef(receive)) {
+    middle = receive.value
+  } else {
+    middle = receive
+  }
+  middle = toRaw(middle)
   // if (isProxy(receive)) {
   //   middle = toRaw(receive)
   // } else {

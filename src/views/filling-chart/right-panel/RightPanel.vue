@@ -1,7 +1,7 @@
 <template>
   <el-tabs type="border-card">
     <el-tab-pane label="图表属性">
-      <PanelPage :receiveValue="chartOption" @change="onChangeSimpleValue" />
+      <PropertyPagePanel :receiveValue="chartOption" @change="onChangeSimpleValue" />
     </el-tab-pane>
     <!-- <el-tab-pane label="数据属性">
       <FormZone :receiveValue="option.series" :formOption="{ keyId: 'series' }" @change="onChangeSimpleValue"></FormZone>
@@ -14,13 +14,10 @@
 
 <script lang="ts" setup>
 import { v4 as uuid } from 'uuid'
-// import { toRaw } from 'vue'
-import rightProperty from './right-property'
-import { deepClone } from '@/utils/utils'
 // import FormJSON from './components/FormJSON.vue'
 // import FormItem from './FormItem.vue'
 // import FormZone from './FormZone.vue'
-import PanelPage from './PanelPage.vue'
+import PropertyPagePanel from './PropertyPagePanel.vue'
 // import app from '@/main.js'
 // console.log(app);
 // app.component('FormZone', FormZone)
@@ -35,19 +32,7 @@ defineProps({
   }
 })
 const emit = defineEmits(['change'])
-// const option = reactive<any>({})
-// const formOption = reactive<any>({})
-// const dataProperty = reactive({})
-// const rightProperty = reactive({})
-onBeforeMount(() => {
-  // this.option = deepClone(toRaw(this.chartOption)) as any
-  // this.dataProperty = JSON.stringify(this.option.series[0].data)
-})
 function onChangeSimpleValue(option: any) {
-  // console.log('新的配置', option)
-  // option[option.keyId] = newVal
-  // console.log(856464, option)
-
   // 开发计划：移除 series.data 中的 id，避免二次渲染错误
   emit('change', uuid(), option)
 }
