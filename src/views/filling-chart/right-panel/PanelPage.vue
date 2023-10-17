@@ -18,7 +18,8 @@
           {{ option.keyName }}
           <IconRight class="g-icon-center" size="18px" />
         </li>
-        <FormItem v-else :receive-value="cloneData[option.keyId]" :form-option="option" />
+        <FormItem v-else :receiveValue="currentForm[option.keyId]" @change="(value) => onFormValueChange(value, option)"
+          :form-option="option" />
       </template>
     </ul>
   </div>
@@ -27,7 +28,7 @@
 <script setup lang="ts">
 import FormItem from './FormItem.vue'
 import { Right as IconRight, Help as IconHelp } from '@icon-park/vue-next'
-import formOption from './right-property'
+import formOptionList from './right-property'
 
 import { ref } from 'vue'
 import { deepClone } from '@/utils/utils'
@@ -37,21 +38,21 @@ const prop = defineProps({
     type: Object,
     default: () => ({})
   }
-  // subTitle: {
-  //   default: '这是小标题',
-  //   type: String
-  // }
 })
-console.log(formOption)
+const emit = defineEmits(['change'])
+const currentForm = ref()
+
 const currentPath = ref([{
   keyName: '横轴',
   keyId: 'xAxis'
 }])
-const cloneData = ref(deepClone(toRaw(prop.receiveValue)))
+const cloneData = ref(deepClone(prop.receiveValue))
+// console.log(9999, cloneData)
 const simpleFormSet = ref(new Set(['input', 'textarea', 'color', 'switch', 'slider']))
 const currentOptionList = ref<Array<any>>([])
 watch(currentPath, () => {
-  let newVal: unknown = formOption
+  let newVal: unknown = formOptionList
+  let newForm: any = prop.receiveValue
   currentPath.value.forEach(path => {
     if (!Array.isArray(newVal)) {
       return
@@ -59,10 +60,17 @@ watch(currentPath, () => {
     newVal.forEach(option => {
       if (path.keyId === option.keyId && option.children) {
         newVal = option.children
+        if (newForm[path.keyId]) {
+          newForm = newForm[path.keyId]
+        } else {
+          throw new Error('键值不匹配')
+        }
       }
     })
   })
   currentOptionList.value = newVal as []
+  currentForm.value = newForm
+  console.log(currentForm.value)
 }, {
   immediate: true
 })
@@ -73,7 +81,19 @@ function onChangeInput() {
 function onChangeOption() {
 
 }
+
+function onFormValueChange(value: any, option: any) {
+  let resss: any = null
+  if (currentPath.value.length > 1) {
+    resss = currentPath.value.reduce(item => cloneData.value[item.keyId])
+  } else {
+    resss = cloneData.value[currentPath.value[0].keyId]
+  }
+  resss[option?.keyId] = value
+  emit('change', cloneData)
+}
 function onJumpToSetting(setting: unknown) {
+
 }
 </script>
 
@@ -100,7 +120,7 @@ function onJumpToSetting(setting: unknown) {
 }
 
 .cell-item {
-  padding: 4px 16px;
+  padding: 4px 24px;
   // border-bottom: 1px solid;
   display: flex;
   align-items: center;

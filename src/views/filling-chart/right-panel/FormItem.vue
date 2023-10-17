@@ -4,9 +4,8 @@
 -->
 <!-- type 类型为 array 或者 object 时，调用 FormZone -->
 <template>
-  <!-- {{ currentSetter }} -->
+  <!-- 单行内容使用 on-line -->
   <div class="form-item" :class="basicSetterType.includes(currentSetter) && formOption.keyName.length < 7 && 'on-line'">
-    <!-- 简单类型的数据处理 -->
     <div class="basic-label">{{ formOption.keyName }}
       <el-tooltip v-if="formOption.tips" placement="top">
         <IconHelp theme="filled" class="g-icon-center" />
@@ -27,25 +26,23 @@
           @change="onChangeValue"></el-input-number>
         <el-switch v-else-if="currentSetter == 'switch'" v-model="formValue" size="small"
           @change="onChangeValue"></el-switch>
-        <el-slider v-else-if="currentSetter == 'slider'" v-model="formValue" size="small" style="width: 100px;" :min="0"
-          :max="60" @change="onChangeValue"></el-slider>
+        <el-slider v-else-if="currentSetter == 'slider'" v-model="formValue" size="small"
+          style="width: 100px;margin-left: 8px;" :min="0" :max="60" @change="onChangeValue"></el-slider>
         <el-select v-else-if="currentSetter == 'select'" v-model="formValue" size="small" :min="0" :max="20"
           @change="onChangeValue">
           <el-option v-for="optionItem in formOption.optionalValue" v-bind="optionItem"
             :key="optionItem.value"></el-option>
         </el-select>
       </div>
-      <div v-if="allSetters.length > 1" class="toggle-icon" :class="setterIndex % 2 == 0 ? 'reverse' : ''"
-        @click="onChangeSetter">
-        <IconRefresh class="g-icon-center" />
+      <div v-if="allSetters.length > 1" class="toggle-icon" @click="onChangeSetter">
+        <IconRefresh class="g-icon-center" :class="setterIndex % 2 == 0 ? 'reverse' : ''" />
       </div>
       <!-- 自定义组件类型的数据处理 -->
     </template>
     <!-- 复杂数据处理，标题会独占一行 -->
     <div v-else class="default-container">
-      <div v-if="allSetters.length > 1" class="toggle-icon" :class="setterIndex % 2 == 0 ? 'reverse' : ''"
-        @click="onChangeSetter">
-        <IconRefresh class="g-icon-center" />
+      <div v-if="allSetters.length > 1" class="toggle-icon" @click="onChangeSetter">
+        <IconRefresh class="g-icon-center" :class="setterIndex % 2 == 0 ? 'reverse' : ''" />
       </div>
       <el-input v-if="currentSetter === 'textarea'" v-model="formValue" size="small" type="textarea"
         style="max-height: 72px;" @input="onChangeInput"></el-input>
@@ -70,10 +67,11 @@ const prop = defineProps({
   },
   receiveValue: {
     require: true,
-    type: Object,
-    default: () => ({})
+    type: [Object, Number, String, Array],
+    default: null
   }
 })
+
 const emit = defineEmits(['change'])
 const formValue = ref<any>('')
 const setterIndex = ref<number>(0)
@@ -83,13 +81,13 @@ const timberFun = ref<number>()
 const basicSetterType = ref(['input', 'color', 'switch', 'slider', 'number', 'select'])
 const complexSetterType = ref(['json', 'textarea'])
 onBeforeMount(() => {
-  // console.log('传输过来的 id', formOption.keyId);
   const state = import.meta.env || {}
   if (state.DEV === true) {
     // 开发时打开，用于捕获默认值的错误
     catchError()
   }
-  formValue.value = deepClone(toRaw(prop.receiveValue))
+  formValue.value = deepClone(prop.receiveValue)
+  // console.log(prop.receiveValue);
   // 赋值为初始值，如果有对象
   if (formValue.value === undefined) {
     if (typeof prop.formOption.default === 'object' && prop.formOption.children) {
@@ -122,17 +120,17 @@ function onChangeInput() {
 function onChangeValue() {
   // console.log('当前的值为', formValue.value)
   // console.log('当前的属性', prop.formOption)
-  emit('change', prop.formOption, formValue.value)
+  emit('change', formValue.value, prop.formOption)
 }
 function onChangeComplexValue() {
-  emit('change', prop.formOption, formValue.value)
+  emit('change', formValue.value, prop.formOption)
 }
 function onChangeZone(option: any, value: any) {
   // console.log(JSON.stringify(formValue.value, null, 2));
   formValue.value = value
   // console.log(JSON.stringify(formValue.value, null, 2));
   // console.log(option, value);
-  emit('change', prop.formOption, formValue.value)
+  emit('change', formValue.value, prop.formOption)
 }
 function onChangeSetter() {
   // console.log('pico');
@@ -144,9 +142,9 @@ function onChangeSetter() {
 </script>
 <style lang="scss" scoped>
 .form-item {
-  padding: 4px 16px;
+  padding: 6px 24px;
   align-items: center;
-  margin-bottom: 12px;
+  border-bottom: 1px solid #aeaeae67;
 
   &.on-line {
     height: 26px;
@@ -182,12 +180,12 @@ function onChangeSetter() {
   display: flex;
   align-items: center;
   font-size: 16px;
-  // width: 20px;
   padding: 0 6px;
   cursor: pointer;
   transition: 0.6s;
 
-  &.reverse {
+  >.reverse {
+    transform-origin: center center;
     transform: rotate(0.5turn);
   }
 }

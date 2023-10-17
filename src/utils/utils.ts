@@ -9,16 +9,19 @@ export function isNotNull(value: unknown) {
 }
 
 export function deepClone<T>(receive: T): T {
-  let middle: unknown = ''
-  if (isProxy(receive)) {
-    middle = toRaw(receive)
-  } else {
-    middle = receive
-  }
+  let middle: unknown = toRaw(receive)
+  // if (isProxy(receive)) {
+  //   middle = toRaw(receive)
+  // } else {
+  //   middle = receive
+  // }
+  // console.log(middle)
+
   let result = null
   try {
     result = structuredClone(middle)
   } catch (err) {
+    console.error(err)
     result = goClone(middle)
   }
   return result as T

@@ -3,7 +3,7 @@
     <template #header-icon>
       <IconReturn @click="onClickBack" style="cursor: pointer;" />
     </template>
-    <div style="display: flex;height: 100%;">
+    <div style="display: flex;overflow: hidden;">
       <div class="main-graph">
         <HeaderTools :option="chartOption" @back="onChangeHistory" @next="onChangeHistory"></HeaderTools>
         <ChartCanvas :option="chartOption" :chartId="chartId"></ChartCanvas>
@@ -75,10 +75,9 @@ function onChangeData() {
 }
 // id 用来判断内容是否修改了，option表示
 function onChangeOption(id: string, option: any) {
-  console.log('最新的更改为', option)
-  // console.log(this.chartId, 'dfdfsafsdfasdf');
-  // chartId.value = id
-  // chartOption.value = option
+  chartOption = option
+  chartId.value = id
+  console.log('最新的更改为', chartOption)
 }
 function onChangeHistory(newVal: any) {
   console.log('历史已生效', newVal)
@@ -107,6 +106,6 @@ export default {
 .right-panel {
   flex-basis: 360px;
   width: 360px;
-  height: 100%;
+  overflow: hidden;
 }
 </style>
