@@ -14,42 +14,43 @@
         </template>
       </el-tooltip>
     </div>
-    <template v-if="basicSetterType.includes(currentSetter)">
-      <div class="basic-form-item">
-        <el-input v-if="currentSetter == 'input'" v-model="formValue" type="text" size="small"
-          @input="onChangeInput"></el-input>
-        <div v-else-if="currentSetter == 'color'">
-          <el-input v-model="formValue" style="width: 68px;" size="small" type="color" @change="onChangeValue"></el-input>
-          {{ formValue || '未选择颜色' }}
-        </div>
-        <el-input-number v-else-if="currentSetter == 'number'" v-model="formValue" size="small"
-          @change="onChangeValue"></el-input-number>
-        <el-switch v-else-if="currentSetter == 'switch'" v-model="formValue" size="small"
-          @change="onChangeValue"></el-switch>
-        <el-slider v-else-if="currentSetter == 'slider'" v-model="formValue" size="small"
-          style="width: 100px;margin-left: 8px;" :min="0" :max="60" @change="onChangeValue"></el-slider>
-        <el-select v-else-if="currentSetter == 'select'" v-model="formValue" size="small" :min="0" :max="20"
-          @change="onChangeValue">
-          <el-option v-for="optionItem in formOption.optionalValue" v-bind="optionItem"
-            :key="optionItem.value"></el-option>
-        </el-select>
+    <!-- 简单类型的数据处理 -->
+    <div v-if="basicSetterType.includes(currentSetter)" class="basic-form-item">
+      <el-input v-if="currentSetter == 'input'" v-model="formValue" type="text" size="small"
+        @input="onChangeInput"></el-input>
+      <div v-else-if="currentSetter == 'color'">
+        <el-input v-model="formValue" style="width: 68px;" size="small" type="color" @change="onChangeValue"></el-input>
+        {{ formValue || '未选择颜色' }}
       </div>
-      <div v-if="allSetters.length > 1" class="toggle-icon" @click="onChangeSetter">
+      <el-input-number v-else-if="currentSetter == 'number'" v-model="formValue" size="small"
+        @change="onChangeValue"></el-input-number>
+      <el-switch v-else-if="currentSetter == 'switch'" v-model="formValue" size="small"
+        @change="onChangeValue"></el-switch>
+      <el-slider v-else-if="currentSetter == 'slider'" v-model="formValue" size="small"
+        style="width: 100px;margin-left: 8px;" :min="0" :max="60" @change="onChangeValue"></el-slider>
+      <el-select v-else-if="currentSetter == 'select'" v-model="formValue" size="small" :min="0" :max="20"
+        @change="onChangeValue">
+        <el-option v-for="optionItem in formOption.optionalValue" v-bind="optionItem" :key="optionItem.value"></el-option>
+      </el-select>
+    </div>
+    <!-- 切换按钮 -->
+    <template v-if="allSetters.length > 1">
+      <div style="flex: 1;"></div>
+      <div class="toggle-icon" @click="onChangeSetter">
         <IconRefresh class="g-icon-center" :class="setterIndex % 2 == 0 ? 'reverse' : ''" />
       </div>
-      <!-- 自定义组件类型的数据处理 -->
     </template>
     <!-- 复杂数据处理，标题会独占一行 -->
-    <div v-else class="default-container">
-      <div v-if="allSetters.length > 1" class="toggle-icon" @click="onChangeSetter">
-        <IconRefresh class="g-icon-center" :class="setterIndex % 2 == 0 ? 'reverse' : ''" />
-      </div>
-      <el-input v-if="currentSetter === 'textarea'" v-model="formValue" size="small" type="textarea"
-        style="max-height: 72px;" @input="onChangeInput"></el-input>
-      <FormJSON v-else-if="currentSetter === 'json'" v-model="formValue" class="complex-container"
-        @change="onChangeComplexValue">
-      </FormJSON>
-    </div>
+  </div>
+  <div v-if="!basicSetterType.includes(currentSetter)" class="default-container">
+    <el-input v-if="currentSetter === 'textarea'" v-model="formValue" size="small" type="textarea"
+      style="max-height: 72px;" @input="onChangeInput"></el-input>
+    <FormJSON v-else-if="currentSetter === 'json'" v-model="formValue" class="complex-container"
+      @change="onChangeComplexValue">
+    </FormJSON>
+    <FormJSON v-else-if="currentSetter === 'function'" v-model="formValue" class="complex-container"
+      @change="onChangeComplexValue">
+    </FormJSON>
   </div>
 </template>
 
@@ -73,7 +74,7 @@ const prop = defineProps({
 })
 
 const emit = defineEmits(['change'])
-const formValue = ref<any>('')
+const formValue = ref<any>()
 const setterIndex = ref<number>(0)
 const currentSetter = ref<string>('')
 const allSetters = ref([])
@@ -81,24 +82,22 @@ const timberFun = ref<number>()
 const basicSetterType = ref(['input', 'color', 'switch', 'slider', 'number', 'select'])
 const complexSetterType = ref(['json', 'textarea'])
 onBeforeMount(() => {
-  const state = import.meta.env || {}
-  if (state.DEV === true) {
+  const devState = import.meta.env.DEV
+  if (devState === true) {
     // 开发时打开，用于捕获默认值的错误
     catchError()
   }
   formValue.value = deepClone(prop.receiveValue)
   // console.log(prop.receiveValue);
   // 赋值为初始值，如果有对象
-  if (formValue.value === undefined) {
+  if (formValue.value === null) {
     if (typeof prop.formOption.default === 'object' && prop.formOption.children) {
       formValue.value = {}
     } else {
       formValue.value = prop.formOption.default
     }
   }
-  // console.log(formValue.value);
   allSetters.value = prop.formOption.setters
-  // console.log(prop.formOption.keyId, allSetters.value);
   currentSetter.value = allSetters.value[0]
   setterIndex.value = 0
 })
@@ -118,37 +117,27 @@ function onChangeInput() {
 }
 // 简单数据类型时的处理方法
 function onChangeValue() {
-  // console.log('当前的值为', formValue.value)
-  // console.log('当前的属性', prop.formOption)
+  console.log('当前的值为', typeof formValue.value)
   emit('change', formValue.value, prop.formOption)
 }
 function onChangeComplexValue() {
   emit('change', formValue.value, prop.formOption)
 }
-function onChangeZone(option: any, value: any) {
-  // console.log(JSON.stringify(formValue.value, null, 2));
-  formValue.value = value
-  // console.log(JSON.stringify(formValue.value, null, 2));
-  // console.log(option, value);
-  emit('change', formValue.value, prop.formOption)
-}
 function onChangeSetter() {
-  // console.log('pico');
   setterIndex.value++
   if (setterIndex.value >= allSetters.value.length) setterIndex.value = 0
   currentSetter.value = allSetters.value[setterIndex.value]
-  // console.log(currentSetter);
 }
 </script>
 <style lang="scss" scoped>
 .form-item {
   padding: 6px 24px;
+  display: flex;
   align-items: center;
-  border-bottom: 1px solid #aeaeae67;
 
   &.on-line {
     height: 26px;
-    display: flex;
+    border-bottom: 1px solid #aeaeae67;
   }
 
   .basic-form-item {

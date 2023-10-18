@@ -46,8 +46,8 @@ const currentPath = ref([{
   keyName: '横轴',
   keyId: 'xAxis'
 }])
+
 const cloneData = ref(deepClone(prop.receiveValue))
-// console.log(9999, cloneData)
 const simpleFormSet = ref(new Set(['input', 'textarea', 'color', 'switch', 'slider']))
 const currentOptionList = ref<Array<any>>([])
 watch(currentPath, () => {
@@ -70,7 +70,7 @@ watch(currentPath, () => {
   })
   currentOptionList.value = newVal as []
   currentForm.value = newForm
-  console.log(currentForm.value)
+  // console.log(currentForm.value)
 }, {
   immediate: true
 })
@@ -83,6 +83,7 @@ function onChangeOption() {
 }
 
 function onFormValueChange(value: any, option: any) {
+  // console.log("🚀 ~ file: PropertyPagePanel.vue:86 ~ onFormValueChange ~ value:", value)
   let resss: any = null
   if (currentPath.value.length > 1) {
     resss = currentPath.value.reduce(item => cloneData.value[item.keyId])

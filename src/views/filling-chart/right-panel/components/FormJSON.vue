@@ -1,9 +1,7 @@
 <!-- 改内容负责将数组，对象，等复杂数据传入进来，然后转化为 JSON 进行编辑，编辑后通过原类型传输回去 -->
 
 <template>
-  <div>
-    <el-input v-model="jsonValue" size="small" type="textarea" @input="onChangeJSONValue" />
-  </div>
+  <el-input v-model="jsonValue" size="small" type="textarea" @input="onChangeJSONValue" />
 </template>
 
 <script setup lang="ts">
@@ -21,7 +19,6 @@ const boundValue = ref('')
 let timberFun: number | null = null
 // const
 const originValue = toRaw(prop.modelValue)
-JSON.stringify(originValue)
 onMounted(() => {
   // console.log(JSON.stringify(originValue))
   jsonValue.value = JSON.stringify(originValue)
@@ -30,20 +27,19 @@ onMounted(() => {
 function onChangeJSONValue() {
   if (timberFun) {
     clearTimeout(timberFun)
-    timberFun = setTimeout(parseValue, 500)
   }
+  timberFun = setTimeout(parseValue, 500)
 }
 
 function parseValue() {
+  let parseValue = {}
   try {
-    boundValue.value = JSON.parse(jsonValue.value)
+    parseValue = JSON.parse(jsonValue.value)
   } catch (e) {
     console.warn('JSON 未能转换成功', e)
-    boundValue.value = {}
   }
-  console.log('更新值', boundValue)
-  emit('update:modelValue', boundValue)
-  emit('change', boundValue)
+  emit('update:modelValue', parseValue)
+  emit('change', parseValue)
 }
 </script>
 

@@ -11,7 +11,6 @@
       <!-- 负责修改 chartOption -->
       <RightPanel :key="currentKey" class="right-panel" :chartOption="chartOption" @change="onChangeOption"></RightPanel>
     </div>
-    <!-- <el-button size="small" @click="onChangeData"> 切换 </el-button> -->
   </PageLayout>
 </template>
 
@@ -47,32 +46,6 @@ let chartOption = reactive({
 provide('chartOption', chartOption)
 const chartId = ref('')
 
-function onChangeData() {
-  const id = uuid()
-  currentKey.value = id
-  chartId.value = id
-  // chartOption = reactive({
-  //   title: {
-  //     text: '廉颇老矣'
-  //   },
-  //   xAxis: {
-  //     show: true,
-  //     type: 'category',
-  //     data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
-  //   },
-  //   yAxis: {
-  //     type: 'value'
-  //   },
-  //   series: [
-  //     {
-  //       data: [150, 230, 224, 218, 135, 147, 260],
-  //       type: 'bar'
-  //     }
-  //   ]
-  // })
-  // console.log(currentKey)
-  // console.log(chartOption)
-}
 // id 用来判断内容是否修改了，option表示
 function onChangeOption(id: string, option: any) {
   chartOption = option

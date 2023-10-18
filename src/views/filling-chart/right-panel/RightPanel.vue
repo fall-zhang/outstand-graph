@@ -14,15 +14,7 @@
 
 <script lang="ts" setup>
 import { v4 as uuid } from 'uuid'
-// import FormJSON from './components/FormJSON.vue'
-// import FormItem from './FormItem.vue'
-// import FormZone from './FormZone.vue'
 import PropertyPagePanel from './PropertyPagePanel.vue'
-// import app from '@/main.js'
-// console.log(app);
-// app.component('FormZone', FormZone)
-// app.component('FormItem', FormItem)
-// console.log(rightProperty)
 
 defineProps({
   chartOption: {
