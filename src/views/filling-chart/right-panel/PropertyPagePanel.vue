@@ -4,17 +4,15 @@
     <div class="panel-title">
       <h3>{{ currentPath.at(-1)?.keyName || "Echarts 属性" }}</h3>
       <div>
-        <a @click="onChangeOption">
-          {{ currentPath.at(0)?.keyName || "Echarts 属性" }} </a>
-        <a v-show="currentPath.length > 0" @click="onChangeOption" v-for="item in currentPath.slice(1) "
-          :key="item.keyId">
+        <a @click="onChangeOption('')">属性</a>
+        <a @click="onChangeOption(item.keyId)" v-for="item in currentPath" :key="item.keyId">
           / {{ item.keyName }}
         </a>
       </div>
     </div>
     <ul class="cell-group">
       <template v-for="option in currentOptionList" :key="option.keyId">
-        <li v-if="option.children" class="cell-item link-cell" @click="onJumpToSetting">
+        <li v-if="option.children" class="cell-item link-cell" @click="onJumpToSetting(option)">
           {{ option.keyName }}
           <IconRight class="g-icon-center" size="18px" />
         </li>
@@ -27,7 +25,7 @@
 
 <script setup lang="ts">
 import FormItem from './FormItem.vue'
-import { Right as IconRight, Help as IconHelp } from '@icon-park/vue-next'
+import { Right as IconRight } from '@icon-park/vue-next'
 import formOptionList from './right-property'
 
 import { ref } from 'vue'
@@ -48,11 +46,12 @@ const currentPath = ref([{
 }])
 
 const cloneData = ref(deepClone(prop.receiveValue))
-const simpleFormSet = ref(new Set(['input', 'textarea', 'color', 'switch', 'slider']))
 const currentOptionList = ref<Array<any>>([])
 watch(currentPath, () => {
+
   let newVal: unknown = formOptionList
   let newForm: any = prop.receiveValue
+
   currentPath.value.forEach(path => {
     if (!Array.isArray(newVal)) {
       return
@@ -63,27 +62,26 @@ watch(currentPath, () => {
         if (newForm[path.keyId]) {
           newForm = newForm[path.keyId]
         } else {
-          throw new Error('键值不匹配')
+          newForm[path.keyId] = {}
+          newForm = newForm[path.keyId]
+          // throw new Error('键值不匹配')
         }
       }
     })
   })
   currentOptionList.value = newVal as []
   currentForm.value = newForm
-  // console.log(currentForm.value)
+  console.log(currentForm.value)
 }, {
   immediate: true
 })
-const popupVisible = ref(false)
-function onChangeInput() {
-  popupVisible.value = false
-}
-function onChangeOption() {
-
+function onChangeOption(str: string) {
+  if (str === '') {
+    currentPath.value = []
+  }
 }
 
 function onFormValueChange(value: any, option: any) {
-  // console.log("🚀 ~ file: PropertyPagePanel.vue:86 ~ onFormValueChange ~ value:", value)
   let resss: any = null
   if (currentPath.value.length > 1) {
     resss = currentPath.value.reduce(item => cloneData.value[item.keyId])
@@ -91,10 +89,15 @@ function onFormValueChange(value: any, option: any) {
     resss = cloneData.value[currentPath.value[0].keyId]
   }
   resss[option?.keyId] = value
-  emit('change', cloneData)
+  emit('change', cloneData.value)
 }
-function onJumpToSetting(setting: unknown) {
 
+function onJumpToSetting(setting: { keyId: string, keyName: string }) {
+  // console.log(setting);
+  currentPath.value = currentPath.value.concat({
+    keyId: setting.keyId,
+    keyName: setting.keyName
+  })
 }
 </script>
 

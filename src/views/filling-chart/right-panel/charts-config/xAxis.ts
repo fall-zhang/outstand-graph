@@ -19,13 +19,13 @@ export default [
     setters: ['switch'],
     default: true,
   },
-  {
-    keyId: 'gridIndex',
-    tips: '当定义多个布局（grid）时，填写对应的布局',
-    keyName: '布局索引',
-    setters: ['number'],
-    default: 0
-  },
+  // {
+  //   keyId: 'gridIndex',
+  //   tips: '当定义多个布局（grid）时，填写对应的布局',
+  //   keyName: '布局索引',
+  //   setters: ['number'],
+  //   default: 0
+  // },
   {
     keyId: 'alignTicks',
     tips: '当前轴为 value 和 log 类型时有效',

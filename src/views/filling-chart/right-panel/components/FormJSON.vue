@@ -9,20 +9,20 @@ import { ref, shallowRef, toRaw, onMounted } from 'vue'
 const emit = defineEmits(['update:modelValue', 'change'])
 const prop = defineProps({
   modelValue: {
-    type: String,
+    type: [String, Array, Object],
     default: '',
     require: true
   }
 })
 const jsonValue = shallowRef('')
-const boundValue = ref('')
 let timberFun: number | null = null
-// const
 const originValue = toRaw(prop.modelValue)
 onMounted(() => {
-  // console.log(JSON.stringify(originValue))
-  jsonValue.value = JSON.stringify(originValue)
-  // console.log("🚀 ~ file: FormJSON.vue:22 ~ jsonValue.value:", jsonValue.value)
+  if (typeof prop.modelValue !== 'string') {
+    jsonValue.value = JSON.stringify(toRaw(prop.modelValue))
+  } else {
+    jsonValue.value = JSON.stringify(originValue)
+  }
 })
 function onChangeJSONValue() {
   if (timberFun) {

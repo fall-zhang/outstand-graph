@@ -27,7 +27,7 @@ const router = useRouter()
 const onClickBack = () => router.go(-1)
 
 const currentKey = ref(uuid())
-let chartOption = reactive({
+let chartOption = ref({
   xAxis: {
     show: true,
     type: 'category',
@@ -48,12 +48,12 @@ const chartId = ref('')
 
 // id 用来判断内容是否修改了，option表示
 function onChangeOption(id: string, option: any) {
-  chartOption = option
+  chartOption.value = option
   chartId.value = id
-  console.log('最新的更改为', chartOption)
+  console.log('最新的更改为', toRaw(chartOption.value))
 }
 function onChangeHistory(newVal: any) {
-  console.log('历史已生效', newVal)
+  console.log('历史已生效', toRaw(newVal))
   const newId = uuid()
   chartId.value = newId
   currentKey.value = newId

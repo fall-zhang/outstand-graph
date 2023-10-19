@@ -13,9 +13,9 @@ module.exports = {
     { value: '⏪回滚', name: '回滚:    代码回退' }
   ],
   scopes: [
-    { name: 'css' },
-    { name: 'typescript' },
     { name: 'vue' },
+    { name: 'typescript' },
+    { name: 'css' },
     { name: 'assets' },
     { name: 'markdown' }
   ],

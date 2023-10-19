@@ -68,7 +68,7 @@ const prop = defineProps({
   },
   receiveValue: {
     require: true,
-    type: [Object, Number, String, Array],
+    type: [Object, Number, String, Array, Boolean],
     default: null
   }
 })

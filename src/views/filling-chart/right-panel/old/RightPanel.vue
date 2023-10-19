@@ -30,7 +30,7 @@ import PanelPage from './PanelPage.vue'
 // console.log(app);
 // app.component('FormZone', FormZone)
 // app.component('FormItem', FormItem)
-console.log(rightProperty)
+// console.log(rightProperty)
 export default {
   name: 'RightPanel',
   components: {
@@ -66,6 +66,7 @@ export default {
       this.option[option.keyId] = newVal
       // 开发计划：移除 series.data 中的 id，避免二次渲染错误
       this.$emit('change', uuid(), deepClone(this.option))
+
     }
   }
 }
