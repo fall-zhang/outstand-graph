@@ -20,7 +20,7 @@
         @input="onChangeInput"></el-input>
       <div v-else-if="currentSetter == 'color'">
         <el-input v-model="formValue" style="width: 68px;" size="small" type="color" @change="onChangeValue"></el-input>
-        {{ formValue || '未选择颜色' }}
+        <!-- {{ formValue || '未选择颜色' }} -->
       </div>
       <el-input-number v-else-if="currentSetter == 'number'" v-model="formValue" size="small"
         @change="onChangeValue"></el-input-number>
@@ -117,7 +117,7 @@ function onChangeInput() {
 }
 // 简单数据类型时的处理方法
 function onChangeValue() {
-  console.log('当前的值为', typeof formValue.value)
+  // console.log('当前的值为', typeof formValue.value)
   emit('change', formValue.value, prop.formOption)
 }
 function onChangeComplexValue() {

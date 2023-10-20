@@ -45,7 +45,7 @@ export default [
     keyName: 'x 轴的位置',
     tips: '默认为下侧，另一个数据轴在另一侧',
     setters: ['select'],
-    default: 'left',
+    default: 'bottom',
     optionalValue: [
       { label: '上侧', value: 'top' },
       { label: '下侧', value: 'bottom' },

@@ -2,7 +2,10 @@
 <template>
   <div class="right-panel">
     <div class="panel-title">
-      <h3>{{ currentPath.at(-1)?.keyName || "Echarts 属性" }}</h3>
+      <h3>
+        <IconReturn @click="onClickBack" style="cursor: pointer;position: absolute;left: 16px;top: 6px;" />
+        {{ currentPath.at(-1)?.keyName || "Echarts 属性" }}
+      </h3>
       <div>
         <a @click="onChangeOption('')">属性</a>
         <a @click="onChangeOption(item.keyId)" v-for="item in currentPath" :key="item.keyId">
@@ -25,7 +28,7 @@
 
 <script setup lang="ts">
 import FormItem from './FormItem.vue'
-import { Right as IconRight } from '@icon-park/vue-next'
+import { Right as IconRight, Return as IconReturn } from '@icon-park/vue-next'
 import formOptionList from './right-property'
 
 import { ref } from 'vue'
@@ -45,12 +48,13 @@ const currentPath = ref([{
   keyId: 'xAxis'
 }])
 
-const cloneData = ref(deepClone(prop.receiveValue))
+const receiveForm = ref(deepClone(prop.receiveValue))
 const currentOptionList = ref<Array<any>>([])
 watch(currentPath, () => {
+  // console.log(6464)
 
   let newVal: unknown = formOptionList
-  let newForm: any = prop.receiveValue
+  let newForm: any = receiveForm.value
 
   currentPath.value.forEach(path => {
     if (!Array.isArray(newVal)) {
@@ -63,7 +67,9 @@ watch(currentPath, () => {
           newForm = newForm[path.keyId]
         } else {
           newForm[path.keyId] = {}
+          // console.log("🚀 ~ file: PropertyPagePanel.vue:70 ~ watch ~ path:", path)
           newForm = newForm[path.keyId]
+          // console.log('🚀 ~ file: PropertyPagePanel.vue:71 ~ watch ~ newForm:', newForm)
           // throw new Error('键值不匹配')
         }
       }
@@ -71,9 +77,9 @@ watch(currentPath, () => {
   })
   currentOptionList.value = newVal as []
   currentForm.value = newForm
-  console.log(currentForm.value)
 }, {
-  immediate: true
+  immediate: true,
+  deep: true
 })
 function onChangeOption(str: string) {
   if (str === '') {
@@ -81,23 +87,30 @@ function onChangeOption(str: string) {
   }
 }
 
+function onClickBack() {
+  currentPath.value.pop()
+}
 function onFormValueChange(value: any, option: any) {
-  let resss: any = null
-  if (currentPath.value.length > 1) {
-    resss = currentPath.value.reduce(item => cloneData.value[item.keyId])
-  } else {
-    resss = cloneData.value[currentPath.value[0].keyId]
+  let resss: any = receiveForm.value
+  if (currentPath.value.length > 0) {
+    currentPath.value.forEach(item => {
+      resss = resss[item.keyId]
+    })
+  } else if (currentPath.value.length === 0) {
+    resss = receiveForm.value
   }
+  // console.log(resss, value)
   resss[option?.keyId] = value
-  emit('change', cloneData.value)
+  emit('change', receiveForm.value)
 }
 
 function onJumpToSetting(setting: { keyId: string, keyName: string }) {
-  // console.log(setting);
-  currentPath.value = currentPath.value.concat({
+  // console.log("🚀 ~ file: PropertyPagePanel.vue:101 ~ onJumpToSetting ~ setting:", setting)
+  currentPath.value.push({
     keyId: setting.keyId,
     keyName: setting.keyName
   })
+  // console.log(currentPath.value)
 }
 </script>
 

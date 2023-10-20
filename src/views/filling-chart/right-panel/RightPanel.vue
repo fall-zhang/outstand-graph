@@ -25,6 +25,7 @@ defineProps({
 })
 const emit = defineEmits(['change'])
 function onChangeSimpleValue(option: any) {
+  console.log('最新的配置：🚀 ~ file: RightPanel.vue:28 ~ onChangeSimpleValue ~ option:', option)
   // 开发计划：移除 series.data 中的 id，避免二次渲染错误
   emit('change', uuid(), option)
 }

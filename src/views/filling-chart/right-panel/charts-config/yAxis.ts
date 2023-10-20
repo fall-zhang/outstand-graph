@@ -118,7 +118,7 @@ export default [
   },
   {
     keyId: 'scale',
-    keyName: '最大刻度值',
+    keyName: '缩放',
     tips: '只在 y 轴类型为数值时有效（type:value），且在设置 min 和 max 之后该配置项无效。',
     setters: ['input', 'number', 'function'],
     default: '',

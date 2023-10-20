@@ -21,7 +21,6 @@ import HeaderTools from './header-tools/HeaderTools.vue'
 import { Return as IconReturn } from '@icon-park/vue-next'
 import { PageLayout } from '@/layout'
 import { v4 as uuid } from 'uuid'
-import { provide, reactive, ref } from 'vue'
 const router = useRouter()
 
 const onClickBack = () => router.go(-1)
@@ -50,10 +49,8 @@ const chartId = ref('')
 function onChangeOption(id: string, option: any) {
   chartOption.value = option
   chartId.value = id
-  console.log('最新的更改为', toRaw(chartOption.value))
 }
 function onChangeHistory(newVal: any) {
-  console.log('历史已生效', toRaw(newVal))
   const newId = uuid()
   chartId.value = newId
   currentKey.value = newId
