@@ -2,13 +2,13 @@
 <template>
   <div class="right-panel">
     <div class="panel-title">
-      <h3>
+      <h3 style="position: relative;">
         <IconReturn @click="onClickBack" style="cursor: pointer;position: absolute;left: 16px;top: 6px;" />
         {{ currentPath.at(-1)?.keyName || "Echarts 属性" }}
       </h3>
       <div>
-        <a @click="onChangeOption('')">属性</a>
-        <a @click="onChangeOption(item.keyId)" v-for="item in currentPath" :key="item.keyId">
+        <a @click="onChangeOption(-1)">属性</a>
+        <a @click="onChangeOption(index)" v-for="(item, index) in currentPath" :key="item.keyId">
           / {{ item.keyName }}
         </a>
       </div>
@@ -16,7 +16,15 @@
     <ul class="cell-group">
       <template v-for="option in currentOptionList" :key="option.keyId">
         <li v-if="option.children" class="cell-item link-cell" @click="onJumpToSetting(option)">
-          {{ option.keyName }}
+          <span style="display: flex;">
+            {{ option.keyName }}
+            <el-tooltip v-if="option.tips" placement="top">
+              <IconHelp theme="filled" class="g-icon-center" />
+              <template #content>
+                <div v-html="option.tips"></div>
+              </template>
+            </el-tooltip>
+          </span>
           <IconRight class="g-icon-center" size="18px" />
         </li>
         <FormItem v-else :receiveValue="currentForm[option.keyId]" @change="(value) => onFormValueChange(value, option)"
@@ -28,7 +36,7 @@
 
 <script setup lang="ts">
 import FormItem from './FormItem.vue'
-import { Right as IconRight, Return as IconReturn } from '@icon-park/vue-next'
+import { Right as IconRight, Return as IconReturn, Help as IconHelp } from '@icon-park/vue-next'
 import formOptionList from './right-property'
 
 import { ref } from 'vue'
@@ -81,9 +89,11 @@ watch(currentPath, () => {
   immediate: true,
   deep: true
 })
-function onChangeOption(str: string) {
-  if (str === '') {
+function onChangeOption(index: number) {
+  if (index < 0) {
     currentPath.value = []
+  } else {
+    currentPath.value = currentPath.value.slice(0, index + 1)
   }
 }
 

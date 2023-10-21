@@ -66,6 +66,12 @@ export default {
     setters: ['color', 'input'],
     default: 'transparent'
   },
+  borderWidth: {
+    keyId: 'borderWidth',
+    keyName: '边框宽度',
+    setters: ['number', 'input'],
+    default: 0
+  },
   borderRadius: {
     keyId: 'borderRadius',
     keyName: '圆角半径',

@@ -160,12 +160,12 @@ export default [
   //   setters: ['slider', 'number'],
   //   default: 10,
   // },
-  {
-    keyId: 'silent',
-    keyName: '静态坐标轴',
-    setters: ['switch'],
-    default: false,
-  },
+  // {
+  //   keyId: 'silent',
+  //   keyName: '静态坐标轴',
+  //   setters: ['switch'],
+  //   default: false,
+  // },
   {
     keyId: 'triggerEvent',
     keyName: '响应鼠标事件',
@@ -193,7 +193,7 @@ export default [
     children: [
       {
         keyId: 'show',
-        keyName: '展示坐标轴',
+        keyName: '显示刻度',
         setters: ['switch'],
         default: false,
       },
@@ -203,12 +203,12 @@ export default [
   {
     keyId: 'minorTick',
     keyName: '次刻度设置',
-    tips: '对除类目轴中的刻度有效',
+    tips: '对有次刻度且只对除类目轴中的刻度有效',
     setters: ['object'],
     children: [
       {
         keyId: 'show',
-        keyName: '展示坐标轴',
+        keyName: '展示次刻度',
         setters: ['switch'],
         default: false,
       },

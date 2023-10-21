@@ -132,7 +132,7 @@ export const richTextChildren = textStyle.children.concat([
     keyName: '富文本',
     tips: '<a href="https://echarts.apache.org/zh/option.html#title.textStyle.rich" target="blank">富文本介绍（点击进入）</a>',
     setters: ['json'],
-    default: {},
+    default: '',
   },
 ])
 
@@ -179,4 +179,19 @@ export const positionConfig = [
     ],
     default: 0
   },
+]
+
+// 有 Label 属性时的配置
+export const labelConfig = [
+  // show , precision , formatter , margin , color , fontStyle , fontWeight , fontFamily , fontSize , lineHeight , width , height , textBorderColor , textBorderWidth , textBorderType , textBorderDashOffset , textShadowColor , textShadowBlur , textShadowOffsetX , textShadowOffsetY , overflow , ellipsis , padding , backgroundColor , borderColor , borderWidth , shadowBlur , shadowColor , shadowOffsetX , shadowOffsetY
+]
+
+export const lineStyleConfig = [
+  // color , width , type , dashOffset , cap , join , miterLimit , shadowBlur , shadowColor , shadowOffsetX , shadowOffsetY , opacity
+]
+export const shadowStyleConfig = [
+  // color , shadowBlur , shadowColor , shadowOffsetX , shadowOffsetY , opacity
+]
+export const crossStyleConfig = [
+  // color , width , type , dashOffset , cap , join , miterLimit , shadowBlur , shadowColor , shadowOffsetX , shadowOffsetY , opacity
 ]

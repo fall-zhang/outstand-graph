@@ -37,6 +37,7 @@ import xAxisConfig from './charts-config/xAxis'
 import titleConfig from './charts-config/title'
 import yAxisConfig from './charts-config/yAxis'
 import legendConfig from './charts-config/legend'
+import tooltipConfig from './charts-config/tooltip'
 import { textStyle } from './charts-config/dictionary/common-option'
 export default [
   {
@@ -86,6 +87,13 @@ export default [
     keyName: '背景颜色',
     setters: ['color', 'input'],
     default: ''
+  },
+  {
+    keyId: 'tooltip',
+    keyName: '背景颜色',
+    setters: ['color', 'input'],
+    default: {},
+    config: tooltipConfig
   },
   textStyle,
   {
