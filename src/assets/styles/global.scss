@@ -2,9 +2,11 @@
   margin-left: 4px;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .g-text-one-line {
+  display: block;
   text-overflow: ellipsis;
   overflow: hidden;
 }

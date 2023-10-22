@@ -2,18 +2,29 @@
 <template>
   <div class="right-panel">
     <div class="panel-title">
-      <h3 style="position: relative;">
-        <IconReturn @click="onClickBack" style="cursor: pointer;position: absolute;left: 16px;top: 6px;" />
-        {{ currentPath.at(-1)?.keyName || "Echarts 属性" }}
+      <h3 style="display: flex;justify-content: space-between">
+        <IconReturn @click="onClickBack" class="g-icon-center" style="width: 40px;" />
+        {{ "图表类型" }}
+        <div style="width: 40px;">
+          <el-tooltip content="添加图表">
+            <IconPlus @click="onAddChart" size="22" v-show="currentPath.length === 0" class="g-icon-center" />
+          </el-tooltip>
+        </div>
       </h3>
       <div>
-        <a @click="onChangeOption(-1)">属性</a>
+        <a @click="onChangeOption(-1)">图表</a>
         <a @click="onChangeOption(index)" v-for="(item, index) in currentPath" :key="item.keyId">
           / {{ item.keyName }}
         </a>
       </div>
     </div>
     <ul class="cell-group">
+      <!-- currentPath 长度为 0 时使用 -->
+      <li class="cell-item complex-cell">
+        <el-select size="small" :min="0" :max="20">
+          <el-option label="柱状图" value="bar"> </el-option>
+        </el-select>
+      </li>
       <!-- <template v-for="option in currentOptionList" :key="option.keyId">
         <li v-if="option.children" class="cell-item link-cell" @click="onJumpToSetting(option)">
           <span style="display: flex;">
@@ -36,8 +47,8 @@
 
 <script setup lang="ts">
 import FormItem from './components/FormItem.vue'
-import { Right as IconRight, Return as IconReturn, Help as IconHelp } from '@icon-park/vue-next'
-import formOptionList from './right-series'
+import { Right as IconRight, Return as IconReturn, Help as IconHelp, Plus as IconPlus } from '@icon-park/vue-next'
+import formOptionList from './right-property'
 
 import { ref } from 'vue'
 import { deepClone } from '@/utils/utils'
@@ -114,6 +125,14 @@ function onFormValueChange(value: any, option: any) {
   emit('change', receiveForm.value)
 }
 
+function onAddChart(setting: { keyId: string, keyName: string }) {
+  // console.log("🚀 ~ file: PropertyPagePanel.vue:101 ~ onJumpToSetting ~ setting:", setting)
+  currentPath.value.push({
+    keyId: setting.keyId,
+    keyName: setting.keyName
+  })
+  // console.log(currentPath.value)
+}
 function onJumpToSetting(setting: { keyId: string, keyName: string }) {
   // console.log("🚀 ~ file: PropertyPagePanel.vue:101 ~ onJumpToSetting ~ setting:", setting)
   currentPath.value.push({
@@ -176,17 +195,17 @@ function onJumpToSetting(setting: { keyId: string, keyName: string }) {
   //   }
   // }
 
-  // &.complex-cell {
-  //   display: block;
-  //   min-width: 110px;
-  //   height: auto;
+  &.complex-cell {
+    display: block;
+    min-width: 110px;
+    height: auto;
 
-  //   .complex-label {
-  //     margin-bottom: 4px;
-  //     display: flex;
-  //     align-items: center;
-  //     justify-content: flex-start;
-  //   }
-  // }
+    .complex-label {
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+  }
 }
 </style>

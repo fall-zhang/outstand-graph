@@ -3,7 +3,8 @@
   <div class="right-panel">
     <div class="panel-title">
       <h3 style="position: relative;">
-        <IconReturn @click="onClickBack" style="cursor: pointer;position: absolute;left: 16px;top: 6px;" />
+        <IconReturn v-show="currentPath.length > 0" @click="onClickBack"
+          style="cursor: pointer;position: absolute;left: 16px;top: 6px;" />
         {{ currentPath.at(-1)?.keyName || "Echarts 属性" }}
       </h3>
       <div>

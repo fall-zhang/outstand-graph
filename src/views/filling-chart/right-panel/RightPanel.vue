@@ -4,8 +4,8 @@
       <PropertyPagePanel :receiveValue="chartOption" @change="onChangeSimpleValue" />
     </el-tab-pane>
     <el-tab-pane label="图表类型">
-      <FormZone :receiveValue="chartOption.series" :formOption="{ keyId: 'series' }" @change="onChangeSimpleValue">
-      </FormZone>
+      <!-- <FormZone :receiveValue="chartOption.series" :formOption="{ keyId: 'series' }" @change="onChangeSimpleValue">
+      </FormZone> -->
       <SerisePagePanel>
       </SerisePagePanel>
     </el-tab-pane>
