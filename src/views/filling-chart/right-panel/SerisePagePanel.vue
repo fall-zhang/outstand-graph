@@ -14,7 +14,7 @@
       </div>
     </div>
     <ul class="cell-group">
-      <template v-for="option in currentOptionList" :key="option.keyId">
+      <!-- <template v-for="option in currentOptionList" :key="option.keyId">
         <li v-if="option.children" class="cell-item link-cell" @click="onJumpToSetting(option)">
           <span style="display: flex;">
             {{ option.keyName }}
@@ -29,7 +29,7 @@
         </li>
         <FormItem v-else :receiveValue="currentForm[option.keyId]" @change="(value) => onFormValueChange(value, option)"
           :form-option="option" />
-      </template>
+      </template> -->
     </ul>
   </div>
 </template>
@@ -37,7 +37,7 @@
 <script setup lang="ts">
 import FormItem from './components/FormItem.vue'
 import { Right as IconRight, Return as IconReturn, Help as IconHelp } from '@icon-park/vue-next'
-import formOptionList from './right-property'
+import formOptionList from './right-series'
 
 import { ref } from 'vue'
 import { deepClone } from '@/utils/utils'

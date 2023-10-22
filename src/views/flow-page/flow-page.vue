@@ -1,7 +1,7 @@
 <template>
-  <PageLayout title="云飞脑图" no-side>
+  <PageLayout title="云飞导图" no-side>
     <template #header-icon>
-      <BachelorDegreeIcon />
+      <IconReturn @click="onClickBack" class="g-icon-center" style="cursor: pointer;" />
     </template>
     <HeadTool ref="headTool" />
     <div class="graph-container" :class="setting.showPort ? '' : 'hidePort'">
@@ -15,7 +15,8 @@
   </PageLayout>
 </template>
 <script lang="ts" setup>
-import BachelorDegreeIcon from '@/components/icons/BachelorDegree.vue'
+// import BachelorDegreeIcon from '@/components/icons/BachelorDegree.vue'
+import { Return as IconReturn } from '@icon-park/vue-next'
 import { PageLayout } from '@/layout'
 import HeadTool from './head-panel/head-tool.vue'
 import RightProperty from './right-property/right-property.vue'
@@ -26,13 +27,16 @@ import basicShapes from './shape/basicShape'
 import { History } from '@antv/x6-plugin-history'
 import { Transform } from '@antv/x6-plugin-transform'
 import { Selection } from '@antv/x6-plugin-selection'
-import { GateWay, CheckOut } from './shape/bpmnShape'
+import { GateWay } from './shape/bpmnShape'
 import { startShape } from './shape/flowShape'
 import { useMagicKeys } from '@vueuse/core'
+
 
 import graphData from './testData/bpmnData.json'
 import './registerComponents'
 // 引入自定义组件文件
+const router = useRouter()
+const onClickBack = () => router.go(-1)
 const setting = reactive<any>({
   showPort: true // 显示连接
 })

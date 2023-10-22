@@ -3,18 +3,23 @@
     <el-tab-pane label="图表属性">
       <PropertyPagePanel :receiveValue="chartOption" @change="onChangeSimpleValue" />
     </el-tab-pane>
-    <!-- <el-tab-pane label="数据属性">
-      <FormZone :receiveValue="option.series" :formOption="{ keyId: 'series' }" @change="onChangeSimpleValue"></FormZone>
+    <el-tab-pane label="图表类型">
+      <FormZone :receiveValue="chartOption.series" :formOption="{ keyId: 'series' }" @change="onChangeSimpleValue">
+      </FormZone>
+      <SerisePagePanel>
+      </SerisePagePanel>
     </el-tab-pane>
-    <el-tab-pane label="配置代码">
+    <!-- <el-tab-pane label="配置代码">
       <FormJSON v-model="option" type="textarea" style="height:600px"></FormJSON>
     </el-tab-pane> -->
   </el-tabs>
 </template>
 
 <script lang="ts" setup>
+import FormZone from './old/FormZone.vue'
 import { v4 as uuid } from 'uuid'
 import PropertyPagePanel from './PropertyPagePanel.vue'
+import SerisePagePanel from './SerisePagePanel.vue'
 
 defineProps({
   chartOption: {

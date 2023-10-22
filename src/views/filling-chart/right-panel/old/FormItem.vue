@@ -93,11 +93,10 @@
 
 <script lang="ts">
 import { deepClone } from '@/utils/utils'
-import FormJSON from './components/FormJSON.vue'
+import FormJSON from '../components/FormItemJSON.vue'
 import { Refresh as Refresh, Help as QuestionFilled } from '@icon-park/vue-next'
 // import FormZone from './FormZone.vue';
 // import FormZone from './FormZone.vue'
-import { defineAsyncComponent, DefineComponent } from 'vue'
 const FormZone = () => import('./FormZone.vue')
 export default {
   name: 'FormItem',

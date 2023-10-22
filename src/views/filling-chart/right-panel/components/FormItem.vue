@@ -56,7 +56,7 @@
 
 <script lang="ts" setup>
 import { deepClone } from '@/utils/utils'
-import FormJSON from './components/FormJSON.vue'
+import FormJSON from './FormItemJSON.vue'
 import { Refresh as IconRefresh, Help as IconHelp } from '@icon-park/vue-next'
 const prop = defineProps({
   formOption: {
