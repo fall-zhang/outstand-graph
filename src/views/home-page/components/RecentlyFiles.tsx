@@ -1,4 +1,4 @@
-import style from './recently-files.module.scss'
+import style from './RecentlyFiles.module.scss'
 import { MoreOne as IconMoreOne } from '@icon-park/vue-next'
 export default {
   components: {

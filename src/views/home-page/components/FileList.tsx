@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 import { Star as IconStar, MoreOne as IconMoreOne } from '@icon-park/vue-next'
-import s from './file-list.module.scss'
+import s from './FileList.module.scss'
 
 
 export default {
@@ -8,13 +8,21 @@ export default {
     IconStar,
   },
   render() {
+    const currentSelect = ref<string>('全部')
+    const onFilterSelect = function (type: string) {
+      currentSelect.value = type
+    }
+    function onEnterChart(type: string) {
+      currentSelect.value = type
+    }
+
     return (<>
       <div class={s.header}>
         <div class={s.selectGroup}>
-          <a onClick={() => this.onFilterSelect('全部')} class={this.currentSelect === '全部' && s.select}>全部</a>
-          <a onClick={() => this.onFilterSelect('导图')} class={this.currentSelect === '导图' && s.select}>导图</a>
-          <a onClick={() => this.onFilterSelect('图表')} class={this.currentSelect === '图表' && s.select}>图表</a>
-          <a onClick={() => this.onFilterSelect('收藏')} class={this.currentSelect === '收藏' && s.select}>收藏</a>
+          <a onClick={() => onFilterSelect('全部')} class={currentSelect.value === '全部' && s.select}>全部</a>
+          <a onClick={() => onFilterSelect('导图')} class={currentSelect.value === '导图' && s.select}>导图</a>
+          <a onClick={() => onFilterSelect('图表')} class={currentSelect.value === '图表' && s.select}>图表</a>
+          <a onClick={() => onFilterSelect('收藏')} class={currentSelect.value === '收藏' && s.select}>收藏</a>
         </div>
         <div class={s.selectGroup}>
           {/* 回头制作视图切换的效果 */}
@@ -23,7 +31,7 @@ export default {
       <div class={s.chartFileGroup} >
         {
           new Array(12).fill('12').map((item) => {
-            return <div class={s.chartItem} onClick={() => this.onEnterChart()} >
+            return <div class={s.chartItem} onClick={() => onEnterChart(item)} >
               <div class={s.itemImg}>图片位置</div>
               <div class={s.itemText}>
                 <span>图片名称</span>
@@ -39,20 +47,14 @@ export default {
     </>)
   },
   setup() {
-    const currentSelect = ref<string>('全部')
-    function onFilterSelect(type: string) {
-      currentSelect.value = type
-    }
-    function onEnterChart(type: string) {
-      currentSelect.value = type
-    }
+
     // watch(currentSelect, (newVal) => {
     //   console.log(newVal)
     // })
     return {
-      onFilterSelect,
-      currentSelect,
-      onEnterChart
+      // onFilterSelect,
+      // currentSelect,
+      // onEnterChart
     }
   }
 }
