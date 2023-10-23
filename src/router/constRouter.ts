@@ -3,7 +3,7 @@ import { BlankLayout } from '../layout'
 const constRouters: RouteRecordRaw[] = [
   {
     path: '/home-page',
-    component: () =>/* 首页 */ import('@V/home-page/home-page.vue')
+    component: () =>/* 首页 */ import('@V/home-page/HomePage.vue')
   },
   {
     path: '/mind-map',
