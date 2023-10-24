@@ -32,13 +32,11 @@ module.exports = {
     'vue/attribute-hyphenation': 0, // 使用 - 分割去代替标签中大写的属性
     'vue/no-multiple-template-root': 0,
     // js
-    indent: ['off', 2], // 2 行缩进
+    indent: ['off', 2], // 2 行缩进，防止与默认格式化功能冲突，关闭
     semi: ['error', 'never'], // 禁止使用分号
-    'no-debugger': 'warn', // 使用 debugger 会警告
     'no-unused-vars': 1,
-    'no-else-return': 'error', // 如果 if 语句里面有 return ,后面不能跟 else 语句
+    'no-else-return': 'error', // 如果 if 语句里面有 return ,后面不能跟 else 语句，减少括号
     'space-infix-ops': ['error', { int32Hint: false }], // 要求操作符周围有空格
-    'no-multi-spaces': 'warn', // 禁止多个空格
     'no-multiple-empty-lines': ['error', { max: 2 }], // 空行最多不能超过2行
     'no-whitespace-before-property': 'error', // 禁止在属性前使用空格
     'space-before-blocks': 'error', // 在块之前强制保持一致的间距
@@ -48,6 +46,7 @@ module.exports = {
     'template-tag-spacing': ['error', 'always'], // 在模板标签及其文字之间需要空格
     'no-var': 'error', // 禁止使用 var
     'no-console': 'warn', // 使用 console 警告
+    'no-debugger': 'warn', // 使用 debugger 会警告
     'prefer-destructuring': [
       'error',
       {
@@ -90,7 +89,6 @@ module.exports = {
     'no-irregular-whitespace': 2,
     // ts
     'no-undef': 0, // 交给 TS 处理未命名的变量
-    // 使用 any 时警告
-    '@typescript-eslint/no-explicit-any': 1
+    '@typescript-eslint/no-explicit-any': 1, // 使用 any 时警告
   }
 }
