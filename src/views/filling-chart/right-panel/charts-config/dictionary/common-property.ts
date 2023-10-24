@@ -1,5 +1,7 @@
 // 通过 key 的方式提供配置
-export default {
+import type { EchartsOption } from '../../chart-config.d.ts'
+
+const commonProperty: Record<string, EchartsOption> = {
   backgroundColor: {
     keyId: 'backgroundColor',
     keyName: '背景颜色',
@@ -243,10 +245,22 @@ export default {
   bottom: {
     keyId: 'bottom',
     keyName: '下侧距离',
-    setters: ['select', 'number',],
+    setters: ['select', 'number'],
+    optionalValue: [
+      { label: 'auto', value: 'auto' }
+    ],
+    default: 'auto'
+  },
+  silent: {
+    keyId: 'silent',
+    keyName: '静默模式',
+    tips: '图形是否不响应和触发鼠标事件',
+    setters: ['switch'],
     optionalValue: [
       { label: 'auto', value: 'auto' }
     ],
     default: 'auto'
   },
 }
+
+export default commonProperty

@@ -1,12 +1,14 @@
 // echarts 的 xAxis 配置
 import setting from './dictionary/common-property'
+import type { EchartsOption } from '../chart-config.d.ts'
 const typeArr = [
   { label: '数据轴', value: 'value' },
   { label: '类目轴', value: 'category' },
   { label: '时间轴', value: 'time' },
   { label: '对数轴', value: 'log' },
 ]
-export default [
+
+const xAxis: Array<EchartsOption> = [
   // {
   //   keyId: "id",
   //   keyName: "ID",
@@ -123,7 +125,6 @@ export default [
     tips: '数据轴不会强制从零开始。不设置最大（最小）刻度值时有效，在x轴类型为数值时有效（type:value）',
     setters: ['input', 'number', 'function'],
     default: '',
-    optionEnable: ['!xAxis.max', 'xAxis.min']
   },
   {
     keyId: 'splitNumber',
@@ -316,3 +317,4 @@ export default [
   // setting.zlevel,
   setting.z,
 ]
+export default xAxis

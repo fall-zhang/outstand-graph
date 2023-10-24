@@ -1,10 +1,21 @@
 // import { seriesType } from './dictionary/common-series.js'
+import setting from './dictionary/common-property'
 const seriesType = [
   { label: '柱状图', value: 'bar' },
   { label: '折线图', value: 'line' },
   { label: '饼图', value: 'pie' }
 ]
 
+const symbolShpe = [
+  { label: '圆形', value: 'circle' },
+  { label: '矩形', value: 'rect' },
+  { label: '圆角矩形', value: 'roundRect' },
+  { label: '三角形', value: 'triangle' },
+  { label: '钻石', value: 'diamond' },
+  { label: '大头针', value: 'pin' },
+  { label: '箭头', value: 'arrow' },
+  { label: '无', value: 'none' },
+]
 export default [
   //   {
   //   keyId: 'type',
@@ -28,9 +39,13 @@ export default [
     default: '',
   },
   {
+    // 应该为数据添加新的内容
     keyId: 'data',
     keyName: '数据',
-    setters: ['json'],
+    setters: ['json', 'object'],
+    fillValue: [
+      213, 461, 124, 342, 197
+    ],
     default: `[]`,
   },
   {
@@ -79,16 +94,7 @@ export default [
     keyName: '标记图形类型',
     tips: '可以添加图片和 path 详情可见 https://echarts.apache.org/zh/option.html#series-line.symbol',
     setters: ['select', 'input'],
-    optionalValue: [
-      { label: '圆形', value: 'circle' },
-      { label: '矩形', value: 'rect' },
-      { label: '圆角矩形', value: 'roundRect' },
-      { label: '三角形', value: 'triangle' },
-      { label: '钻石', value: 'diamond' },
-      { label: '大头针', value: 'pin' },
-      { label: '箭头', value: 'arrow' },
-      { label: '无', value: 'none' },
-    ],
+    optionalValue: symbolShpe,
     default: 'emptyCircle',
   },
   {
@@ -253,5 +259,314 @@ export default [
       }
     ],
     default: {},
+  },
+  {
+    keyId: 'labelLayout',
+    keyName: '标签布局配置',
+    tips: '该配置项是在每个系列默认的标签布局基础上，统一调整标签的(x, y)位置，标签对齐等属性以实现想要的标签布局效果。',
+    setters: ['object', 'function'],
+    childern: [
+      {
+        keyId: 'hideOverlap',
+        keyName: '是否隐藏重叠的标签',
+        setters: ['switch'],
+        default: false
+      }
+    ],
+    default: {},
+  },
+  {
+    keyId: 'itemStyle',
+    keyName: '总样式',
+    tips: '折线拐点标志的样式。',
+    setters: ['object'],
+    childern: [
+      {
+        keyId: 'color',
+        keyName: '显示端点标签',
+        setters: ['color', 'input'],
+        default: ''
+      }
+    ],
+    default: {},
+  },
+  {
+    keyId: 'lineStyle',
+    keyName: '线段的样式',
+    setters: ['object'],
+    childern: [
+      {
+        keyId: 'color',
+        keyName: '显示端点标签',
+        setters: ['color', 'input'],
+        default: ''
+      }
+    ],
+    default: {},
+  },
+  {
+    keyId: 'areaStyle',
+    keyName: '填充的样式',
+    tips: '设置后显示成区域面积图。',
+    setters: ['object'],
+    childern: [
+      {
+        keyId: 'color',
+        keyName: '显示端点标签',
+        setters: ['color', 'input'],
+        default: ''
+      }
+    ],
+    default: {},
+  },
+  {
+    keyId: 'emphasis',
+    keyName: '强调的样式',
+    tips: '设置后显示成区域面积图。',
+    setters: ['object'],
+    childern: [
+      {
+        keyId: 'disable',
+        keyName: '关闭强调样式',
+        setters: ['switch'],
+        default: false
+      }
+    ],
+    default: {},
+  },
+  {
+    keyId: 'blur',
+    keyName: '淡出状态',
+    tips: '开启 emphasis.focus 后有效。',
+    setters: ['object'],
+    childern: [
+      {
+        keyId: 'label',
+        keyName: '标签样式',
+        setters: ['object'],
+        default: {},
+        children: [
+          {
+            keyId: 'show',
+            keyName: '展示标签',
+            setters: ['switch'],
+            default: false
+          }
+        ]
+      },
+      {
+        keyId: 'labelLine',
+        keyName: '视觉引导线样式',
+        setters: ['object'],
+        default: {},
+        children: [
+          {
+            keyId: 'show',
+            keyName: '展示引导线',
+            setters: ['switch'],
+            default: false
+          }
+        ]
+      }
+    ],
+    default: {},
+  },
+  {
+    keyId: 'selectMode',
+    keyName: '选中模式',
+    setters: ['switch', 'select'],
+    optionalValue: [
+      { label: '单个', value: 'single' },
+      { label: '多选', value: 'multiple' },
+      { label: '系列', value: 'series' },
+    ],
+    default: false,
+  },
+  {
+    keyId: 'select',
+    keyName: '选中状态样式',
+    tips: '折线图的选中状态',
+    setters: ['object'],
+    childern: [
+      {
+        keyId: 'disable',
+        keyName: '是否可以被选中',
+        setters: ['switch'],
+        default: false
+      }
+    ],
+    default: {},
+  },
+  {
+    keyId: 'smooth',
+    keyName: '平滑曲线',
+    setters: ['boolean', 'number'],
+    default: false,
+  },
+  {
+    keyId: 'smoothMonotone',
+    keyName: '平滑单调性',
+    tips: '在一个维度上保持单调性，通常在双数值轴上使用。',
+    setters: ['boolean', 'number'],
+    optionalValue: [
+      { label: 'x 轴', value: 'x' },
+      { label: 'y 轴', value: 'y' },
+    ],
+    default: false,
+  },
+  {
+    keyId: 'sampling',
+    keyName: '多数据采样策略',
+    tips: '折线图在数据量远大于像素点时候的降采样策略，开启后可以有效的优化图表的绘制效率',
+    setters: ['select'],
+    optionalValue: [
+      { label: 'lttb 算法', value: 'lttb' }, // 采用 Largest-Triangle-Three-Bucket 算法，
+      { label: '过滤点平均值', value: 'avreage' },
+      { label: '过滤点最大值', value: 'max' },
+      { label: '过滤点最小值', value: 'min' },
+      { label: '过滤点和', value: 'sum' },
+    ],
+    default: '',
+  },
+  {
+    keyId: 'dimensions',
+    keyName: '维度信息',
+    tips: '定义 series.data 或者（数据集）dataset.source 的每个维度的信息。',
+    // https://echarts.apache.org/zh/option.html#series-line.dimensions
+    setters: ['array'],
+    default: '',
+  },
+  {
+    keyId: 'encode',
+    keyName: '编码格式',
+    tips: '定义 data 的哪个维度被编码成什么。',
+    setters: ['array'],
+    default: '',
+  },
+  {
+    keyId: 'seriesLayoutBy',
+    keyName: '数据集对应列',
+    tips: '指定了 dataset（数据集）用行还是列对应到系列上',
+    setters: ['select'],
+    optionalValue: [
+      { label: '列', value: 'column' },
+      { label: '行', value: 'row' },
+    ],
+    default: '',
+  },
+  {
+    keyId: 'datasetIndex',
+    keyName: '数据集对应列',
+    tips: '指定了 dataset（数据集）用行还是列对应到系列上',
+    setters: ['select'],
+    optionalValue: [
+      { label: '过滤点最小值', value: 'column' },
+      { label: '过滤点和', value: 'row' },
+    ],
+    default: '',
+  },
+  {
+    keyId: 'dataGroupId',
+    keyName: '数据共有id',
+    tips: '系列所有数据共有的组 ID',
+    setters: ['select'],
+    optionalValue: [
+      { label: '过滤点最小值', value: 'column' },
+      { label: '过滤点和', value: 'row' },
+    ],
+    default: '',
+  },
+  {
+    keyId: 'markPoint',
+    keyName: '图表标注点',
+    setters: ['object'],
+    children: [{
+      keyId: 'symbol',
+      keyName: '图形类型',
+      setters: ['select', 'input'],
+      optionalValue: symbolShpe,
+      default: 'pin'
+    }],
+    default: '',
+  },
+  {
+    keyId: 'markLine',
+    keyName: '图表标注线',
+    setters: ['object'],
+    children: [{
+      keyId: 'silent',
+      keyName: '安静模式',
+      setters: ['switch'],
+      tips: '图形是否不响应和触发鼠标事件',
+      default: false
+    }],
+    default: '',
+  },
+  {
+    keyId: 'markArea',
+    keyName: '图表标域',
+    setters: ['object'],
+    children: [{
+      keyId: 'silent',
+      keyName: '安静模式',
+      setters: ['switch'],
+      tips: '图形是否不响应和触发鼠标事件',
+      default: false
+    }],
+    default: '',
+  },
+  setting.zlevel,
+  setting.z,
+  setting.silent,
+  setting.animation,
+  setting.animationDelay,
+  setting.animationDelayUpdate,
+  setting.animationDuration,
+  setting.animationDurationUpdate,
+  setting.animationEasing,
+  setting.animationEasingUpdate,
+  setting.animationThreshold,
+  {
+    keyId: 'universalTransition',
+    keyName: '全局过渡动画',
+    setters: ['object'],
+    children: [{
+      keyId: 'enabled',
+      keyName: '是否开启',
+      setters: ['switch'],
+      tips: '图形是否不响应和触发鼠标事件',
+      default: false
+    }],
+    default: '',
+  },
+  {
+    keyId: 'universalTransition',
+    keyName: '全局过渡动画',
+    setters: ['object'],
+    children: [{
+      keyId: 'enabled',
+      keyName: '是否开启',
+      setters: ['switch'],
+      tips: '图形是否不响应和触发鼠标事件',
+      default: false
+    }],
+    default: '',
+  },
+  {
+    keyId: 'tooltip',
+    keyName: '提示设置',
+    tips: '系列 tooltip 设定',
+    setters: ['object'],
+    children: [{
+      keyId: 'position',
+      keyName: '是否开启',
+      setters: ['select'],
+      optionalValue: [
+        { label: 'auto', value: 'auto' }
+      ],
+      tips: '图形是否不响应和触发鼠标事件',
+      default: false
+    }],
+    default: '',
   },
 ]
