@@ -15,11 +15,10 @@
   </PageLayout>
 </template>
 <script lang="ts" setup>
-// import BachelorDegreeIcon from '@/components/icons/BachelorDegree.vue'
 import { Return as IconReturn } from '@icon-park/vue-next'
 import { PageLayout } from '@/layout'
-import HeadTool from './head-panel/head-tool.vue'
-import RightProperty from './right-property/right-property.vue'
+import HeadTool from './head-panel/HeadTool.vue'
+import RightProperty from './right-property/RightProperty.vue'
 import { Edge, Graph } from '@antv/x6'
 import { Stencil } from '@antv/x6-plugin-stencil'
 import type { Cell, Node } from '@antv/x6'
