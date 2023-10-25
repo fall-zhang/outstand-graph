@@ -16,18 +16,23 @@
     </div>
     <ul class="cell-group">
       <template v-for="option in currentOptionList" :key="option.keyId">
-        <li v-if="option.children" class="cell-item link-cell" @click="onJumpToSetting(option)">
-          <span style="display: flex;">
-            {{ option.keyName }}
-            <el-tooltip v-if="option.tips" placement="top">
-              <IconHelp theme="filled" class="g-icon-center" />
-              <template #content>
-                <div v-html="option.tips"></div>
-              </template>
-            </el-tooltip>
-          </span>
-          <IconRight class="g-icon-center" size="18px" />
-        </li>
+        <el-popover v-if="option.children" placement="left">
+          <el-button>添加</el-button>
+          <template #reference>
+            <li class="cell-item link-cell" @click="onJumpToSetting(option)">
+              <span style="display: flex;">
+                {{ option.keyName }}
+                <el-tooltip v-if="option.tips" placement="top">
+                  <IconHelp theme="filled" class="g-icon-center" />
+                  <template #content>
+                    <div v-html="option.tips"></div>
+                  </template>
+                </el-tooltip>
+              </span>
+              <IconRight class="g-icon-center" size="18px" />
+            </li>
+          </template>
+        </el-popover>
         <FormItem v-else :receiveValue="currentForm[option.keyId]" @change="(value) => onFormValueChange(value, option)"
           :form-option="option" />
       </template>

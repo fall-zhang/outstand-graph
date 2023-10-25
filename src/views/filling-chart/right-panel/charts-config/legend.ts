@@ -303,13 +303,13 @@ const legend: EchartsOption[] = [
     default: {},
     children: textStyle.children
   },
-  {
-    keyId: 'tooltip',
-    tips: '图例提示，默认同 tooltip',
-    keyName: '图例提示',
-    setters: ['object'],
-    default: {},
-  },
+  // {
+  //   keyId: 'tooltip',
+  //   tips: '图例提示，默认同 tooltip',
+  //   keyName: '图例提示',
+  //   setters: ['object'],
+  //   default: {},
+  // },
   {
     keyId: 'icon',
     tips: '可以为 DataURI，或者通过 image://url 添加图片链接，path://path 添加矢量路径',

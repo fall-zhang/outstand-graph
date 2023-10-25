@@ -290,11 +290,11 @@ const xAxis: Array<EchartsOption> = [
         keyId: 'show',
         keyName: '展示指示器',
         setters: ['switch'],
-        default: true,
+        default: false,
       },
       {
         keyId: 'type',
-        keyName: '标签内容',
+        keyName: '指示器类型',
         setters: ['select'],
         optionalValue: [
           { label: '线型', value: 'line' },

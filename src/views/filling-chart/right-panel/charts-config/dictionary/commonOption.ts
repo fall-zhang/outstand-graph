@@ -143,23 +143,23 @@ export const tooltip: EchartsOption = {
   children: []
 }
 
-export const labelConfig: EchartsOption = {
-  keyId: 'tooltip',
-  keyName: '提示信息',
-  setters: ['object'],
-  children: []
-}
+// export const labelConfig: EchartsOption = {
+//   keyId: 'tooltip',
+//   keyName: '提示信息',
+//   setters: ['object'],
+//   children: []
+// }
 
-export const lineStyleConfig: EchartsOption = {
-  keyId: 'tooltip',
-  keyName: '提示信息',
-  setters: ['object'],
-  children: []
-}
+// export const lineStyleConfig: EchartsOption = {
+//   keyId: 'tooltip',
+//   keyName: '提示信息',
+//   setters: ['object'],
+//   children: []
+// }
 
-export const crossStyleConfig: EchartsOption = {
-  keyId: 'tooltip',
-  keyName: '提示信息',
-  setters: ['object'],
-  children: []
-}
+// export const crossStyleConfig: EchartsOption = {
+//   keyId: 'tooltip',
+//   keyName: '提示信息',
+//   setters: ['object'],
+//   children: []
+// }

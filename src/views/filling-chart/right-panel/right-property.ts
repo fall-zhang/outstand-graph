@@ -7,6 +7,7 @@ import tooltipConfig from './charts-config/tooltip'
 import { textStyle } from './charts-config/dictionary/commonOption'
 
 import type { EchartsOption } from './chart-config.d.ts'
+import polar from './charts-config/polar'
 const rightProperty: Array<EchartsOption> = [
   {
     keyId: 'xAxis',
@@ -33,6 +34,21 @@ const rightProperty: Array<EchartsOption> = [
     keyId: 'legend',
     tips: '需要数据提供名称（name）属性',
     keyName: '图例',
+    setters: ['array'],
+    default: {},
+    children: legendConfig
+  },
+  {
+    keyId: 'polar',
+    tips: '极坐标需要搭配极坐标系角度轴使用，angleAxis',
+    keyName: '极坐标',
+    setters: ['array'],
+    default: {},
+    children: polar
+  },
+  {
+    keyId: 'angleAxis',
+    keyName: '极坐标轴',
     setters: ['array'],
     default: {},
     children: legendConfig
