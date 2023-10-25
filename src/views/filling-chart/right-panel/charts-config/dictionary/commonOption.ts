@@ -1,5 +1,12 @@
-// import { seriesType } from "./common-series"
-export const textStyle = {
+
+/**
+ * 用于定义一些经常出现的大对象，类似于
+ * tooltip、textStyle
+ */
+
+import type { EchartsOption } from '../../chart-config.d.ts'
+
+export const textStyle: EchartsOption = {
   keyId: 'textStyle',
   keyName: '字体样式',
   setters: ['object'],
@@ -126,72 +133,33 @@ export const textStyle = {
   ],
   default: {}
 }
-export const richTextChildren = textStyle.children.concat([
-  {
-    keyId: 'rich',
-    keyName: '富文本',
-    tips: '<a href="https://echarts.apache.org/zh/option.html#title.textStyle.rich" target="blank">富文本介绍（点击进入）</a>',
-    setters: ['json'],
-    default: '',
-  },
-])
 
-export const positionConfig = [
-  {
-    keyId: 'left',
-    keyName: '左侧距离',
-    setters: ['number', 'select'],
-    optionalValue: [
-      { label: '自动对齐', value: 'auto' },
-      { label: '左侧对齐', value: 'left' },
-      { label: '中心对齐', value: 'center' },
-      { label: '右侧对齐', value: 'right' },
-    ],
-    default: 0
-  },
-  {
-    keyId: 'top',
-    keyName: '上侧距离',
-    setters: ['number', 'select'],
-    optionalValue: [
-      { label: '自动对齐', value: 'auto' },
-      { label: '顶部对齐', value: 'top' },
-      { label: '中心对齐', value: 'middle' },
-      { label: '底部对齐', value: 'bottom' },
-    ],
-    default: 0
-  },
-  {
-    keyId: 'right',
-    keyName: '右侧距离',
-    setters: ['number', 'select'],
-    optionalValue: [
-      { label: 'auto', value: 'auto' }
-    ],
-    default: 0
-  },
-  {
-    keyId: 'bottom',
-    keyName: '下侧距离',
-    setters: ['number', 'select'],
-    optionalValue: [
-      { label: 'auto', value: 'auto' }
-    ],
-    default: 0
-  },
-]
 
-// 有 Label 属性时的配置
-export const labelConfig = [
-  // show , precision , formatter , margin , color , fontStyle , fontWeight , fontFamily , fontSize , lineHeight , width , height , textBorderColor , textBorderWidth , textBorderType , textBorderDashOffset , textShadowColor , textShadowBlur , textShadowOffsetX , textShadowOffsetY , overflow , ellipsis , padding , backgroundColor , borderColor , borderWidth , shadowBlur , shadowColor , shadowOffsetX , shadowOffsetY
-]
+// tooltip 的配置
+export const tooltip: EchartsOption = {
+  keyId: 'tooltip',
+  keyName: '提示信息',
+  setters: ['object'],
+  children: []
+}
 
-export const lineStyleConfig = [
-  // color , width , type , dashOffset , cap , join , miterLimit , shadowBlur , shadowColor , shadowOffsetX , shadowOffsetY , opacity
-]
-export const shadowStyleConfig = [
-  // color , shadowBlur , shadowColor , shadowOffsetX , shadowOffsetY , opacity
-]
-export const crossStyleConfig = [
-  // color , width , type , dashOffset , cap , join , miterLimit , shadowBlur , shadowColor , shadowOffsetX , shadowOffsetY , opacity
-]
+export const labelConfig: EchartsOption = {
+  keyId: 'tooltip',
+  keyName: '提示信息',
+  setters: ['object'],
+  children: []
+}
+
+export const lineStyleConfig: EchartsOption = {
+  keyId: 'tooltip',
+  keyName: '提示信息',
+  setters: ['object'],
+  children: []
+}
+
+export const crossStyleConfig: EchartsOption = {
+  keyId: 'tooltip',
+  keyName: '提示信息',
+  setters: ['object'],
+  children: []
+}

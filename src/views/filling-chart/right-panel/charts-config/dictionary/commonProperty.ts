@@ -1,4 +1,7 @@
-// 通过 key 的方式提供配置
+/**
+ * 通过 key 的方式提供单个属性的配置
+ */
+
 import type { EchartsOption } from '../../chart-config.d.ts'
 
 const commonProperty: Record<string, EchartsOption> = {
