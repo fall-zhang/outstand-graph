@@ -1,5 +1,5 @@
 // echarts 的 xAxis 配置
-import setting from './dictionary/common-property'
+import setting from './dictionary/commonProperty'
 import type { EchartsOption } from '../chart-config.d.ts'
 const typeArr = [
   { label: '数据轴', value: 'value' },

@@ -4,7 +4,7 @@ import titleConfig from './charts-config/title'
 import yAxisConfig from './charts-config/yAxis'
 import legendConfig from './charts-config/legend'
 import tooltipConfig from './charts-config/tooltip'
-import { textStyle } from './charts-config/dictionary/common-option'
+import { textStyle } from './charts-config/dictionary/commonOption'
 
 import type { EchartsOption } from './chart-config.d.ts'
 const rightProperty: Array<EchartsOption> = [
@@ -58,10 +58,10 @@ const rightProperty: Array<EchartsOption> = [
   },
   {
     keyId: 'tooltip',
-    keyName: '背景颜色',
+    keyName: '提示信息',
     setters: ['color', 'input'],
     default: {},
-    config: tooltipConfig
+    children: tooltipConfig
   },
   textStyle,
   {

@@ -1,5 +1,7 @@
-import { richTextChildren, positionConfig } from './dictionary/common-option'
-export default [
+import { textStyle } from './dictionary/commonOption'
+import setting from './dictionary/commonProperty'
+import type { EchartsOption } from '../chart-config.d.ts'
+const title: Array<EchartsOption> = [
   {
     keyId: 'show',
     keyName: '显示标题',
@@ -34,7 +36,7 @@ export default [
     keyName: '标题字体样式',
     setters: ['object'],
     default: {},
-    children: richTextChildren,
+    children: textStyle.children,
   },
   {
     keyId: 'subtext',
@@ -63,7 +65,7 @@ export default [
     keyName: '副标题字体样式',
     setters: ['object'],
     default: {},
-    children: richTextChildren,
+    children: textStyle.children,
   },
   {
     keyId: 'textAlign',
@@ -122,13 +124,11 @@ export default [
   //   setters: ['number', 'slider'],
   //   default: 1
   // },
-  ...positionConfig,
-  {
-    keyId: 'backgroundColor',
-    keyName: '背景颜色',
-    setters: ['input', 'color'],
-    default: 'transparent'
-  },
+  setting.left,
+  setting.right,
+  setting.top,
+  setting.bottom,
+  setting.backgroundColor,
   {
     keyId: 'borderColor',
     keyName: '边框背景颜色',
@@ -172,3 +172,5 @@ export default [
     default: 0
   },
 ]
+
+export default title

@@ -7,11 +7,11 @@ const constRouters: RouteRecordRaw[] = [
   },
   {
     path: '/mind-map',
-    component: () => /* 流程设计 */import('@V/flow-page/flow-page.vue')
+    component: () => /* 流程设计 */import('@V/flow-page/FlowPage.vue')
   },
   {
     path: '/chart-generate',
-    component: () => /* 图表生成 */import('@V/chart-generate/chart-generate.vue')
+    component: () => /* 图表生成 */import('@V/chart-generate/ChartGenerate.vue')
   },
   {
     path: '/filling-chart',

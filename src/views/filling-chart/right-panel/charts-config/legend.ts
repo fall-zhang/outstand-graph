@@ -1,7 +1,8 @@
 // 图例可以为多个
-import { positionConfig, richTextChildren } from './dictionary/common-option'
-import setting from './dictionary/common-property.js'
-export default [
+import { textStyle } from './dictionary/commonOption'
+import setting from './dictionary/commonProperty.js'
+import type { EchartsOption } from '../chart-config.d.ts'
+const legend: EchartsOption[] = [
   {
     keyId: 'type',
     keyName: '图例的类型',
@@ -300,7 +301,7 @@ export default [
     keyName: '文本样式',
     setters: ['object'],
     default: {},
-    children: richTextChildren
+    children: textStyle.children
   },
   {
     keyId: 'tooltip',
@@ -493,3 +494,5 @@ export default [
     default: 10
   },
 ]
+
+export default legend

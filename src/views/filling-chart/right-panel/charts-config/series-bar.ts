@@ -1,5 +1,5 @@
 // import { seriesType } from './dictionary/common-series.js'
-import setting from './dictionary/common-property'
+import setting from './dictionary/commonProperty'
 const seriesType = [
   { label: '柱状图', value: 'bar' },
   { label: '折线图', value: 'line' },

@@ -1,13 +1,14 @@
-import { textStyle } from './dictionary/common-option.js'
-import setting from './dictionary/common-property.js'
-export default [
+import { textStyle } from './dictionary/commonOption.js'
+import setting from './dictionary/commonProperty.js'
+import type { EchartsOption } from '../chart-config.d.ts'
+const tooltip: EchartsOption[] = [
   {
     keyId: 'show',
     keyName: '展示提示',
     setters: ['switch'],
     default: false,
-    type: 'object'
-  }, {
+  },
+  {
     keyId: 'trigger',
     keyName: '触发时机',
     setters: ['switch'],
@@ -17,11 +18,11 @@ export default [
       { label: '坐标轴触发', value: 'axis' },
       { label: '不触发', value: 'none' },
     ],
-  }, {
+  },
+  {
     keyId: 'axisPointer',
     keyName: '触发时机',
     setters: ['object'],
-    type: 'object',
     default: {},
     children: [{
       keyId: 'type',
@@ -54,7 +55,6 @@ export default [
       keyId: 'label',
       keyName: '指示器文本',
       setters: ['switch'],
-      type: 'object',
       default: {},
       children: [{
         keyId: 'show',
@@ -66,7 +66,6 @@ export default [
       keyId: 'lineStyle',
       keyName: '触发时机',
       setters: ['switch'],
-      type: 'object',
       default: {},
       children: [{
         keyId: 'show',
@@ -78,7 +77,6 @@ export default [
       keyId: 'shadowStyle',
       keyName: '阴影',
       setters: ['switch'],
-      type: 'object',
       default: {},
       children: [{
         keyId: 'show',
@@ -90,7 +88,6 @@ export default [
       keyId: 'crossStyle',
       keyName: '触发时机',
       setters: ['switch'],
-      type: 'object',
       default: {},
       children: [{
         keyId: 'show',
@@ -108,19 +105,22 @@ export default [
     setting.animationEasingUpdate,
     setting.animationDelayUpdate,
     ],
-  }, {
+  },
+  {
     keyId: 'showContent',
     keyName: '显示框浮层',
     setters: ['switch'],
     tips: '只需 tooltip 触发事件或显示 axisPointer 而不需要显示内容时可配置该项为 false',
     default: true,
-  }, {
+  },
+  {
     keyId: 'alwaysShowContent',
     keyName: '一直显示内容',
     setters: ['switch'],
     tips: '在移出可触发提示框区域后是否展示',
     default: false,
-  }, {
+  },
+  {
     keyId: 'triggerOn',
     keyName: '触发时机',
     setters: ['select'],
@@ -263,3 +263,5 @@ export default [
     default: 'seriesAsc',
   }
 ]
+
+export default tooltip
