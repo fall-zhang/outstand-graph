@@ -13,7 +13,7 @@
     "commit": "git-cz"
   },
   "lint-staged": {
-    "*.{js,vue,jsx,tsx}": [
+    "*.{js,vue,jsx,tsx,ts}": [
       "eslint --fix"
     ]
   },

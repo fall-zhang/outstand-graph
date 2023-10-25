@@ -17,15 +17,17 @@
 
 - [ ] 补充图标属性的 options
   - [x] 补充 tooltip
-  - [ ] 补充 line
-  - [ ] 补充 bar
+  - [x] 补充 line
+  - [x] 补充 grid
+  - [ ] 补充 polar
+  - [ ] 补充 radar
   - [ ] 补充 pie
   - [ ] 补充 treemap
   - [ ] 补充 radar
   - [ ] 补充 sunburst
   - [ ] 补充 gauge
   - [ ] 补充 pictorialBar
-  - [ ] 添加共同的属性，common-options
+  - [ ] 添加共同的属性，commonOptions
 - [ ] 出码时可以切换出码的形式（出码为 Vue2、Vue3、setup、纯 js、React-tsx）
 - [ ] 配置项可以考虑抽屉弹出，或者可以扩展配置项的列数
 - [ ] 点击 ？问号时，跳转到（echarts 官网）
@@ -41,6 +43,7 @@
 - [ ] 注重代码分割，确保分割后的代码加载符合用户使用规律
 - [ ] 最好注册 service worker，当客户端闲置的时候，将用到的代码推送到客户端（防止多次载入）
 - [ ] 对异步加载的组件进行处理，如果出错，给用户展示要么反馈，要么重新加载
+- [ ] 目前只在最顶层设置 tooltips
 - [ ] 选项过滤，对配置进行搜索，获取特定内容
   - [ ] 根据 id 生成图表的功能
   - [ ] 项目主目录
