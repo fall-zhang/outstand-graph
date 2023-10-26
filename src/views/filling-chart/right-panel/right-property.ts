@@ -4,10 +4,12 @@ import titleConfig from './charts-config/title'
 import yAxisConfig from './charts-config/yAxis'
 import legendConfig from './charts-config/legend'
 import tooltipConfig from './charts-config/tooltip'
+import radiusAxis from './charts-config/radiusAxis'
 import { textStyle } from './charts-config/dictionary/commonOption'
 
 import type { EchartsOption } from './chart-config.d.ts'
 import polar from './charts-config/polar'
+import axisPointer from './charts-config/axisPointer'
 const rightProperty: Array<EchartsOption> = [
   {
     keyId: 'xAxis',
@@ -47,8 +49,16 @@ const rightProperty: Array<EchartsOption> = [
     children: polar
   },
   {
+    keyId: 'radiusAxis',
+    tips: '极坐标需要搭配极坐标系角度轴使用，angleAxis',
+    keyName: '极坐标径向轴',
+    setters: ['array'],
+    default: {},
+    children: radiusAxis
+  },
+  {
     keyId: 'angleAxis',
-    keyName: '极坐标轴',
+    keyName: '极坐标角度轴',
     setters: ['array'],
     default: {},
     children: legendConfig
@@ -75,9 +85,16 @@ const rightProperty: Array<EchartsOption> = [
   {
     keyId: 'tooltip',
     keyName: '提示信息',
-    setters: ['color', 'input'],
+    setters: ['object'],
     default: {},
     children: tooltipConfig
+  },
+  {
+    keyId: 'axisPointer',
+    keyName: '坐标轴指示器',
+    setters: ['object'],
+    default: {},
+    children: axisPointer
   },
   textStyle,
   {
