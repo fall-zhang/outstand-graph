@@ -1,7 +1,7 @@
 'use strict'
 module.exports = {
   types: [
-    { value: '👾issue', name: '修复:    issue 有专门的代号' }, // 此项特别针对bug号，用于向测试反馈bug列表的bug修改情况
+    { value: '👾issue', name: '修复:    issue 有专门的代号' }, // 此项特别针对 bug 号，用于向测试反馈 bug 列表的 bug 修改情况
     { value: '✨新增', name: '新增:    新的内容' },
     { value: '🐛修复', name: '修复:    修复一个Bug' },
     { value: '📝文档', name: '文档:    变更的只有文档' },
@@ -19,7 +19,7 @@ module.exports = {
     { name: 'assets' },
     { name: 'markdown' }
   ],
-  // override the messages, defaults are as follows
+  // 通过下面的字段，覆盖默认提示信息
   messages: {
     type: '选择一种你的提交类型:',
     scope: '选择一个scope (可选):',
