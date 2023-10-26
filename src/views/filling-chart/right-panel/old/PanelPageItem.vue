@@ -60,6 +60,7 @@ const currentSetter = ref('')
 const allSetters = ref('')
 const basicSetterType = ref(['dd', 'aa'])
 const complexSetterType = ref(['dd', 'aa'])
+const setterIndex = ref(0)
 function onChangeComplexValue() {
 
 }

@@ -176,7 +176,7 @@ export default {
       }
     },
     // 嵌套数据类型时的处理方法嵌套 FormItem
-    onChangeChild(option, value) {
+    onChangeChild(option: any, value) {
       this.formValue[option.keyId] = value
       // console.log('当前的值为', value)
       // console.log('当前的属性', option.keyId)

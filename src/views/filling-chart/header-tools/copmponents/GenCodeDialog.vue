@@ -38,25 +38,27 @@ function onOpened() {
 onMounted(() => {
   console.log(chartOption)
 })
-function onSelectTab(label) {
+function onSelectTab(label: any) {
+  if (!monacoEditor.value) {
+    console.error('找不到 monaco 编辑器')
+    return
+  }
   if (label.props.label === 'Vue2') {
     const code = genVue2Code(chartOption)
-    if (monacoEditor.value) {
-      monacoEditor.value.getModel()?.setValue(code)
-    }
+    monacoEditor.value.getModel()?.setValue(code)
   } else if (label.props.label === 'Vue3') {
     const code = genVue3Code(chartOption)
-    monacoEditor.value.getModel().setValue(code)
+    monacoEditor.value.getModel()?.setValue(code)
   } else if (label.props.label === 'Vue3 setup') {
     const code = genVue3SetupCode(chartOption)
-    monacoEditor.value.getModel().setValue(code)
+    monacoEditor.value.getModel()?.setValue(code)
   }
   console.log()
 }
 function onValueChange() {
   // 更新值
-  monacoEditor.value.getModel().getValue()
-  monacoEditor.value.getModel().setValue()
+  // monacoEditor.value.getModel().getValue()
+  // monacoEditor.value.getModel().setValue()
 }
 </script>
 

@@ -171,7 +171,8 @@ export default defineComponent({
         this.currentData = [this.currentData]
       }
       this.currentData.push({
-        id: currentId
+        id: currentId,
+        type: ''
       })
     }
   }

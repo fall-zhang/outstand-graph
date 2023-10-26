@@ -50,7 +50,7 @@ export default {
       require: true,
       type: String,
       default: 'medium',
-      validator(size) {
+      validator(size: string) {
         return ['small', 'medium', 'large'].includes(size)
       }
     }
@@ -58,7 +58,8 @@ export default {
   emits: ['update:modelValue', 'confirm', 'cancel', 'largeSize', 'miniSize'],
   data() {
     return {
-      forceLarge: true
+      forceLarge: true,
+      visible: false
     }
   },
   computed: {},
