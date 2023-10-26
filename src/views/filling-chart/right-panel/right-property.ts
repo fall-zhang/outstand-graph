@@ -50,7 +50,6 @@ const rightProperty: Array<EchartsOption> = [
   },
   {
     keyId: 'radiusAxis',
-    tips: '极坐标需要搭配极坐标系角度轴使用，angleAxis',
     keyName: '极坐标径向轴',
     setters: ['array'],
     default: {},

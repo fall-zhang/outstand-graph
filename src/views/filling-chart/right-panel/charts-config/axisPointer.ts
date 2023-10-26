@@ -6,6 +6,7 @@
 import type { EchartsOption } from '../chart-config.d.ts'
 import setting from './dictionary/commonProperty'
 
-const angleAxis: EchartsOption[] = [
+const axisPointer: EchartsOption[] = [
 
 ]
+export default axisPointer

@@ -1,3 +1,7 @@
+/**
+ * 提示信息
+ * 只在全局进行设置
+ */
 import { textStyle } from './dictionary/commonOption.js'
 import setting from './dictionary/commonProperty.js'
 import type { EchartsOption } from '../chart-config.d.ts'

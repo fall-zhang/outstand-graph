@@ -264,6 +264,48 @@ const commonProperty: Record<string, EchartsOption> = {
     ],
     default: 'auto'
   },
+  splitNumber: {
+    keyId: 'splitNumber',
+    keyName: '分割段数',
+    tips: '表示大致分割段数，类目轴无效',
+    setters: ['number'],
+    default: 5
+  },
+  minInterval: {
+    keyId: 'minInterval',
+    keyName: '坐标轴最小间隔',
+    tips: '可以设置成 1 保证坐标轴分割刻度显示成整数',
+    setters: ['number'],
+    default: undefined
+  },
+  maxInterval: {
+    keyId: 'maxInterval',
+    keyName: '坐标轴最大间隔',
+    tips: '设置成 3600 * 24 * 1000 保证坐标轴分割刻度最大为一天，数值轴和有效',
+    setters: ['number'],
+    default: undefined
+  },
+  interval: {
+    keyId: 'interval',
+    keyName: '强制设置分隔',
+    tips: '设置成 3600 * 24 * 1000 保证坐标轴分割刻度最大为一天，数值轴和有效',
+    setters: ['number'],
+    default: undefined
+  },
+  logBase: {
+    keyId: 'logBase',
+    keyName: '对数轴的底数',
+    tips: '设置成 3600 * 24 * 1000 保证坐标轴分割刻度最大为一天，数值轴和有效',
+    setters: ['number'],
+    default: undefined
+  },
+  triggerEvent: {
+    keyId: 'triggerEvent',
+    keyName: '标签事件响应',
+    tips: '坐标轴的标签是否响应和触发鼠标事件，默认不响应。',
+    setters: ['switch'],
+    default: false
+  },
 }
 
 export default commonProperty
