@@ -48,7 +48,7 @@ export const getRandomId = function () {
  * @returns 移除该事件的函数
  */
 // 之后需要添加上节流相关方法
-export const addListener = (target: HTMLElement, event: string, fun: { (): void }) => {
+export const addListener = (target: Document | Window, event: string, fun: { (ev: any): void }) => {
   target.addEventListener(event, fun)
   return function () {
     target.removeEventListener(event, fun)

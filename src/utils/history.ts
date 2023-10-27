@@ -6,7 +6,7 @@
 
 import produce from 'immer'
 class History {
-  private historyArr = []
+  private historyArr: Array<any> = []
   private maxStep = 10
   private currentList = []
   private currentIndex = -1

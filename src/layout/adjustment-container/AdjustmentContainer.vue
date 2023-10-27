@@ -32,17 +32,22 @@ const originPosition = reactive({
 const onShow = ref(false)
 onMounted(() => {
 })
-const container = ref(null)
-function onMouseDown(ev) {
+const container = ref<HTMLElement>()
+function onMouseDown(ev: MouseEvent) {
   onShow.value = true
-  console.log(ev.clientX)
   originPosition.left = ev.clientX
   const listener = addListener(document, 'mousemove', (ev) => {
     const movingDistance = ev.clientX - originPosition.left
+    if (!container.value) {
+      return
+    }
     container.value.style.width = originPosition.origin + movingDistance + 'px'
   })
   const listener2 = addListener(window, 'mouseup', (ev) => {
     const movingDistance = ev.clientX - originPosition.left
+    if (!container.value) {
+      return
+    }
     container.value.style.width = originPosition.origin + movingDistance + 'px'
     originPosition.origin = originPosition.origin + movingDistance
     onShow.value = false

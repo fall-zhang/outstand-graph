@@ -3,7 +3,7 @@
 // 如果数组中没有内容，删除该属性
 // 如果为 show false，压缩会去掉该属性
 import { genTemplateCode } from './genSplitPart'
-export function genVue3Code(option) {
+export function genVue3Code(option: any) {
   const templateCode = genTemplateCode(option)
   const jsCode = `
   <script>
@@ -39,7 +39,7 @@ export function genVue3Code(option) {
   return templateCode + jsCode
 }
 
-export function genVue3SetupCode(option) {
+export function genVue3SetupCode(option: any) {
   const templateCode = genTemplateCode(option)
 
   return templateCode + `
@@ -67,9 +67,9 @@ export default{
   `
 }
 
-export const genVue2Code = (option) => {
+export const genVue2Code = (option: any) => {
   const chartOption = JSON.stringify(option, null, 2)
-  console.log(chartOption)
+  // console.log(chartOption)
   return `
     <template>
     <div style="height: 600px;width: 860px;">

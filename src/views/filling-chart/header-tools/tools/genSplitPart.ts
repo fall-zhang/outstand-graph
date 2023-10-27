@@ -1,5 +1,5 @@
 
-export const genJSCode = (option) => {
+export const genJSCode = (option: any) => {
   const chartOption = JSON.stringify(option)
   return `
   import { init } from 'echarts';
@@ -10,7 +10,7 @@ export const genJSCode = (option) => {
 `
 }
 
-export const genTemplateCode = (option) => {
+export const genTemplateCode = (option: any) => {
   return `
   <template>
   <div style="height: 600px;width: 860px;">

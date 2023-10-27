@@ -20,8 +20,9 @@
   - [x] 补充 line
   - [x] 补充 grid
   - [x] 补充 polar
-  - [x] 补充 radiusAxis
-  - [x] 补充 axisPointer
+  - [x] 补充 radiusAxis 极坐标径向轴
+  - [ ] 补充 angleAxis 极坐标角度轴
+  - [ ] 补充 axisPointer 坐标轴指示器
   - [ ] 补充 radar
   - [ ] 补充 pie
   - [ ] 补充 treemap

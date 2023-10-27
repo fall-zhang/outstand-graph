@@ -10,7 +10,7 @@
 
 export default {
   name: 'FormJSON',
-  emits: ['update:modelValue'],
+  emits: ['update:modelValue', 'change'],
   props: {
     modelValue: {
       type: String,
@@ -19,16 +19,19 @@ export default {
     }
   },
   data() {
+    const boundValue: {
+      (): void
+    } | Function = () => { }
     return {
       jsonValue: '',
-      boundValue: null,
-      timberFun: null
+      boundValue,
+      timberFun: -1
     }
   },
   computed: {},
   watch: {},
   created() {
-    this.jsonValue = JSON.stringify(this.value)
+    this.jsonValue = JSON.stringify(this.modelValue)
   },
   methods: {
     onChangeJSONValue() {
