@@ -12,13 +12,13 @@ const radiusAxis: EchartsOption[] = [
   //   setters: ['input'],
   //   default: '',
   // },
-  {
-    keyId: 'polarIndex',
-    keyName: '极坐标索引',
-    tips: '径向轴所在的极坐标系的索引',
-    setters: ['number'],
-    default: true,
-  },
+  // {
+  //   keyId: 'polarIndex',
+  //   keyName: '极坐标索引',
+  //   tips: '径向轴所在的极坐标系的索引',
+  //   setters: ['number'],
+  //   default: true,
+  // },
   {
     keyId: 'type',
     keyName: '坐标轴类型',
@@ -156,7 +156,7 @@ const radiusAxis: EchartsOption[] = [
   {
     keyId: 'splitLine',
     keyName: '分割提示线',
-    tips: 'grid 区域中的分隔线。',
+    tips: 'grid 区域中的分隔线（坐标弧度轴）',
     setters: ['object'],
     default: {},
     children: [
@@ -171,7 +171,7 @@ const radiusAxis: EchartsOption[] = [
   {
     keyId: 'minorSplitLine',
     keyName: '次分割提示线',
-    tips: 'grid 区域中的分隔线。',
+    tips: 'grid 区域中的分隔线（坐标弧度轴）',
     setters: ['object'],
     default: {},
     children: [
@@ -186,7 +186,7 @@ const radiusAxis: EchartsOption[] = [
   {
     keyId: 'splitArea',
     keyName: '分隔区域颜色',
-    tips: 'grid 区域中的分隔各个区域的颜色。',
+    tips: 'grid 区域中的分隔各个区域的颜色（坐标弧度分割）',
     setters: ['object'],
     default: {},
     children: [

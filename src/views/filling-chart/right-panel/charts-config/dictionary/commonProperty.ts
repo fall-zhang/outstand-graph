@@ -254,15 +254,30 @@ const commonProperty: Record<string, EchartsOption> = {
     ],
     default: 'auto'
   },
-  silent: {
-    keyId: 'silent',
-    keyName: '静默模式',
-    tips: '图形是否不响应和触发鼠标事件',
-    setters: ['switch'],
+  // 坐标轴相关设置
+  min: {
+    keyId: 'min',
+    keyName: '坐标轴最小刻度',
+    tips: '不设置时会自动计算最小值保证坐标轴刻度的均匀分布',
+    setters: ['number', 'select', 'function'],
     optionalValue: [
-      { label: 'auto', value: 'auto' }
+      { label: '数据最小值', value: 'dataMin' }
     ],
-    default: 'auto'
+    default: undefined
+  },
+  max: {
+    keyId: 'max',
+    keyName: '坐标轴最大刻度',
+    tips: '不设置时会自动计算最大值保证坐标轴刻度的均匀分布',
+    setters: ['number', 'select', 'function'],
+    default: undefined
+  },
+  scale: {
+    keyId: 'scale',
+    keyName: '包含零刻度',
+    tips: '只在数值轴中有效',
+    setters: ['switch'],
+    default: undefined
   },
   splitNumber: {
     keyId: 'splitNumber',
@@ -298,6 +313,16 @@ const commonProperty: Record<string, EchartsOption> = {
     tips: '设置成 3600 * 24 * 1000 保证坐标轴分割刻度最大为一天，数值轴和有效',
     setters: ['number'],
     default: undefined
+  },
+  silent: {
+    keyId: 'silent',
+    keyName: '静默模式',
+    tips: '图形是否不响应和触发鼠标事件',
+    setters: ['switch'],
+    optionalValue: [
+      { label: 'auto', value: 'auto' }
+    ],
+    default: 'auto'
   },
   triggerEvent: {
     keyId: 'triggerEvent',
