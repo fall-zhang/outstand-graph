@@ -15,12 +15,15 @@
 </template>
 
 <script setup lang="ts">
-import ChartCanvas from './chart-canvas/ChartCanvas.vue'
-import RightPanel from './right-panel/RightPanel.vue'
+// import ChartCanvas from './chart-canvas/ChartCanvas.vue'
+// import RightPanel from './right-panel/RightPanel.vue'
 import HeaderTools from './header-tools/HeaderTools.vue'
 import { Return as IconReturn } from '@icon-park/vue-next'
 import { PageLayout } from '@/layout'
 import { v4 as uuid } from 'uuid'
+
+const ChartCanvas = defineAsyncComponent(() => import('./chart-canvas/ChartCanvas.vue'))
+const RightPanel = defineAsyncComponent(() => import('./right-panel/RightPanel.vue'))
 const router = useRouter()
 
 const onClickBack = () => router.go(-1)
