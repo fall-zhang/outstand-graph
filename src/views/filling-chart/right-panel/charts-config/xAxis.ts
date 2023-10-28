@@ -280,32 +280,33 @@ const xAxis: Array<EchartsOption> = [
     ],
     default: {},
   },
-  {
-    keyId: 'axisPointer',
-    keyName: '鼠标指示器',
-    tips: '鼠标在数据轴上移动时的表现，默认会在显示 tooltip.trigger 为 axis 时显示',
-    setters: ['object'],
-    children: [
-      {
-        keyId: 'show',
-        keyName: '展示指示器',
-        setters: ['switch'],
-        default: false,
-      },
-      {
-        keyId: 'type',
-        keyName: '指示器类型',
-        setters: ['select'],
-        optionalValue: [
-          { label: '线型', value: 'line' },
-          { label: '阴影', value: 'shadow' },
-          { label: '无', value: 'none' },
-        ],
-        default: 'none',
-      },
-    ],
-    default: {},
-  },
+  // 指示器使用全局设置
+  // {
+  //   keyId: 'axisPointer',
+  //   keyName: '鼠标指示器',
+  //   tips: '鼠标在数据轴上移动时的表现，默认会在显示 tooltip.trigger 为 axis 时显示',
+  //   setters: ['object'],
+  //   children: [
+  //     {
+  //       keyId: 'show',
+  //       keyName: '展示指示器',
+  //       setters: ['switch'],
+  //       default: false,
+  //     },
+  //     {
+  //       keyId: 'type',
+  //       keyName: '指示器类型',
+  //       setters: ['select'],
+  //       optionalValue: [
+  //         { label: '线型', value: 'line' },
+  //         { label: '阴影', value: 'shadow' },
+  //         { label: '无', value: 'none' },
+  //       ],
+  //       default: 'none',
+  //     },
+  //   ],
+  //   default: {},
+  // },
   setting.animation,
   setting.animationThreshold,
   setting.animationDuration,

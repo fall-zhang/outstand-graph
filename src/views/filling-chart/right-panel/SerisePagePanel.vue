@@ -3,13 +3,9 @@
   <div class="right-panel">
     <div class="panel-title">
       <h3 style="display: flex;justify-content: space-between">
-        <IconReturn @click="onClickBack" class="g-icon-center" style="width: 40px;" />
+        <IconReturn @click="onClickBack" class="g-icon-center" style="width: 40px;cursor: pointer;" />
         {{ "图表类型" }}
-        <div style="width: 40px;">
-          <el-tooltip content="添加图表">
-            <IconPlus @click="onAddChart" size="22" v-show="currentPath.length === 0" class="g-icon-center" />
-          </el-tooltip>
-        </div>
+        <div style="width: 40px;"></div>
       </h3>
       <div>
         <a @click="onChangeOption(-1)">图表</a>
@@ -18,29 +14,23 @@
         </a>
       </div>
     </div>
+    {{ currentForm }}
     <ul class="cell-group">
-      <!-- currentPath 长度为 0 时使用 -->
-      <li class="cell-item complex-cell">
-        <el-select size="small" :min="0" :max="20">
+      <li class="cell-item complex-cell" style="justify-content: space-between;display: flex;">
+        <el-select v-model="currentSeriesType" size="small" :min="0" :max="20">
           <el-option label="柱状图" value="bar"> </el-option>
         </el-select>
+        <el-button type="primary" size="small">添加</el-button>
       </li>
-      <!-- <template v-for="option in currentOptionList" :key="option.keyId">
-        <li v-if="option.children" class="cell-item link-cell" @click="onJumpToSetting(option)">
-          <span style="display: flex;">
-            {{ option.keyName }}
-            <el-tooltip v-if="option.tips" placement="top">
-              <IconHelp theme="filled" class="g-icon-center" />
-              <template #content>
-                <div v-html="option.tips"></div>
-              </template>
-            </el-tooltip>
-          </span>
-          <IconRight class="g-icon-center" size="18px" />
-        </li>
-        <FormItem v-else :receiveValue="currentForm[option.keyId]" @change="(value) => onFormValueChange(value, option)"
-          :form-option="option" />
-      </template> -->
+      <!-- 首页，当前所拥有的图表和数据配置 -->
+      <li class="cell-item link-cell" v-for="(series, index) in currentForm" :key="series.id"
+        @click="onSelectSeries(index)">
+        <span style="display: flex;">
+          {{ '折线图' }}{{ series.name || '' }}
+          <IconHelp theme="filled" class="g-icon-center" />
+        </span>
+        <IconRight class="g-icon-center" size="18px" />
+      </li>
     </ul>
   </div>
 </template>
@@ -52,6 +42,7 @@ import formOptionList from './right-property'
 
 import { ref } from 'vue'
 import { deepClone } from '@/utils/utils'
+const currentSeriesType = ref('bar')
 const prop = defineProps({
   receiveValue: {
     require: true,
@@ -60,42 +51,32 @@ const prop = defineProps({
   }
 })
 const emit = defineEmits(['change'])
-const currentForm = ref()
+const currentForm = ref<any>()
 
-const currentPath = ref([{
-  keyName: '横轴',
-  keyId: 'xAxis'
-}])
-
-const receiveForm = ref(deepClone(prop.receiveValue))
+const currentPath = ref<any[]>([])
+const receiveForm = reactive(deepClone(prop.receiveValue))
 const currentOptionList = ref<Array<any>>([])
 watch(currentPath, () => {
-  // console.log(6464)
-
   let newVal: unknown = formOptionList
-  let newForm: any = receiveForm.value
-
-  currentPath.value.forEach(path => {
-    if (!Array.isArray(newVal)) {
-      return
-    }
-    newVal.forEach(option => {
-      if (path.keyId === option.keyId && option.children) {
-        newVal = option.children
-        if (newForm[path.keyId]) {
-          newForm = newForm[path.keyId]
-        } else {
-          newForm[path.keyId] = {}
-          // console.log("🚀 ~ file: PropertyPagePanel.vue:70 ~ watch ~ path:", path)
-          newForm = newForm[path.keyId]
-          // console.log('🚀 ~ file: PropertyPagePanel.vue:71 ~ watch ~ newForm:', newForm)
-          // throw new Error('键值不匹配')
-        }
-      }
-    })
-  })
+  let newForm: any = receiveForm
+  // currentPath.value.forEach(path => {
+  //   if (!Array.isArray(newVal)) {
+  //     return
+  //   }
+  //   newVal.forEach(option => {
+  //     if (path.keyId === option.keyId && option.children) {
+  //       newVal = option.children
+  //       if (newForm[path.keyId]) {
+  //         newForm = newForm[path.keyId]
+  //       } else {
+  //         newForm[path.keyId] = {}
+  //         newForm = newForm[path.keyId]
+  //       }
+  //     }
+  //   })
+  // })
   currentOptionList.value = newVal as []
-  currentForm.value = newForm
+  currentForm.value = newForm.series
 }, {
   immediate: true,
   deep: true
@@ -109,32 +90,34 @@ function onChangeOption(index: number) {
 }
 
 function onClickBack() {
-  currentPath.value.pop()
+  console.log(currentPath.value.length)
+
+  if (currentPath.value.length === 0) {
+    // 暂无处理
+    currentForm.value = receiveForm.series
+  } else {
+    currentPath.value.pop()
+  }
 }
 function onFormValueChange(value: any, option: any) {
-  let resss: any = receiveForm.value
+  let resss: any = receiveForm
   if (currentPath.value.length > 0) {
     currentPath.value.forEach(item => {
       resss = resss[item.keyId]
     })
   } else if (currentPath.value.length === 0) {
-    resss = receiveForm.value
+    resss = receiveForm
   }
   // console.log(resss, value)
   resss[option?.keyId] = value
-  emit('change', receiveForm.value)
+  emit('change', receiveForm)
 }
 
-function onAddChart(setting: { keyId: string, keyName: string }) {
-  // console.log("🚀 ~ file: PropertyPagePanel.vue:101 ~ onJumpToSetting ~ setting:", setting)
-  currentPath.value.push({
-    keyId: setting.keyId,
-    keyName: setting.keyName
-  })
-  // console.log(currentPath.value)
+function onSelectSeries(index: number) {
+  currentForm.value = receiveForm.series[index]
 }
+
 function onJumpToSetting(setting: { keyId: string, keyName: string }) {
-  // console.log("🚀 ~ file: PropertyPagePanel.vue:101 ~ onJumpToSetting ~ setting:", setting)
   currentPath.value.push({
     keyId: setting.keyId,
     keyName: setting.keyName

@@ -6,7 +6,7 @@
     <el-tab-pane label="图表类型">
       <!-- <FormZone :receiveValue="chartOption.series" :formOption="{ keyId: 'series' }" @change="onChangeSimpleValue">
       </FormZone> -->
-      <SerisePagePanel>
+      <SerisePagePanel :receiveValue="chartOption">
       </SerisePagePanel>
     </el-tab-pane>
     <!-- <el-tab-pane label="配置代码">
