@@ -14,27 +14,51 @@
         </a>
       </div>
     </div>
-    <!-- {{ currentForm }} -->
+    {{ currentForm }}
     <ul class="cell-group">
-      <li class="cell-item complex-cell" style="justify-content: space-between;display: flex;">
-        <el-select v-model="currentSeriesType" size="small" :min="0" :max="20">
-          <el-option v-for="(value, key) in chartType" :label="value" :value="key" :key="key"> </el-option>
-        </el-select>
-        <el-button type="primary" size="small">添加</el-button>
-      </li>
-      <!-- 首页，当前所拥有的图表和数据配置 -->
-      <li class="cell-item link-cell" v-for="(series, index) in currentForm" :key="series.id"
-        @click="onSelectSeries(index)">
-        <span style="display: flex;">
-          {{ series.type }}
-          {{ chartType[series.type] }}{{ series.name || '' }}
-          <IconHelp theme="filled" class="g-icon-center" />
-        </span>
-        <IconRight class="g-icon-center" size="18px" />
-      </li>
+      <!-- 根配置 -->
+      <template v-if="isRootConfig">
+        <li class="cell-item complex-cell" style="justify-content: space-between;display: flex;">
+          <el-select v-model="currentSeriesType" size="small" :min="0" :max="20">
+            <el-option v-for="(value, key) in chartType" :label="value" :value="key" :key="key"> </el-option>
+          </el-select>
+          <el-button type="primary" size="small">添加</el-button>
+        </li>
+        <!-- 首页，当前所拥有的图表和数据配置 -->
+        <li class="cell-item link-cell" v-for="(series, index) in currentForm" :key="series.id"
+          @click="onSelectSeries(index, series.type)">
+          <span style="display: flex;">
+            {{ series.type }}
+            {{ chartType[series.type] }}{{ series.name || '' }}
+            <IconHelp theme="filled" class="g-icon-center" />
+          </span>
+          <IconRight class="g-icon-center" size="18px" />
+        </li>
+      </template>
+      <template v-else>
+        <template v-for="option in currentOptionList" :key="option.keyId">
+          <el-popover v-if="option.children" placement="left">
+            <el-button>添加</el-button>
+            <template #reference>
+              <li class="cell-item link-cell" @click="onJumpToSetting(option)">
+                <span style="display: flex;">
+                  {{ option.keyName }}
+                  <el-tooltip v-if="option.tips" placement="top">
+                    <IconHelp theme="filled" class="g-icon-center" />
+                    <template #content>
+                      <div v-html="option.tips"></div>
+                    </template>
+                  </el-tooltip>
+                </span>
+                <IconRight class="g-icon-center" size="18px" />
+              </li>
+            </template>
+          </el-popover>
+          <FormItem v-else :receiveValue="currentForm[option.keyId]" @change="(value) => onFormValueChange(value, option)"
+            :form-option="option" />
+        </template>
+      </template>
       <!-- 属性详情渲染 -->
-      <!-- <FormItem :receiveValue="currentForm[option.keyId]" @change="(value) => onFormValueChange(value, option)"
-          :form-option="option" /> -->
     </ul>
   </div>
 </template>
@@ -42,7 +66,7 @@
 <script setup lang="ts">
 import FormItem from './components/FormItem.vue'
 import { Right as IconRight, Return as IconReturn, Help as IconHelp, Plus as IconPlus } from '@icon-park/vue-next'
-import formOptionList from './right-property'
+import formOptionList from './right-series'
 
 import { ref } from 'vue'
 import { deepClone } from '@/utils/utils'
@@ -69,14 +93,38 @@ const chartType = reactive<Record<string, string>>({
   sankey: '桑基图',
 })
 const emit = defineEmits(['change'])
+
+const isRootConfig = ref<boolean>(true)
 const currentForm = ref<any>()
 
 const currentPath = ref<any[]>([])
 const receiveForm = reactive(deepClone(prop.receiveValue))
 const currentOptionList = ref<Array<any>>([])
 watch(currentPath, () => {
-  let newVal: unknown = formOptionList
+  let newVal: unknown = currentOptionList.value
+  let newForm: any = receiveForm.value
   currentOptionList.value = newVal as []
+  currentPath.value.forEach(path => {
+    if (!Array.isArray(newVal)) {
+      return
+    }
+    newVal.forEach(option => {
+      if (path.keyId === option.keyId && option.children) {
+        newVal = option.children
+        if (newForm[path.keyId]) {
+          newForm = newForm[path.keyId]
+        } else {
+          newForm[path.keyId] = {}
+          // console.log("🚀 ~ file: PropertyPagePanel.vue:70 ~ watch ~ path:", path)
+          newForm = newForm[path.keyId]
+          // console.log('🚀 ~ file: PropertyPagePanel.vue:71 ~ watch ~ newForm:', newForm)
+          // throw new Error('键值不匹配')
+        }
+      }
+    })
+  })
+  currentOptionList.value = newVal as []
+  currentForm.value = newForm
   currentForm.value = receiveForm.series
 }, {
   immediate: true,
@@ -85,6 +133,7 @@ watch(currentPath, () => {
 function onChangeOption(index: number) {
   if (index < 0) {
     currentPath.value = []
+    isRootConfig.value = true
   } else {
     currentPath.value = currentPath.value.slice(0, index + 1)
   }
@@ -92,8 +141,8 @@ function onChangeOption(index: number) {
 
 function onClickBack() {
   if (currentPath.value.length === 0) {
-    // 暂无处理
     currentForm.value = receiveForm.series
+    isRootConfig.value = true
   } else {
     currentPath.value.pop()
   }
@@ -112,8 +161,10 @@ function onFormValueChange(value: any, option: any) {
   emit('change', receiveForm)
 }
 
-function onSelectSeries(index: number) {
+function onSelectSeries(index: number, type: string) {
+  isRootConfig.value = false
   currentForm.value = receiveForm.series[index]
+  currentOptionList.value = formOptionList[type]
 }
 
 function onJumpToSetting(setting: { keyId: string, keyName: string }) {
