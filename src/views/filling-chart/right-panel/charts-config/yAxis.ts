@@ -44,7 +44,7 @@ const yAxis: EchartsOption[] = [
   // },
   {
     keyId: 'position',
-    keyName: 'x 轴的位置',
+    keyName: 'y 轴的位置',
     tips: '默认为下侧，另一个数据轴在另一侧',
     setters: ['select'],
     default: 'left',

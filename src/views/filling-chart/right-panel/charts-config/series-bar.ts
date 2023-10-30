@@ -1,5 +1,6 @@
 // import { seriesType } from './dictionary/common-series.js'
 import setting from './dictionary/commonProperty'
+import type { EchartsOption } from '../chart-config.d.ts'
 const seriesType = [
   { label: '柱状图', value: 'bar' },
   { label: '折线图', value: 'line' },
@@ -16,7 +17,7 @@ const symbolShpe = [
   { label: '箭头', value: 'arrow' },
   { label: '无', value: 'none' },
 ]
-export default [
+const seriesBar: EchartsOption[] = [
   //   {
   //   keyId: 'type',
   //   keyName: '图表类型',
@@ -43,9 +44,9 @@ export default [
     keyId: 'data',
     keyName: '数据',
     setters: ['json', 'object'],
-    fillValue: [
-      213, 461, 124, 342, 197
-    ],
+    // fillValue: [
+    //   213, 461, 124, 342, 197
+    // ],
     default: `[]`,
   },
   {
@@ -134,7 +135,7 @@ export default [
     keyName: '显示全部 symbol',
     tips: '类目轴（category）时有效如果 false 则只有在 tooltip hover 的时候显示。',
     setters: ['select'],
-    optionValue: [
+    optionalValue: [
       { label: '显示所有图形', value: true },
       { label: '随主轴标签间隔隐藏策略', value: false },
       { label: '根据空间适应', value: 'auto' }
@@ -160,7 +161,7 @@ export default [
     keyName: '数据堆叠策略',
     tips: '相同标志的数据会进行堆叠',
     setters: ['select'],
-    optionValue: [
+    optionalValue: [
       { label: '符号相同（同为正或负）', value: 'samesign' },
       { label: '堆叠所有的值', value: 'all' },
       { label: '只堆积正值', value: 'positive' },
@@ -173,7 +174,7 @@ export default [
     keyName: '手势',
     tips: '和 CSS 的手势相同',
     setters: ['select'],
-    optionValue: [
+    optionalValue: [
       { label: '符号相同（同为正或负）', value: 'pointer' },
       { label: '堆叠所有的值', value: 'all' },
       { label: '只堆积正值', value: 'positive' },
@@ -209,7 +210,7 @@ export default [
   {
     keyId: 'step',
     keyName: '阶梯线图',
-    optionValue: [
+    optionalValue: [
       { label: '起始', value: 'start' },
       { label: '中心', value: 'middle' },
       { label: '结尾', value: 'end' },
@@ -221,7 +222,7 @@ export default [
     keyId: 'label',
     keyName: '文本标签',
     setters: ['object'],
-    childern: [
+    children: [
       {
         keyId: 'show',
         keyName: '显示标签',
@@ -235,7 +236,7 @@ export default [
     keyId: 'endLabel',
     keyName: '折线端点标签',
     setters: ['object'],
-    childern: [
+    children: [
       {
         keyId: 'show',
         keyName: '显示端点标签',
@@ -250,7 +251,7 @@ export default [
     keyName: '视觉引导线',
     tips: '标签的视觉引导线配置',
     setters: ['object'],
-    childern: [
+    children: [
       {
         keyId: 'show',
         keyName: '显示端点标签',
@@ -265,7 +266,7 @@ export default [
     keyName: '标签布局配置',
     tips: '该配置项是在每个系列默认的标签布局基础上，统一调整标签的(x, y)位置，标签对齐等属性以实现想要的标签布局效果。',
     setters: ['object', 'function'],
-    childern: [
+    children: [
       {
         keyId: 'hideOverlap',
         keyName: '是否隐藏重叠的标签',
@@ -280,7 +281,7 @@ export default [
     keyName: '总样式',
     tips: '折线拐点标志的样式。',
     setters: ['object'],
-    childern: [
+    children: [
       {
         keyId: 'color',
         keyName: '显示端点标签',
@@ -294,7 +295,7 @@ export default [
     keyId: 'lineStyle',
     keyName: '线段的样式',
     setters: ['object'],
-    childern: [
+    children: [
       {
         keyId: 'color',
         keyName: '显示端点标签',
@@ -309,7 +310,7 @@ export default [
     keyName: '填充的样式',
     tips: '设置后显示成区域面积图。',
     setters: ['object'],
-    childern: [
+    children: [
       {
         keyId: 'color',
         keyName: '显示端点标签',
@@ -324,7 +325,7 @@ export default [
     keyName: '强调的样式',
     tips: '设置后显示成区域面积图。',
     setters: ['object'],
-    childern: [
+    children: [
       {
         keyId: 'disable',
         keyName: '关闭强调样式',
@@ -339,7 +340,7 @@ export default [
     keyName: '淡出状态',
     tips: '开启 emphasis.focus 后有效。',
     setters: ['object'],
-    childern: [
+    children: [
       {
         keyId: 'label',
         keyName: '标签样式',
@@ -387,7 +388,7 @@ export default [
     keyName: '选中状态样式',
     tips: '折线图的选中状态',
     setters: ['object'],
-    childern: [
+    children: [
       {
         keyId: 'disable',
         keyName: '是否可以被选中',
@@ -400,14 +401,14 @@ export default [
   {
     keyId: 'smooth',
     keyName: '平滑曲线',
-    setters: ['boolean', 'number'],
+    setters: ['switch', 'number'],
     default: false,
   },
   {
     keyId: 'smoothMonotone',
     keyName: '平滑单调性',
     tips: '在一个维度上保持单调性，通常在双数值轴上使用。',
-    setters: ['boolean', 'number'],
+    setters: ['switch', 'number'],
     optionalValue: [
       { label: 'x 轴', value: 'x' },
       { label: 'y 轴', value: 'y' },
@@ -570,3 +571,5 @@ export default [
     default: '',
   },
 ]
+
+export default seriesBar
