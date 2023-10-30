@@ -12,28 +12,31 @@ type Recurrence = 'array' | 'object'
 // 以 children 的 keyId 作为 key 的对象构成
 
 
-type OptionalSelect = Array<{ label: string, value: string }>
+type OptionalSelect = Array<{ label: string, value: string | boolean }>
 interface EchartsOption {
-  keyId: string, // ehcarts 中的属性名称
-  keyName: string, // 当前内容高度
-  setters: Array<ChartSettersSimple | ChartSettersComplex | Recurrence>, // 多个设置方式，如果是数值，可以采用 slider，滑块
-  optionalValue?: OptionalSelect, // 提供 select 或者级联选择调取，可选值
-  tips?: string, // 提供的详情介绍
-  default?: unknown, // 默认内容同 echarts 提供的内容
-  children?: Array<EchartsOption>, // 子属性节点
-  // 当某些属性启动时，可以使用
-  // optionEnable: ['!xAxis.max', 'xAxis.min']
+  keyId: string,
+  keyName: string,
+  setters: Array<ChartSettersSimple | ChartSettersComplex | Recurrence>,
+  optionalValue?: OptionalSelect,
+  tips?: string,
+  default?: unknown,
+  children?: Array<EchartsOption>,
+
 }
 
 // 示例
 // {
 //   keyId: "show", // ehcarts 中的属性名称
-//   keyName: "高度", // 当前内容高度
-//   setters: ['input'], // 多个设置方式，如果是数值，可以采用 slider，滑块
+//   keyName: "显示",
+//   setters: ['switch'], // 多个设置方式，如果是数值，可以采用 slider，滑块
 //   optionalVal: [], // 提供 select 或者级联选择调取，可选值
 //   tips: "", // 提供的详情介绍
 //   default: "", // 默认内容同 echarts 提供的内容
 //   children: [], // 子属性节点
+//   当某些属性启动时，可以使用
+//   optionEnable: ['!xAxis.max', 'xAxis.min']
+//   当想要使用默认填充的时候，可以使用
+//   fillValue:[213, 461, 124, 342, 197]
 // }
 
 export {

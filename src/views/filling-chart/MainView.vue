@@ -66,11 +66,6 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-.left-panel {
-  flex-shrink: 0;
-  flex-grow: 0;
-}
-
 .main-graph {
   flex-grow: 1;
   flex-shrink: 1;
