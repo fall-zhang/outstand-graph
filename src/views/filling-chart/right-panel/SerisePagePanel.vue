@@ -14,11 +14,11 @@
         </a>
       </div>
     </div>
-    {{ currentForm }}
+    <!-- {{ currentForm }} -->
     <ul class="cell-group">
       <li class="cell-item complex-cell" style="justify-content: space-between;display: flex;">
         <el-select v-model="currentSeriesType" size="small" :min="0" :max="20">
-          <el-option label="柱状图" value="bar"> </el-option>
+          <el-option v-for="(value, key) in chartType" :label="value" :value="key" :key="key"> </el-option>
         </el-select>
         <el-button type="primary" size="small">添加</el-button>
       </li>
@@ -26,11 +26,15 @@
       <li class="cell-item link-cell" v-for="(series, index) in currentForm" :key="series.id"
         @click="onSelectSeries(index)">
         <span style="display: flex;">
-          {{ '折线图' }}{{ series.name || '' }}
+          {{ series.type }}
+          {{ chartType[series.type] }}{{ series.name || '' }}
           <IconHelp theme="filled" class="g-icon-center" />
         </span>
         <IconRight class="g-icon-center" size="18px" />
       </li>
+      <!-- 属性详情渲染 -->
+      <!-- <FormItem :receiveValue="currentForm[option.keyId]" @change="(value) => onFormValueChange(value, option)"
+          :form-option="option" /> -->
     </ul>
   </div>
 </template>
@@ -50,6 +54,20 @@ const prop = defineProps({
     default: () => ({})
   }
 })
+const chartType = reactive<Record<string, string>>({
+  line: '折线图',
+  bar: '柱状图',
+  pie: '饼图',
+  scatter: '散点（气泡）图',
+  radar: '雷达图图',
+  map: '地图',
+  tree: '树图',
+  sunburst: '旭日图',
+  boxplot: '箱型图',
+  heatmap: '热力图',
+  graph: '关系图',
+  sankey: '桑基图',
+})
 const emit = defineEmits(['change'])
 const currentForm = ref<any>()
 
@@ -58,25 +76,8 @@ const receiveForm = reactive(deepClone(prop.receiveValue))
 const currentOptionList = ref<Array<any>>([])
 watch(currentPath, () => {
   let newVal: unknown = formOptionList
-  let newForm: any = receiveForm
-  // currentPath.value.forEach(path => {
-  //   if (!Array.isArray(newVal)) {
-  //     return
-  //   }
-  //   newVal.forEach(option => {
-  //     if (path.keyId === option.keyId && option.children) {
-  //       newVal = option.children
-  //       if (newForm[path.keyId]) {
-  //         newForm = newForm[path.keyId]
-  //       } else {
-  //         newForm[path.keyId] = {}
-  //         newForm = newForm[path.keyId]
-  //       }
-  //     }
-  //   })
-  // })
   currentOptionList.value = newVal as []
-  currentForm.value = newForm.series
+  currentForm.value = receiveForm.series
 }, {
   immediate: true,
   deep: true
@@ -90,8 +91,6 @@ function onChangeOption(index: number) {
 }
 
 function onClickBack() {
-  console.log(currentPath.value.length)
-
   if (currentPath.value.length === 0) {
     // 暂无处理
     currentForm.value = receiveForm.series
