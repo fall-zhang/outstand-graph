@@ -2,8 +2,9 @@
 <template>
   <div class="right-panel">
     <div class="panel-title">
-      <h3 style="display: flex;justify-content: space-between">
-        <IconReturn @click="onClickBack" class="g-icon-center" style="width: 40px;cursor: pointer;" />
+      <h3 style="position: relative;">
+        <IconReturn v-show="!isRootConfig" @click="onClickBack"
+          style="cursor: pointer;position: absolute;left: 16px;top: 6px;" />
         {{ "图表类型" }}
         <div style="width: 40px;"></div>
       </h3>
@@ -18,42 +19,48 @@
     <ul class="cell-group">
       <!-- 根配置 -->
       <template v-if="isRootConfig">
-        <li class="cell-item complex-cell" style="justify-content: space-between;display: flex;">
-          <el-select v-model="currentSeriesType" size="small" :min="0" :max="20">
+        <li class="cell-item add-method">
+          <el-select v-model="currentSeriesType" size="small">
             <el-option v-for="(value, key) in chartType" :label="value" :value="key" :key="key"> </el-option>
           </el-select>
           <el-button type="primary" size="small">添加</el-button>
         </li>
         <!-- 首页，当前所拥有的图表和数据配置 -->
-        <li class="cell-item link-cell" v-for="(series, index) in currentForm" :key="series.id"
-          @click="onSelectSeries(index, series.type)">
-          <span style="display: flex;">
-            {{ series.type }}
-            {{ chartType[series.type] }}{{ series.name || '' }}
-            <IconHelp theme="filled" class="g-icon-center" />
-          </span>
-          <IconRight class="g-icon-center" size="18px" />
+        <li class="cell-item complex-cell" v-for="(series, index) in currentForm" :key="series.id">
+          <div>
+            <!-- <span style="display: flex;">
+              {{ series.type }}
+              {{ chartType[series.type] }}{{ series.name || '' }}
+              <IconHelp theme="filled" class="g-icon-center" />
+            </span> -->
+            <div>
+              图表名称：
+              <el-input v-model="series.name" size="small" style="width:182px ;"></el-input>
+            </div>
+            图表类型：
+            <el-select v-model="series.type" size="small">
+              <el-option v-for="(value, key) in chartType" :label="value" :value="key" :key="key"> </el-option>
+            </el-select>
+          </div>
+          <el-button circle type="primary" @click="onSelectSeries(index, series.type)">
+            <IconRight size="18px" />
+          </el-button>
         </li>
       </template>
       <template v-else>
         <template v-for="option in currentOptionList" :key="option.keyId">
-          <el-popover v-if="option.children" placement="left">
-            <el-button>添加</el-button>
-            <template #reference>
-              <li class="cell-item link-cell" @click="onJumpToSetting(option)">
-                <span style="display: flex;">
-                  {{ option.keyName }}
-                  <el-tooltip v-if="option.tips" placement="top">
-                    <IconHelp theme="filled" class="g-icon-center" />
-                    <template #content>
-                      <div v-html="option.tips"></div>
-                    </template>
-                  </el-tooltip>
-                </span>
-                <IconRight class="g-icon-center" size="18px" />
-              </li>
-            </template>
-          </el-popover>
+          <li v-if="option.children" class="cell-item link-cell" @click="onJumpToSetting(option)">
+            <span style="display: flex;">
+              {{ option.keyName }}
+              <el-tooltip v-if="option.tips" placement="top">
+                <IconHelp theme="filled" class="g-icon-center" />
+                <template #content>
+                  <div v-html="option.tips"></div>
+                </template>
+              </el-tooltip>
+            </span>
+            <IconRight class="g-icon-center" size="18px" />
+          </li>
           <FormItem v-else :receiveValue="currentForm[option.keyId]" @change="(value) => onFormValueChange(value, option)"
             :form-option="option" />
         </template>
@@ -98,6 +105,7 @@ const isRootConfig = ref<boolean>(true)
 const currentForm = ref<any>()
 
 const currentPath = ref<any[]>([])
+const configIndex = ref<number>(0)
 const receiveForm = reactive(deepClone(prop.receiveValue))
 const currentOptionList = ref<Array<any>>([])
 watch(currentPath, () => {
@@ -148,13 +156,12 @@ function onClickBack() {
   }
 }
 function onFormValueChange(value: any, option: any) {
-  let resss: any = receiveForm
+  let resss: any = receiveForm.series[configIndex.value]
+  // console.log("🚀 ~ file: SerisePagePanel.vue:160 ~ onFormValueChange ~ resss:", resss)
   if (currentPath.value.length > 0) {
     currentPath.value.forEach(item => {
       resss = resss[item.keyId]
     })
-  } else if (currentPath.value.length === 0) {
-    resss = receiveForm
   }
   // console.log(resss, value)
   resss[option?.keyId] = value
@@ -163,6 +170,7 @@ function onFormValueChange(value: any, option: any) {
 
 function onSelectSeries(index: number, type: string) {
   isRootConfig.value = false
+  configIndex.value = index
   currentForm.value = receiveForm.series[index]
   currentOptionList.value = formOptionList[type]
 }
@@ -200,7 +208,6 @@ function onJumpToSetting(setting: { keyId: string, keyName: string }) {
 
 .cell-item {
   padding: 4px 24px;
-  // border-bottom: 1px solid;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -217,28 +224,16 @@ function onJumpToSetting(setting: { keyId: string, keyName: string }) {
     }
   }
 
-  // &.basic-cell {
-  //   height: 26px;
-
-  //   .basic-label {
-  //     min-width: 110px;
-  //     display: flex;
-  //     align-items: center;
-  //     justify-content: flex-start;
-  //   }
-  // }
-
-  &.complex-cell {
-    display: block;
+  .complex-cell {
+    cursor: pointer;
+    height: 36px;
     min-width: 110px;
-    height: auto;
+  }
 
-    .complex-label {
-      margin-bottom: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-    }
+  &.add-method {
+    border-bottom: 1px solid var(--gray-1);
+    padding-bottom: 8px;
+    margin-bottom: 6px;
   }
 }
 </style>
