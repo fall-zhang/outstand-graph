@@ -1,12 +1,6 @@
 // import { seriesType } from './dictionary/common-series.js'
 import setting from './dictionary/commonProperty'
 import type { EchartsOption } from '../chart-config.d.ts'
-const seriesType = [
-  { label: '柱状图', value: 'bar' },
-  { label: '折线图', value: 'line' },
-  { label: '饼图', value: 'pie' }
-]
-
 const symbolShpe = [
   { label: '圆形', value: 'circle' },
   { label: '矩形', value: 'rect' },
@@ -18,11 +12,16 @@ const symbolShpe = [
   { label: '无', value: 'none' },
 ]
 const seriesBar: EchartsOption[] = [
+  // 不在内部修改图表类型
   //   {
   //   keyId: 'type',
   //   keyName: '图表类型',
   //   setters: ['select'],
-  //   optionalValue: seriesType,
+  //   optionalValue: [
+  // { label: '柱状图', value: 'bar' },
+  // { label: '折线图', value: 'line' },
+  // { label: '饼图', value: 'pie' }
+  // ],
   //   default: 'bar',
   // },
   {

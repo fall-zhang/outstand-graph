@@ -5,6 +5,7 @@ import yAxisConfig from './charts-config/yAxis'
 import legendConfig from './charts-config/legend'
 import tooltipConfig from './charts-config/tooltip'
 import radiusAxis from './charts-config/radiusAxis'
+import angleAxis from './charts-config/angleAxis'
 import { textStyle } from './charts-config/dictionary/commonOption'
 
 import type { EchartsOption } from './chart-config.d.ts'
@@ -44,7 +45,7 @@ const rightProperty: Array<EchartsOption> = [
     keyId: 'polar',
     tips: '极坐标需要搭配极坐标系角度轴（angleAxis）使用，极坐标径向轴（radiusAxis）',
     keyName: '极坐标',
-    setters: ['array'],
+    setters: ['object'],
     default: {},
     children: polar
   },
@@ -52,7 +53,7 @@ const rightProperty: Array<EchartsOption> = [
     keyId: 'radiusAxis',
     keyName: '极坐标径向轴',
     tips: '是半径所在的轴，可以配置半径轴上相关内容',
-    setters: ['array'],
+    setters: ['object'],
     default: {},
     children: radiusAxis
   },
@@ -60,9 +61,9 @@ const rightProperty: Array<EchartsOption> = [
     keyId: 'angleAxis',
     keyName: '极坐标角度轴',
     tips: '角度轴是外侧从 0 到 360° 的轴，可以配置轴线相关内容',
-    setters: ['array'],
+    setters: ['object'],
     default: {},
-    children: legendConfig
+    children: angleAxis
   },
   // {
   //   keyId: "darkMode",
