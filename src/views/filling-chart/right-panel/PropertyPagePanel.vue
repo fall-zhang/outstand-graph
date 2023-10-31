@@ -16,7 +16,7 @@
     </div>
     <ul class="cell-group">
       <template v-for="option in currentOptionList" :key="option.keyId">
-        <el-popover v-if="option.children" placement="left">
+        <el-popover v-if="option.setters.includes('array')" placement="left">
           <el-button>添加</el-button>
           <template #reference>
             <li class="cell-item link-cell" @click="onJumpToSetting(option)">
@@ -33,6 +33,18 @@
             </li>
           </template>
         </el-popover>
+        <li v-else-if="option.children" class="cell-item link-cell" @click="onJumpToSetting(option)">
+          <span style="display: flex;">
+            {{ option.keyName }}
+            <el-tooltip v-if="option.tips" placement="top">
+              <IconHelp theme="filled" class="g-icon-center" />
+              <template #content>
+                <div v-html="option.tips"></div>
+              </template>
+            </el-tooltip>
+          </span>
+          <IconRight class="g-icon-center" size="18px" />
+        </li>
         <FormItem v-else :receiveValue="currentForm[option.keyId]" @change="(value) => onFormValueChange(value, option)"
           :form-option="option" />
       </template>
@@ -57,19 +69,16 @@ const prop = defineProps({
 const emit = defineEmits(['change'])
 const currentForm = ref()
 
-const currentPath = ref([{
-  keyName: '横轴',
-  keyId: 'xAxis'
-}])
+const currentPath = ref<{
+  keyName: string,
+  keyId: string
+}[]>([])
 
 const receiveForm = ref(deepClone(prop.receiveValue))
 const currentOptionList = ref<Array<any>>([])
 watch(currentPath, () => {
-  // console.log(6464)
-
   let newVal: unknown = formOptionList
   let newForm: any = receiveForm.value
-
   currentPath.value.forEach(path => {
     if (!Array.isArray(newVal)) {
       return

@@ -4,7 +4,7 @@
       <PropertyPagePanel :receiveValue="chartOption" @change="onChangeSimpleValue" />
     </el-tab-pane>
     <el-tab-pane label="图表类型">
-      <SerisePagePanel :receiveValue="chartOption">
+      <SerisePagePanel :receiveValue="chartOption" @change="onChangeSimpleValue">
       </SerisePagePanel>
     </el-tab-pane>
     <!-- <el-tab-pane label="配置代码">
