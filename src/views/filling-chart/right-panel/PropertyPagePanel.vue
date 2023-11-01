@@ -19,7 +19,7 @@
         <el-popover v-if="option.setters.includes('array')" placement="left">
           <el-button>添加</el-button>
           <template #reference>
-            <li class="cell-item link-cell" @click="onJumpToSetting(option)">
+            <li class="cell-item link-cell" @click="onChangeSetting(option)">
               <span style="display: flex;">
                 {{ option.keyName }}
                 <el-tooltip v-if="option.tips" placement="top">
@@ -33,7 +33,7 @@
             </li>
           </template>
         </el-popover>
-        <li v-else-if="option.children" class="cell-item link-cell" @click="onJumpToSetting(option)">
+        <li v-else-if="option.children" class="cell-item link-cell" @click="onChangeSetting(option)">
           <span style="display: flex;">
             {{ option.keyName }}
             <el-tooltip v-if="option.tips" placement="top">
@@ -67,18 +67,20 @@ const prop = defineProps({
   }
 })
 const emit = defineEmits(['change'])
-const currentForm = ref()
 
 const currentPath = ref<{
   keyName: string,
   keyId: string
 }[]>([])
 
-const receiveForm = ref(deepClone(prop.receiveValue))
-const currentOptionList = ref<Array<any>>([])
-watch(currentPath, () => {
+const mainForm = reactive(deepClone(prop.receiveValue))
+
+const currentOptionList = ref<Array<any>>(formOptionList)
+const currentForm = ref<any>(mainForm)
+// currentOptionList.value = formOptionList
+const refreshCurrentForm = () => {
   let newVal: unknown = formOptionList
-  let newForm: any = receiveForm.value
+  let newForm: any = mainForm
   currentPath.value.forEach(path => {
     if (!Array.isArray(newVal)) {
       return
@@ -100,42 +102,40 @@ watch(currentPath, () => {
   })
   currentOptionList.value = newVal as []
   currentForm.value = newForm
-}, {
-  immediate: true,
-  deep: true
-})
+}
 function onChangeOption(index: number) {
   if (index < 0) {
     currentPath.value = []
   } else {
     currentPath.value = currentPath.value.slice(0, index + 1)
   }
+  refreshCurrentForm()
 }
 
 function onClickBack() {
   currentPath.value.pop()
+  refreshCurrentForm()
 }
+
 function onFormValueChange(value: any, option: any) {
-  let resss: any = receiveForm.value
+  let resss: any = mainForm
   if (currentPath.value.length > 0) {
     currentPath.value.forEach(item => {
       resss = resss[item.keyId]
     })
   } else if (currentPath.value.length === 0) {
-    resss = receiveForm.value
+    resss = mainForm
   }
-  // console.log(resss, value)
   resss[option?.keyId] = value
-  emit('change', receiveForm.value)
+  emit('change', mainForm)
 }
 
-function onJumpToSetting(setting: { keyId: string, keyName: string }) {
-  // console.log("🚀 ~ file: PropertyPagePanel.vue:101 ~ onJumpToSetting ~ setting:", setting)
+function onChangeSetting(setting: { keyId: string, keyName: string }) {
   currentPath.value.push({
     keyId: setting.keyId,
     keyName: setting.keyName
   })
-  // console.log(currentPath.value)
+  refreshCurrentForm()
 }
 </script>
 

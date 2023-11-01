@@ -28,11 +28,6 @@
         <!-- 首页，当前所拥有的图表和数据配置 -->
         <li class="cell-item complex-cell" v-for="(series, index) in currentForm" :key="series.id">
           <div>
-            <!-- <span style="display: flex;">
-              {{ series.type }}
-              {{ chartType[series.type] }}{{ series.name || '' }}
-              <IconHelp theme="filled" class="g-icon-center" />
-            </span> -->
             <div>
               图表名称：
               <el-input v-model="series.name" size="small" style="width:182px ;"></el-input>
@@ -49,7 +44,7 @@
       </template>
       <template v-else>
         <template v-for="option in currentOptionList" :key="option.keyId">
-          <li v-if="option.children" class="cell-item link-cell" @click="onJumpToSetting(option)">
+          <li v-if="option.children" class="cell-item link-cell" @click="onChangeSetting(option)">
             <span style="display: flex;">
               {{ option.keyName }}
               <el-tooltip v-if="option.tips" placement="top">
@@ -77,6 +72,7 @@ import formOptionList from './right-series'
 
 import { ref } from 'vue'
 import { deepClone } from '@/utils/utils'
+import { EchartsOption } from './chart-config'
 const currentSeriesType = ref('bar')
 const prop = defineProps({
   receiveValue: {
@@ -85,6 +81,7 @@ const prop = defineProps({
     default: () => ({})
   }
 })
+const emit = defineEmits(['change'])
 const chartType = reactive<Record<string, string>>({
   line: '折线图',
   bar: '柱状图',
@@ -99,45 +96,50 @@ const chartType = reactive<Record<string, string>>({
   graph: '关系图',
   sankey: '桑基图',
 })
-const emit = defineEmits(['change'])
 
 const isRootConfig = ref<boolean>(true)
-const currentForm = ref<any>()
 
-const currentPath = ref<any[]>([])
-const configIndex = ref<number>(0)
-const receiveForm = reactive(deepClone(prop.receiveValue))
-const currentOptionList = ref<Array<any>>([])
-watch(currentPath, () => {
-  let newVal: unknown = currentOptionList.value
-  let newForm: any = receiveForm.value
-  currentOptionList.value = newVal as []
+const currentPath = ref<{
+  keyName: string,
+  keyId: string
+  index?: number // keyName === 'index' 时有 index
+}[]>([])
+// const configIndex = ref<number>(0)
+const mainForm = reactive(deepClone(prop.receiveValue))
+const currentForm = ref<any>(mainForm.series)
+const currentOptionList = ref<any[]>([])
+
+const refreshCurrentForm = () => {
+  let optList: unknown = currentOptionList.value
+  let newForm: Record<string, any> = mainForm.series
+
+  // if (currentPath.value.length > 0) {
+  //   isRootConfig.value = false
+  // }
   currentPath.value.forEach(path => {
-    if (!Array.isArray(newVal)) {
-      return
-    }
-    newVal.forEach(option => {
-      if (path.keyId === option.keyId && option.children) {
-        newVal = option.children
-        if (newForm[path.keyId]) {
-          newForm = newForm[path.keyId]
-        } else {
-          newForm[path.keyId] = {}
-          // console.log("🚀 ~ file: PropertyPagePanel.vue:70 ~ watch ~ path:", path)
-          newForm = newForm[path.keyId]
-          // console.log('🚀 ~ file: PropertyPagePanel.vue:71 ~ watch ~ newForm:', newForm)
-          // throw new Error('键值不匹配')
-        }
+    if (path.index !== undefined) {
+      newForm = newForm[path.index]
+    } else {
+      if (!Array.isArray(optList)) {
+        return
       }
-    })
+      optList.forEach(option => {
+        if (path.keyId === option.keyId && option.children) {
+          optList = option.children
+          if (newForm[path.keyId]) {
+            newForm = newForm[path.keyId]
+          } else {
+            newForm[path.keyId] = {}
+            newForm = newForm[path.keyId]
+          }
+        }
+      })
+    }
   })
-  currentOptionList.value = newVal as []
   currentForm.value = newForm
-  currentForm.value = receiveForm.series
-}, {
-  immediate: true,
-  deep: true
-})
+  currentOptionList.value = optList as []
+  // console.log('🚀 ~ file: SerisePagePanel.vue:143 ~ refreshCurrentForm ~ newForm:', newForm, optList)
+}
 function onChangeOption(index: number) {
   if (index < 0) {
     currentPath.value = []
@@ -145,42 +147,45 @@ function onChangeOption(index: number) {
   } else {
     currentPath.value = currentPath.value.slice(0, index + 1)
   }
+  refreshCurrentForm()
 }
 
 function onClickBack() {
-  if (currentPath.value.length === 0) {
-    currentForm.value = receiveForm.series
-    isRootConfig.value = true
-  } else {
-    currentPath.value.pop()
-  }
+  currentPath.value.pop()
 }
-function onFormValueChange(value: any, option: any) {
-  let resss: any = receiveForm.series[configIndex.value]
-  // console.log("🚀 ~ file: SerisePagePanel.vue:160 ~ onFormValueChange ~ resss:", resss)
+
+function onFormValueChange(value: any, option: EchartsOption) {
+  let editForm: any = mainForm.series
   if (currentPath.value.length > 0) {
     currentPath.value.forEach(item => {
-      resss = resss[item.keyId]
+      if (item.index !== undefined) {
+        editForm = editForm[item.index]
+      } else {
+        editForm = editForm[item.keyId]
+      }
     })
   }
-  // console.log(resss, value)
-  resss[option?.keyId] = value
-  emit('change', receiveForm)
+  editForm[option.keyId] = value
+  emit('change', mainForm)
 }
 
 function onSelectSeries(index: number, type: string) {
   isRootConfig.value = false
-  configIndex.value = index
-  currentForm.value = receiveForm.series[index]
+  currentPath.value.push({
+    keyId: type,
+    keyName: 'series',
+    index,
+  })
   currentOptionList.value = formOptionList[type]
+  refreshCurrentForm()
 }
 
-function onJumpToSetting(setting: { keyId: string, keyName: string }) {
+function onChangeSetting(setting: { keyId: string, keyName: string }) {
   currentPath.value.push({
     keyId: setting.keyId,
     keyName: setting.keyName
   })
-  // console.log(currentPath.value)
+  refreshCurrentForm()
 }
 </script>
 
