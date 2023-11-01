@@ -1,25 +1,30 @@
 <template>
   <div class="fun-main">
-    <div class="add-item" @click="onAddNewChart('导图')">
+    <!-- <div class="add-item" @click="onAddNewChart('导图')">
       <MindmapMapIcon class="menu-icon left" />
       <span class="add-text">新建导图</span>
       <IconPlus class="menu-icon"></IconPlus>
-    </div>
-    <div class="add-item" @click="onAddNewChart('图表生成')">
+    </div> -->
+    <!-- <div class="add-item" @click="onAddNewChart('图表生成')">
       <IconKagiMap class="menu-icon left" />
       <span class="add-text">图表生成</span>
       <IconPlus class="menu-icon"></IconPlus>
-    </div>
+    </div> -->
     <div class="add-item" @click="onAddNewChart('图表编辑')">
       <ChartHistogram class="menu-icon left" />
       <span class="add-text">创建图表</span>
       <IconPlus class="menu-icon"></IconPlus>
     </div>
+    <div class="working-item">
+      <FreezeLine class="menu-icon left" />
+      <span class="add-text">功能施工中...</span>
+      <!-- <IconPlus class="menu-icon"></IconPlus> -->
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { Plus as IconPlus, MindmapMap as MindmapMapIcon, ChartHistogram, KagiMap as IconKagiMap } from '@icon-park/vue-next'
+import { Plus as IconPlus, MindmapMap as MindmapMapIcon, ChartHistogram, KagiMap as IconKagiMap, FreezeLine } from '@icon-park/vue-next'
 import { useRouter } from 'vue-router'
 const router = useRouter()
 const onAddNewChart = (type: string) => {
@@ -42,6 +47,25 @@ const onAddNewChart = (type: string) => {
 </script>
 
 <style lang="scss" scoped>
+.working-item {
+  height: 64px;
+  margin-right: 24px;
+  box-sizing: border-box;
+  padding: 0 20px;
+  width: 200px;
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  border: 1px solid var(--gray-1);
+
+  &:hover {
+    background-color: var(--gray-1);
+    transition: .5s;
+  }
+
+  cursor: pointer;
+}
+
 .add-item {
   height: 64px;
   margin-right: 24px;
