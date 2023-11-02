@@ -331,6 +331,157 @@ const commonProperty: Record<string, EchartsOption> = {
     setters: ['switch'],
     default: false
   },
+  colorBy: {
+    keyId: 'colorBy',
+    keyName: '取色策略',
+    setters: ['select'],
+    optionalValue: [
+      { label: '按照系列分配', value: 'series' },
+      { label: '按照数据分配', value: 'data' },
+    ],
+    default: [],
+  },
+  coordinateSystem: {
+    keyId: 'coordinateSystem',
+    keyName: '采用坐标系',
+    setters: ['select'],
+    optionalValue: [
+      { label: '直角坐标系', value: 'cartesian2d' },
+      { label: '极坐标系', value: 'polar' },
+    ],
+    default: 'cartesian2d',
+  },
+  showSymbol: {
+    keyId: 'showSymbol',
+    keyName: '显示标记',
+    tips: '设置为 false 时，将仅会在 tooltip（提示）触发时展示',
+    setters: ['switch'],
+    default: true,
+  },
+  symbol: {
+    keyId: 'symbol',
+    keyName: '标记图形样式',
+    setters: ['select', 'input'],
+    optionalValue: [
+      { label: '圆形', value: 'circle' },
+      { label: '矩形', value: 'rect' },
+      { label: '圆角矩形', value: 'roundRect' },
+      { label: '三角形', value: 'triangle' },
+      { label: '钻石', value: 'diamond' },
+      { label: '大头针', value: 'pin' },
+      { label: '箭头', value: 'arrow' },
+      { label: '无', value: 'none' },
+    ],
+    default: 0,
+  },
+  symbolSize: {
+    keyId: 'symbolSize',
+    keyName: '标记大小',
+    tips: '可以用数组表示宽和高，例如 [20, 10] 表示标记宽为20，高为10',
+    setters: ['number', 'array'],
+    default: 4,
+  },
+  symbolRotate: {
+    keyId: 'symbolRotate',
+    keyName: '标记旋转角度',
+    setters: ['number', 'function'],
+    default: 0,
+  },
+  symbolKeepAspect: {
+    keyId: 'symbolKeepAspect',
+    keyName: '保持长宽比',
+    setters: ['switch'],
+    default: 0,
+  },
+  symbolOffset: {
+    keyId: 'symbolOffset',
+    keyName: '标记偏移',
+    setters: ['array'],
+    default: [0, 0],
+  },
+  showAllSymbol: {
+    keyId: 'showAllSymbol',
+    keyName: '标记偏移',
+    setters: ['select'],
+    optionalValue: [
+      { label: '自适应', value: 'auto' },
+      { label: '显示所有图形', value: true },
+      { label: '随主轴标签间隔隐藏', value: false },
+    ],
+    default: 'auto',
+  },
+  legendHoverLink: {
+    keyId: 'legendHoverLink',
+    keyName: '联动图例高亮',
+    setters: ['switch'],
+    default: true,
+  },
+  stack: {
+    keyId: 'stack',
+    keyName: '堆叠名称',
+    tips: '相同的堆叠名称，数据可以堆叠',
+    setters: ['input'],
+    default: '',
+  },
+  stackStrategy: {
+    keyId: 'stackStrategy',
+    keyName: '堆叠策略',
+    setters: ['select'],
+    optionalValue: [
+      { label: '相同符号（同为正或负）', value: 'samesign' },
+      { label: '堆叠所有值', value: 'all' },
+      { label: '堆叠正值', value: 'positive' },
+      { label: '堆叠负值', value: 'samesign' },
+    ],
+    default: 'samesign',
+  },
+  cursor: {
+    keyId: 'cursor',
+    keyName: '指针悬浮样式',
+    tips: '鼠标指针悬浮时的样式，同 CSS 的手势相同',
+    setters: ['select', 'input'],
+    optionalValue: [
+      { label: '手势', value: 'pointer' },
+      { label: '指针', value: 'none' },
+    ],
+    default: 'pointer',
+  },
+  clip: {
+    keyId: 'clip',
+    keyName: '裁剪',
+    tips: '裁剪超出坐标系部分的图形',
+    setters: ['switch'],
+    default: true,
+  },
+  triggerLineEvent: {
+    keyId: 'triggerLineEvent',
+    keyName: '裁剪',
+    tips: '裁剪超出坐标系部分的图形',
+    setters: ['switch'],
+    default: true,
+  },
+  step: {
+    keyId: 'step',
+    keyName: '阶梯线图',
+    optionalValue: [
+      { label: '起始', value: 'start' },
+      { label: '中心', value: 'middle' },
+      { label: '结尾', value: 'end' },
+    ],
+    setters: ['select'],
+    default: false,
+  },
+  selectedMode: {
+    keyId: 'selectedMode',
+    keyName: '选中模式',
+    optionalValue: [
+      { label: '起始', value: 'start' },
+      { label: '中心', value: 'middle' },
+      { label: '结尾', value: 'end' },
+    ],
+    setters: ['select'],
+    default: false,
+  }
 }
 
 export default commonProperty

@@ -90,104 +90,169 @@ const seriesBar: EchartsOption[] = [
   //   default: '',
   // },
   {
-    keyId: 'symbol',
-    keyName: '标记图形类型',
-    tips: '可以添加图片和 path 详情可见 https://echarts.apache.org/zh/option.html#series-line.symbol',
-    setters: ['select', 'input'],
-    optionalValue: symbolShpe,
-    default: 'emptyCircle',
-  },
-  {
-    keyId: 'symbolSize',
-    keyName: '标记图形类型',
-    tips: '可以设置为数组，表示宽高',
-    setters: ['number', 'json'],
-    default: 4,
-  },
-  {
-    keyId: 'symbolRotate',
-    keyName: '标记图形类型',
-    setters: ['number'],
-    default: 0,
-  },
-  {
-    keyId: 'symbolKeepAspect',
-    keyName: '保持 path 长宽比',
-    setters: ['switch'],
-    default: 0,
-  },
-  {
-    keyId: 'symbolOffset',
-    keyName: '相对于原本位置的偏移',
-    setters: ['json'],
-    default: `[0, 0]`,
-  },
-  {
-    keyId: 'showSymbol',
-    keyName: '显示 symbol',
-    tips: ' 如果 false 则只有在 tooltip hover 的时候显示。',
+    keyId: 'roundCap',
+    keyName: '环形柱条圆弧',
+    tips: '对极坐标系柱状图有效，在环形柱条两侧使用圆弧效果。',
     setters: ['switch'],
     default: true,
   },
   {
-    keyId: 'showAllSymbol',
-    keyName: '显示全部 symbol',
-    tips: '类目轴（category）时有效如果 false 则只有在 tooltip hover 的时候显示。',
-    setters: ['select'],
-    optionalValue: [
-      { label: '显示所有图形', value: true },
-      { label: '随主轴标签间隔隐藏策略', value: false },
-      { label: '根据空间适应', value: 'auto' }
-    ],
-    default: true,
-  },
-  {
-    keyId: 'legendHoverLink',
-    keyName: '联动图例',
-    tips: '启用图例 hover 时的联动高亮。',
+    keyId: 'realtimeSort',
+    keyName: '实时排序',
+    tips: '开启实时排序，用来实现动态排序图效果',
     setters: ['switch'],
     default: true,
   },
   {
-    keyId: 'stack',
-    keyName: '数据堆叠标志',
-    tips: '相同标志的数据会进行堆叠',
-    setters: ['input'],
-    default: '',
+    keyId: 'showBackground',
+    keyName: '展示背景',
+    setters: ['switch'],
+    default: false,
   },
   {
-    keyId: 'stackStrategy',
-    keyName: '数据堆叠策略',
-    tips: '相同标志的数据会进行堆叠',
-    setters: ['select'],
-    optionalValue: [
-      { label: '符号相同（同为正或负）', value: 'samesign' },
-      { label: '堆叠所有的值', value: 'all' },
-      { label: '只堆积正值', value: 'positive' },
-      { label: '只堆叠负值', value: 'negative' },
+    keyId: 'backgroundStyle',
+    keyName: '背景样式',
+    setters: ['object'],
+    children: [
+      {
+        keyId: 'color',
+        keyName: '背景颜色',
+        setters: ['color', 'input'],
+        default: 'rgba(180, 180, 180, 0.2)',
+      }
     ],
-    default: '',
+    default: false,
   },
   {
-    keyId: 'cursor',
-    keyName: '手势',
-    tips: '和 CSS 的手势相同',
-    setters: ['select'],
-    optionalValue: [
-      { label: '符号相同（同为正或负）', value: 'pointer' },
-      { label: '堆叠所有的值', value: 'all' },
-      { label: '只堆积正值', value: 'positive' },
-      { label: '只堆叠负值', value: 'negative' },
+    keyId: 'label',
+    keyName: '文本标签',
+    setters: ['object'],
+    children: [
+      {
+        keyId: 'show',
+        keyName: '显示标签',
+        setters: ['switch'],
+        default: false
+      }
     ],
-    default: 'pointer',
+    default: {},
   },
-  // {
-  //   keyId: 'connectNulls',
-  //   keyName: '连接空数据',
-  //   tips: '和 CSS 的手势相同',
-  //   setters: ['switch'],
-  //   default: false,
-  // },
+  {
+    keyId: 'labelLayout',
+    keyName: '标签布局配置',
+    tips: '该配置项是在每个系列默认的标签布局基础上，统一调整标签的(x, y)位置，标签对齐等属性以实现想要的标签布局效果。',
+    setters: ['object', 'function'],
+    children: [
+      {
+        keyId: 'hideOverlap',
+        keyName: '是否隐藏重叠的标签',
+        setters: ['switch'],
+        default: false
+      }
+    ],
+    default: {},
+  },
+  {
+    keyId: 'labelLine',
+    keyName: '视觉引导线',
+    tips: '标签的视觉引导线配置',
+    setters: ['object'],
+    children: [
+      {
+        keyId: 'show',
+        keyName: '显示端点标签',
+        setters: ['switch'],
+        default: false
+      }
+    ],
+    default: {},
+  },
+  {
+    keyId: 'itemStyle',
+    keyName: '总样式',
+    tips: '折线拐点标志的样式',
+    setters: ['object'],
+    children: [
+      {
+        keyId: 'color',
+        keyName: '显示端点标签',
+        setters: ['color', 'input'],
+        default: ''
+      }
+    ],
+    default: {},
+  },
+  {
+    keyId: 'emphasis',
+    keyName: '强调的样式',
+    tips: '设置后显示成区域面积图。',
+    setters: ['object'],
+    children: [
+      {
+        keyId: 'disable',
+        keyName: '关闭强调样式',
+        setters: ['switch'],
+        default: false
+      }
+    ],
+    default: {},
+  },
+  {
+    keyId: 'blur',
+    keyName: '淡出状态',
+    tips: '开启 emphasis.focus 后有效。',
+    setters: ['object'],
+    children: [
+      {
+        keyId: 'label',
+        keyName: '标签样式',
+        setters: ['object'],
+        default: {},
+        children: [
+          {
+            keyId: 'show',
+            keyName: '展示标签',
+            setters: ['switch'],
+            default: false
+          }
+        ]
+      },
+      {
+        keyId: 'labelLine',
+        keyName: '视觉引导线样式',
+        setters: ['object'],
+        default: {},
+        children: [
+          {
+            keyId: 'show',
+            keyName: '展示引导线',
+            setters: ['switch'],
+            default: false
+          }
+        ]
+      }
+    ],
+    default: {},
+  },
+  {
+    keyId: 'select',
+    keyName: '选中状态样式',
+    tips: '折线图的选中状态',
+    setters: ['object'],
+    children: [
+      {
+        keyId: 'disable',
+        keyName: '是否可以被选中',
+        setters: ['switch'],
+        default: false
+      }
+    ],
+    default: {},
+  },
+  setting.selectedMode,
+  setting.stack,
+  setting.stackStrategy,
+  setting.cursor,
   {
     keyId: 'clip',
     keyName: '裁剪超出坐标系部分的图形',
@@ -200,23 +265,7 @@ const seriesBar: EchartsOption[] = [
     setters: ['switch'],
     default: true,
   },
-  {
-    keyId: 'triggerLineEvent',
-    keyName: '线条区域触发事件',
-    setters: ['switch'],
-    default: true,
-  },
-  {
-    keyId: 'step',
-    keyName: '阶梯线图',
-    optionalValue: [
-      { label: '起始', value: 'start' },
-      { label: '中心', value: 'middle' },
-      { label: '结尾', value: 'end' },
-    ],
-    setters: ['select'],
-    default: false,
-  },
+  setting.triggerLineEvent,
   {
     keyId: 'label',
     keyName: '文本标签',
