@@ -236,10 +236,11 @@ const seriesLine: EchartsOption[] = [
     default: {},
   },
   {
-    keyId: 'selectMode',
+    keyId: 'selectedMode',
     keyName: '选中模式',
     setters: ['switch', 'select'],
     optionalValue: [
+      { label: '关闭', value: false },
       { label: '单个', value: 'single' },
       { label: '多选', value: 'multiple' },
       { label: '系列', value: 'series' },
@@ -292,100 +293,63 @@ const seriesLine: EchartsOption[] = [
     ],
     default: '',
   },
-  {
-    keyId: 'dimensions',
-    keyName: '维度信息',
-    tips: '定义 series.data 或者（数据集）dataset.source 的每个维度的信息。',
-    // https://echarts.apache.org/zh/option.html#series-line.dimensions
-    setters: ['array'],
-    default: '',
-  },
-  {
-    keyId: 'encode',
-    keyName: '编码格式',
-    tips: '定义 data 的哪个维度被编码成什么。',
-    setters: ['array'],
-    default: '',
-  },
-  {
-    keyId: 'seriesLayoutBy',
-    keyName: '数据集对应列',
-    tips: '指定了 dataset（数据集）用行还是列对应到系列上',
-    setters: ['select'],
-    optionalValue: [
-      { label: '列', value: 'column' },
-      { label: '行', value: 'row' },
-    ],
-    default: '',
-  },
-  {
-    keyId: 'datasetIndex',
-    keyName: '数据集对应列',
-    tips: '指定了 dataset（数据集）用行还是列对应到系列上',
-    setters: ['select'],
-    optionalValue: [
-      { label: '过滤点最小值', value: 'column' },
-      { label: '过滤点和', value: 'row' },
-    ],
-    default: '',
-  },
-  {
-    keyId: 'dataGroupId',
-    keyName: '数据共有id',
-    tips: '系列所有数据共有的组 ID',
-    setters: ['select'],
-    optionalValue: [
-      { label: '过滤点最小值', value: 'column' },
-      { label: '过滤点和', value: 'row' },
-    ],
-    default: '',
-  },
+  setting.dimensions,
+  setting.encode,
+  setting.seriesLayoutBy,
+  setting.datasetIndex,
+  setting.dataGroupId,
   {
     keyId: 'markPoint',
     keyName: '图表标注点',
     setters: ['object'],
-    children: [{
-      keyId: 'symbol',
-      keyName: '图形类型',
-      setters: ['select', 'input'],
-      optionalValue: [
-        { label: '圆形', value: 'circle' },
-        { label: '矩形', value: 'rect' },
-        { label: '圆角矩形', value: 'roundRect' },
-        { label: '三角形', value: 'triangle' },
-        { label: '钻石', value: 'diamond' },
-        { label: '大头针', value: 'pin' },
-        { label: '箭头', value: 'arrow' },
-        { label: '无', value: 'none' },
-      ],
-      default: 'pin'
-    }],
+    children: [
+      {
+        keyId: 'symbol',
+        keyName: '图形类型',
+        setters: ['select', 'input'],
+        optionalValue: [
+          { label: '圆形', value: 'circle' },
+          { label: '矩形', value: 'rect' },
+          { label: '圆角矩形', value: 'roundRect' },
+          { label: '三角形', value: 'triangle' },
+          { label: '钻石', value: 'diamond' },
+          { label: '大头针', value: 'pin' },
+          { label: '箭头', value: 'arrow' },
+          { label: '无', value: 'none' },
+        ],
+        default: 'pin'
+      }
+    ],
     default: '',
   },
   {
     keyId: 'markLine',
     keyName: '图表标注线',
     setters: ['object'],
-    children: [{
-      keyId: 'silent',
-      keyName: '安静模式',
-      setters: ['switch'],
-      tips: '图形是否不响应和触发鼠标事件',
-      default: false
-    }],
+    children: [
+      {
+        keyId: 'silent',
+        keyName: '安静模式',
+        setters: ['switch'],
+        tips: '图形是否不响应和触发鼠标事件',
+        default: false
+      }
+    ],
     default: '',
   },
   {
     keyId: 'markArea',
     keyName: '图表标域',
     setters: ['object'],
-    children: [{
-      keyId: 'silent',
-      keyName: '安静模式',
-      setters: ['switch'],
-      tips: '图形是否不响应和触发鼠标事件',
-      default: false
-    }],
+    children: [
+      {
+        keyId: 'silent',
+        keyName: '安静模式',
+        setters: ['switch'],
+        tips: '图形是否不响应和触发鼠标事件',
+        default: false
+      }
+    ],
     default: '',
   },
   setting.zlevel,
@@ -413,33 +377,22 @@ const seriesLine: EchartsOption[] = [
     default: '',
   },
   {
-    keyId: 'universalTransition',
-    keyName: '全局过渡动画',
-    setters: ['object'],
-    children: [{
-      keyId: 'enabled',
-      keyName: '是否开启',
-      setters: ['switch'],
-      tips: '图形是否不响应和触发鼠标事件',
-      default: false
-    }],
-    default: '',
-  },
-  {
     keyId: 'tooltip',
     keyName: '提示设置',
     tips: '系列 tooltip 设定',
     setters: ['object'],
-    children: [{
-      keyId: 'position',
-      keyName: '是否开启',
-      setters: ['select'],
-      optionalValue: [
-        { label: 'auto', value: 'auto' }
-      ],
-      tips: '图形是否不响应和触发鼠标事件',
-      default: false
-    }],
+    children: [
+      {
+        keyId: 'position',
+        keyName: '是否开启',
+        setters: ['select'],
+        optionalValue: [
+          { label: 'auto', value: 'auto' }
+        ],
+        tips: '图形是否不响应和触发鼠标事件',
+        default: false
+      }
+    ],
     default: '',
   },
 ]
