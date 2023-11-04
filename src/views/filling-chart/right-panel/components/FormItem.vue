@@ -110,6 +110,11 @@ function catchError() {
       console.error('该配置出现错误', prop.formOption)
     }
   }
+  if (['textarea', 'input'].includes(defaultSetter)) {
+    if (typeof defaultVal !== 'string') {
+      console.error('该配置出现错误', prop.formOption)
+    }
+  }
 }
 function onChangeInput() {
   clearTimeout(timberFun.value)

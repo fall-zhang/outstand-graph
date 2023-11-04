@@ -450,6 +450,12 @@ const commonProperty: Record<string, EchartsOption> = {
     keyId: 'clip',
     keyName: '裁剪',
     tips: '裁剪超出坐标系部分的图形',
+    // 散点图/带有涟漪特效动画的散点（气泡）图：忽略中心点超出坐标系的图形，但是不裁剪单个图形
+    // 柱状图：裁掉完全超出的柱子，但是不会裁剪只超出部分的柱子
+    // 折线图：裁掉所有超出坐标系的折线部分，拐点图形的逻辑按照散点图处理
+    // 路径图：裁掉所有超出坐标系的部分
+    // K 线图：忽略整体都超出坐标系的图形，但是不裁剪单个图形
+    // 自定义系列：裁掉所有超出坐标系的部分
     setters: ['switch'],
     default: true,
   },
@@ -480,8 +486,95 @@ const commonProperty: Record<string, EchartsOption> = {
       { label: '结尾', value: 'end' },
     ],
     setters: ['select'],
+    default: '',
+  },
+  large: {
+    keyId: 'large',
+    keyName: '大数据量优化',
+    tips: '在数据图形特别多而出现卡顿时候可以开启（优化后不能自定义设置单个数据项的样式）',
+    setters: ['switch'],
     default: false,
-  }
+  },
+  largeThreshold: {
+    keyId: 'largeThreshold',
+    keyName: '大量数据阈值',
+    tips: '开启绘制优化的阈值',
+    setters: ['number'],
+    default: 400,
+  },
+  progressive: {
+    keyId: 'progressive',
+    keyName: '渐进式渲染',
+    tips: '渐进式渲染时每一帧绘制图形数量，设为 0 时不启用',
+    setters: ['number'],
+    default: 5000,
+  },
+  progressiveThreshold: {
+    keyId: 'progressiveThreshold',
+    keyName: '启用渐进式渲染的阈值',
+    tips: '单个系列的图形数量超过该阈值时启用渐进式渲染',
+    setters: ['number'],
+    default: 3000,
+  },
+  progressiveChunkMode: {
+    keyId: 'progressiveChunkMode',
+    keyName: '启用渐进式渲染的阈值',
+    tips: '取模分片（视觉上均匀得渲染），数据顺序分片（渲染过程不自然）',
+    optionalValue: [
+      { label: '数据顺序分片', value: 'sequential' },
+      { label: '取模分片', value: 'mod' },
+    ],
+    setters: ['number'],
+    default: 5000,
+  },
+  dimensions: {
+    keyId: 'dimensions',
+    keyName: '维度信息',
+    tips: '定义 series.data 或者（数据集）dataset.source 的每个维度的信息。',
+    // https://echarts.apache.org/zh/option.html#series-line.dimensions
+    setters: ['array'],
+    default: '',
+  },
+  encode: {
+    keyId: 'encode',
+    keyName: '编码格式',
+    tips: '定义 data 的哪个维度被编码成什么。',
+    setters: ['array'],
+    default: '',
+  },
+  seriesLayoutBy: {
+    keyId: 'seriesLayoutBy',
+    keyName: '数据集对应列',
+    tips: '指定了 dataset（数据集）用行还是列对应到系列上',
+    setters: ['select'],
+    optionalValue: [
+      { label: '列', value: 'column' },
+      { label: '行', value: 'row' },
+    ],
+    default: '',
+  },
+  datasetIndex: {
+    keyId: 'datasetIndex',
+    keyName: '数据集对应列',
+    tips: '指定了 dataset（数据集）用行还是列对应到系列上',
+    setters: ['select'],
+    optionalValue: [
+      { label: '过滤点最小值', value: 'column' },
+      { label: '过滤点和', value: 'row' },
+    ],
+    default: '',
+  },
+  dataGroupId: {
+    keyId: 'dataGroupId',
+    keyName: '数据共有id',
+    tips: '系列所有数据共有的组 ID',
+    setters: ['select'],
+    optionalValue: [
+      { label: '过滤点最小值', value: 'column' },
+      { label: '过滤点和', value: 'row' },
+    ],
+    default: '',
+  },
 }
 
 export default commonProperty
