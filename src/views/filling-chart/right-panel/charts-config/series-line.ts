@@ -63,7 +63,7 @@ const seriesLine: EchartsOption[] = [
     setters: ['number'],
     default: 0,
   },
-  setting.symbolShow,
+  setting.showSymbol,
   setting.symbol,
   setting.symbolSize,
   setting.symbolRotate,
