@@ -27,8 +27,8 @@ module.exports = {
     'vue/html-quotes': ['error', 'double'],
     'vue/multi-word-component-names': ['off'],
     'vue/first-attribute-linebreak': 0,
-    'vue/html-closing-bracket-newline': 0,
-    'vue/max-attributes-per-line': 0,
+    'vue/html-closing-bracket-newline': 0, //  结尾标签必须换行
+    'vue/max-attributes-per-line': 0, // 每行最多多少个属性
     'vue/attribute-hyphenation': 0, // 使用 - 分割去代替标签中大写的属性
     'vue/no-multiple-template-root': 0,
     // js
@@ -74,8 +74,6 @@ module.exports = {
     'no-lonely-if': 'error', // 禁止 if 语句作为唯一语句出现在 else 语句块中
     'newline-per-chained-call': ['off', { ignoreChainWithDepth: 2 }], // 要求方法链中每个调用都有一个换行符
     // 路径别名设置
-    'no-submodule-imports': ['off', '/@'],
-    'no-implicit-dependencies': ['off', ['/@']],
     'space-before-function-paren': 0,
     'eol-last': 0,
     quotes: [
