@@ -105,6 +105,7 @@ onBeforeMount(() => {
 function catchError() {
   const defaultSetter = prop.formOption.setters[0]
   const defaultVal = prop.formOption.default
+  const hasChildren = !!prop.formOption.children
   if (defaultSetter === 'slider') {
     if (typeof defaultVal !== 'number') {
       console.error('该 slider 配置出现错误', prop.formOption)
@@ -113,6 +114,11 @@ function catchError() {
   if (['textarea', 'input'].includes(defaultSetter)) {
     if (typeof defaultVal !== 'string') {
       console.error('textarea 或 input 该配置出现错误', prop.formOption)
+    }
+  }
+  if (['object'].includes(defaultSetter)) {
+    if (!hasChildren || (typeof defaultVal !== 'object' && typeof defaultVal !== 'undefined')) {
+      console.error('该 object 配置出现错误', prop.formOption)
     }
   }
 }

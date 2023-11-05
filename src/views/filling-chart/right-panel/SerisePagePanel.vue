@@ -10,12 +10,17 @@
       </h3>
       <div>
         <a @click="onChangeOption(-1)">图表</a>
-        <a @click="onChangeOption(index)" v-for="(item, index) in currentPath" :key="item.keyId">
-          / {{ item.keyName }}
-        </a>
+        <template v-for="(item, index) in currentPath" :key="item.keyId">
+          <a @click="onChangeOption(index)" v-if="item.index === undefined">
+            / {{ item.keyName }}
+          </a>
+          <a @click="onChangeOption(index)" v-else>
+            / {{ chartType[item.keyId] }}
+          </a>
+        </template>
       </div>
     </div>
-    {{ currentForm }}
+    <!-- {{ currentForm }} -->
     <ul class="cell-group">
       <!-- 根配置 -->
       <template v-if="isRootConfig">
@@ -30,10 +35,10 @@
           <div>
             <div>
               图表名称：
-              <el-input v-model="series.name" @input="onChangeSeries" size="small" style="width:182px ;"></el-input>
+              <el-input v-model="series.name" @input="onChangeSeriesName" size="small" style="width:182px ;"></el-input>
             </div>
             图表类型：
-            <el-select v-model="series.type" size="small" @change="onChangeSeries">
+            <el-select v-model="series.type" size="small" @change="onChangeSeriesType">
               <el-option v-for="(value, key) in chartType" :label="value" :value="key" :key="key"> </el-option>
             </el-select>
           </div>
@@ -164,10 +169,6 @@ function onClickBack() {
   // if (currentPath.value.at(-1)?.keyName === 'index') {
   //   currentPath.value.pop()
   // }
-
-  // if (currentPath.value.at(-1)?.keyName === 'index') {
-  //   currentPath.value.pop()
-  // }
 }
 
 function onFormValueChange(value: any, option: EchartsOption) {
@@ -206,11 +207,17 @@ function onChangeSetting(setting: { keyId: string, keyName: string }) {
 }
 // timber
 const timberFun = ref<number>(0)
-function onChangeSeries() {
+function onChangeSeriesName() {
   clearTimeout(timberFun.value)
   timberFun.value = setTimeout(() => {
     emit('change', mainForm)
   }, 300)
+}
+const seriesStore = reactive({
+
+})
+function onChangeSeriesType() {
+  emit('change', mainForm)
 }
 </script>
 
@@ -260,7 +267,7 @@ function onChangeSeries() {
     min-width: 110px;
   }
 
-  &.add-method {
+  &.add-d {
     border-bottom: 1px solid var(--gray-1);
     padding-bottom: 8px;
     margin-bottom: 6px;
