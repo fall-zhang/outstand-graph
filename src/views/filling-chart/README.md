@@ -23,13 +23,23 @@
   - [x] 补充 radiusAxis 极坐标径向轴
   - [x] 补充 angleAxis 极坐标角度轴
   - [x] 补充 axisPointer 坐标轴指示器
-  - [ ] 补充 pie
+  - [x] 补充 pie
   - [ ] 补充 treemap
   - [ ] 补充 radar
   - [ ] 补充 sunburst
   - [ ] 补充 gauge
   - [ ] 补充 pictorialBar
-  - [ ] 添加共同的属性，commonOptions
+- [ ] 添加共同的属性，commonOptions
+  - [ ] label
+  - [ ] labelLine
+  - [ ] labelLayout
+  - [ ] itemStyle
+  - [ ] emphasis
+  - [ ] blur
+  - [ ] markPoint
+  - [ ] markLine
+  - [ ] markArea
+
 - [ ] 出码时可以切换出码的形式（出码为 Vue2、Vue3、setup、纯 js、React-tsx）
 - [ ] 配置项可以考虑抽屉弹出，或者可以扩展配置项的列数
 - [ ] 点击 ？问号时，跳转到（echarts 官网）
@@ -41,6 +51,7 @@
 - [ ] 添加一个新的页面，可以通过数据（导入 excel，或者是远程数据），配置 chart 参考，https://app.rawgraphs.io/
 - [ ] 切换的时候，只切换配置的层级，根据对象的层级，使用 immer，实现历史修改
 
+- [ ] 可以添加多种图表类型
 - [ ] 添加 undefined，当属性设定为 undefined 时，更新时移除对应属性
 - [ ] 为属性添加类型注解
 - [ ] 注重代码分割，确保分割后的代码加载符合用户使用规律
