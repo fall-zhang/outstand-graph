@@ -30,10 +30,10 @@
           <div>
             <div>
               图表名称：
-              <el-input v-model="series.name" size="small" style="width:182px ;"></el-input>
+              <el-input v-model="series.name" @input="onChangeSeries" size="small" style="width:182px ;"></el-input>
             </div>
             图表类型：
-            <el-select v-model="series.type" size="small">
+            <el-select v-model="series.type" size="small" @change="onChangeSeries">
               <el-option v-for="(value, key) in chartType" :label="value" :value="key" :key="key"> </el-option>
             </el-select>
           </div>
@@ -73,7 +73,6 @@ import formOptionList from './right-series'
 import { ref } from 'vue'
 import { deepClone } from '@/utils/utils'
 import { EchartsOption } from './chart-config'
-const currentSeriesType = ref('bar')
 const prop = defineProps({
   receiveValue: {
     require: true,
@@ -81,6 +80,14 @@ const prop = defineProps({
     default: () => ({})
   }
 })
+
+let mainForm = reactive(deepClone(prop.receiveValue))
+watch(() => prop.receiveValue, (newVal) => {
+  mainForm = reactive(deepClone(prop.receiveValue))
+  refreshCurrentForm()
+})
+
+const currentSeriesType = ref('bar')
 const emit = defineEmits(['change'])
 const chartType = reactive<Record<string, string>>({
   line: '折线图',
@@ -105,7 +112,6 @@ const currentPath = ref<{
   index?: number // keyName === 'index' 时有 index
 }[]>([])
 // const configIndex = ref<number>(0)
-const mainForm = reactive(deepClone(prop.receiveValue))
 const currentForm = ref<any>(mainForm.series)
 const currentOptionList = ref<any[]>([])
 
@@ -138,7 +144,6 @@ const refreshCurrentForm = () => {
   })
   currentForm.value = newForm
   currentOptionList.value = optList as []
-  // console.log('🚀 ~ file: SerisePagePanel.vue:143 ~ refreshCurrentForm ~ newForm:', newForm, optList)
 }
 function onChangeOption(index: number) {
   if (index < 0) {
@@ -152,6 +157,17 @@ function onChangeOption(index: number) {
 
 function onClickBack() {
   currentPath.value.pop()
+  if (currentPath.value.length === 0) {
+    isRootConfig.value = true
+  }
+  refreshCurrentForm()
+  // if (currentPath.value.at(-1)?.keyName === 'index') {
+  //   currentPath.value.pop()
+  // }
+
+  // if (currentPath.value.at(-1)?.keyName === 'index') {
+  //   currentPath.value.pop()
+  // }
 }
 
 function onFormValueChange(value: any, option: EchartsOption) {
@@ -170,6 +186,7 @@ function onFormValueChange(value: any, option: EchartsOption) {
 }
 
 function onSelectSeries(index: number, type: string) {
+  // console.log("🚀 ~ file: SerisePagePanel.vue:189 ~ onSelectSeries ~ type:", type)
   isRootConfig.value = false
   currentPath.value.push({
     keyId: type,
@@ -186,6 +203,14 @@ function onChangeSetting(setting: { keyId: string, keyName: string }) {
     keyName: setting.keyName
   })
   refreshCurrentForm()
+}
+// timber
+const timberFun = ref<number>(0)
+function onChangeSeries() {
+  clearTimeout(timberFun.value)
+  timberFun.value = setTimeout(() => {
+    emit('change', mainForm)
+  }, 300)
 }
 </script>
 

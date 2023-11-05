@@ -67,13 +67,16 @@ const prop = defineProps({
   }
 })
 const emit = defineEmits(['change'])
-
 const currentPath = ref<{
   keyName: string,
   keyId: string
 }[]>([])
 
-const mainForm = reactive(deepClone(prop.receiveValue))
+let mainForm = reactive(deepClone(prop.receiveValue))
+watch(() => prop.receiveValue, (newVal) => {
+  mainForm = reactive(deepClone(prop.receiveValue))
+  refreshCurrentForm()
+})
 
 const currentOptionList = ref<Array<any>>(formOptionList)
 const currentForm = ref<any>(mainForm)

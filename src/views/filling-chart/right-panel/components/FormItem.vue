@@ -78,11 +78,11 @@ const formValue = ref<any>()
 const setterIndex = ref<number>(0)
 const currentSetter = ref<string>('')
 const allSetters = ref([])
-const timberFun = ref<number>()
 const basicSetterType = ref(['input', 'color', 'switch', 'slider', 'number', 'select'])
 const complexSetterType = ref(['json', 'textarea'])
 onBeforeMount(() => {
   const devState = import.meta.env.DEV
+  // console.log(devState)
   if (devState === true) {
     // 开发时打开，用于捕获默认值的错误
     catchError()
@@ -106,16 +106,18 @@ function catchError() {
   const defaultSetter = prop.formOption.setters[0]
   const defaultVal = prop.formOption.default
   if (defaultSetter === 'slider') {
-    if (typeof defaultVal === 'string') {
-      console.error('该配置出现错误', prop.formOption)
+    if (typeof defaultVal !== 'number') {
+      console.error('该 slider 配置出现错误', prop.formOption)
     }
   }
   if (['textarea', 'input'].includes(defaultSetter)) {
     if (typeof defaultVal !== 'string') {
-      console.error('该配置出现错误', prop.formOption)
+      console.error('textarea 或 input 该配置出现错误', prop.formOption)
     }
   }
 }
+// timber
+const timberFun = ref<number>()
 function onChangeInput() {
   clearTimeout(timberFun.value)
   timberFun.value = setTimeout(onChangeValue, 500)
