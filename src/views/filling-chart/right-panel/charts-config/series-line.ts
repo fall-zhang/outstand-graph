@@ -8,13 +8,13 @@ const seriesType = [
 ]
 
 const seriesLine: EchartsOption[] = [
-  {
-    keyId: 'type',
-    keyName: '图表类型',
-    setters: ['select'],
-    optionalValue: seriesType,
-    default: 'line',
-  },
+  // {
+  //   keyId: 'type',
+  //   keyName: '图表类型',
+  //   setters: ['select'],
+  //   optionalValue: seriesType,
+  //   default: 'line',
+  // },
   // {
   //   keyId: 'id',
   //   keyName: '组件 ID',
@@ -320,7 +320,7 @@ const seriesLine: EchartsOption[] = [
         default: 'pin'
       }
     ],
-    default: '',
+    default: {},
   },
   {
     keyId: 'markLine',
@@ -367,33 +367,35 @@ const seriesLine: EchartsOption[] = [
     keyId: 'universalTransition',
     keyName: '全局过渡动画',
     setters: ['object'],
-    children: [{
-      keyId: 'enabled',
-      keyName: '是否开启',
-      setters: ['switch'],
-      tips: '图形是否不响应和触发鼠标事件',
-      default: false
-    }],
-    default: '',
-  },
-  {
-    keyId: 'tooltip',
-    keyName: '提示设置',
-    tips: '系列 tooltip 设定',
-    setters: ['object'],
     children: [
       {
-        keyId: 'position',
+        keyId: 'enabled',
         keyName: '是否开启',
-        setters: ['select'],
-        optionalValue: [
-          { label: 'auto', value: 'auto' }
-        ],
+        setters: ['switch'],
         tips: '图形是否不响应和触发鼠标事件',
         default: false
       }
     ],
     default: '',
   },
+  // {
+  //   keyId: 'tooltip',
+  //   keyName: '提示设置',
+  //   tips: '系列 tooltip 设定',
+  //   setters: ['object'],
+  //   children: [
+  //     {
+  //       keyId: 'position',
+  //       keyName: '是否开启',
+  //       setters: ['select'],
+  //       optionalValue: [
+  //         { label: 'auto', value: 'auto' }
+  //       ],
+  //       tips: '图形是否不响应和触发鼠标事件',
+  //       default: false
+  //     }
+  //   ],
+  //   default: '',
+  // },
 ]
 export default seriesLine

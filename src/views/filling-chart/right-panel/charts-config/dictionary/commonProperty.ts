@@ -319,10 +319,7 @@ const commonProperty: Record<string, EchartsOption> = {
     keyName: '静默模式',
     tips: '图形是否不响应和触发鼠标事件',
     setters: ['switch'],
-    optionalValue: [
-      { label: 'auto', value: 'auto' }
-    ],
-    default: 'auto'
+    default: false
   },
   triggerEvent: {
     keyId: 'triggerEvent',
@@ -339,14 +336,14 @@ const commonProperty: Record<string, EchartsOption> = {
       { label: '按照系列分配', value: 'series' },
       { label: '按照数据分配', value: 'data' },
     ],
-    default: [],
+    default: 'series',
   },
   coordinateSystem: {
     keyId: 'coordinateSystem',
     keyName: '采用坐标系',
     setters: ['select'],
     optionalValue: [
-      { label: '直角坐标系', value: 'cartesian2d' },
+      { label: '直角（二维）坐标系', value: 'cartesian2d' },
       { label: '极坐标系', value: 'polar' },
     ],
     default: 'cartesian2d',
@@ -412,7 +409,7 @@ const commonProperty: Record<string, EchartsOption> = {
   },
   legendHoverLink: {
     keyId: 'legendHoverLink',
-    keyName: '联动图例高亮',
+    keyName: '联动图例（legend）高亮',
     setters: ['switch'],
     default: true,
   },
@@ -481,6 +478,7 @@ const commonProperty: Record<string, EchartsOption> = {
     keyId: 'selectedMode',
     keyName: '选中模式',
     optionalValue: [
+      { label: '开启', value: true },
       { label: '起始', value: 'start' },
       { label: '中心', value: 'middle' },
       { label: '结尾', value: 'end' },
@@ -545,7 +543,7 @@ const commonProperty: Record<string, EchartsOption> = {
   seriesLayoutBy: {
     keyId: 'seriesLayoutBy',
     keyName: '数据集对应列',
-    tips: '指定了 dataset（数据集）用行还是列对应到系列上',
+    tips: '指定了数据集（dataset）时，用行还是列对应到系列上',
     setters: ['select'],
     optionalValue: [
       { label: '列', value: 'column' },
@@ -575,6 +573,21 @@ const commonProperty: Record<string, EchartsOption> = {
     ],
     default: '',
   },
+  geoIndex: {
+    keyId: 'geoIndex',
+    keyName: '地理坐标系id',
+    tips: '使用的地理坐标系的 ID',
+    setters: ['number'],
+    default: 0
+  },
+  calendarIndex: {
+    keyId: 'calendarIndex',
+    keyName: '日丽坐标系id',
+    tips: '使用的日历坐标系的 ID',
+    setters: ['number'],
+    default: 0
+  },
+
 }
 
 export default commonProperty

@@ -8,9 +8,9 @@ const seriesBar: EchartsOption[] = [
   //   keyName: '图表类型',
   //   setters: ['select'],
   //   optionalValue: [
-  // { label: '柱状图', value: 'bar' },
-  // { label: '折线图', value: 'line' },
-  // { label: '饼图', value: 'pie' }
+  //     { label: '柱状图', value: 'bar' },
+  //     { label: '折线图', value: 'line' },
+  //     { label: '饼图', value: 'pie' }
   // ],
   //   default: 'bar',
   // },
@@ -38,26 +38,9 @@ const seriesBar: EchartsOption[] = [
     // ],
     default: `[]`,
   },
-  {
-    keyId: 'colorBy',
-    keyName: '使用色系',
-    setters: ['select'],
-    optionalValue: [
-      { label: '系列调色盘', value: 'series' },
-      { label: '数据项分配', value: 'data' },
-    ],
-    default: `series`,
-  },
-  {
-    keyId: 'coordinateSystem',
-    keyName: '使用坐标系',
-    setters: ['select'],
-    optionalValue: [
-      { label: '二维坐标系', value: 'cartesian2d' },
-      { label: '极坐标系', value: 'polar' },
-    ],
-    default: `series`,
-  },
+  setting.colorBy,
+  setting.legendHoverLink,
+  setting.coordinateSystem,
   // {
   //   keyId: 'xAxisIndex',
   //   keyName: '使用的 x 轴',
