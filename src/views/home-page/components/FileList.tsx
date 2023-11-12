@@ -4,10 +4,14 @@ import s from './FileList.module.scss'
 
 
 export default {
+  // data: () => ({
+  //   udfu: 'picku'
+  // }),
   components: {
     IconStar,
   },
-  render() {
+  setup() {
+    // console.log(this.udfu)
     const currentSelect = ref<string>('全部')
     const onFilterSelect = function (type: string) {
       currentSelect.value = type
@@ -16,11 +20,11 @@ export default {
       currentSelect.value = type
     }
 
-    return (<>
+    return () => (<>
       <div class={s.header}>
         <div class={s.selectGroup}>
           <a onClick={() => onFilterSelect('全部')} class={currentSelect.value === '全部' && s.select}>全部</a>
-          <a onClick={() => onFilterSelect('导图')} class={currentSelect.value === '导图' && s.select}>导图</a>
+          {/* <a onClick={() => onFilterSelect('导图')} class={currentSelect.value === '导图' && s.select}>导图</a> */}
           <a onClick={() => onFilterSelect('图表')} class={currentSelect.value === '图表' && s.select}>图表</a>
           <a onClick={() => onFilterSelect('收藏')} class={currentSelect.value === '收藏' && s.select}>收藏</a>
         </div>
@@ -46,15 +50,15 @@ export default {
       </div>
     </>)
   },
-  setup() {
+  // mounted() {
+  //   console.log(this.udfu)
 
-    // watch(currentSelect, (newVal) => {
-    //   console.log(newVal)
-    // })
-    return {
-      // onFilterSelect,
-      // currentSelect,
-      // onEnterChart
-    }
-  }
+  //   const allFiles = ref<any[]>([])
+  //   fetch('/api/home/files', {
+  //     method: 'post'
+  //   }).then(res => res.json()).then(res => {
+  //     console.log(res)
+  //     allFiles.value = res
+  //   })
+  // },
 }

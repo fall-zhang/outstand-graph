@@ -1,4 +1,4 @@
-<!-- 根据当前配置来展示配置内容 -->
+<!-- 图表类型 - 编辑图表配置 -->
 <template>
   <div class="right-panel">
     <div class="panel-title">
