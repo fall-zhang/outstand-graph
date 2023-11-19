@@ -1,12 +1,10 @@
 import { ref } from 'vue'
 import { Star as IconStar, MoreOne as IconMoreOne } from '@icon-park/vue-next'
 import s from './FileList.module.scss'
+import { usePost } from '@/utils/Request'
 
 
 export default {
-  // data: () => ({
-  //   udfu: 'picku'
-  // }),
   components: {
     IconStar,
   },
@@ -19,7 +17,10 @@ export default {
     function onEnterChart(type: string) {
       currentSelect.value = type
     }
-
+    const allFiles = ref<any[]>([])
+    usePost('/api/home/files').then(res => {
+      allFiles.value = res
+    })
     return () => (<>
       <div class={s.header}>
         <div class={s.selectGroup}>
@@ -34,7 +35,7 @@ export default {
       </div>
       <div class={s.chartFileGroup} >
         {
-          new Array(12).fill('12').map((item) => {
+          allFiles.value.map((item) => {
             return <div class={s.chartItem} onClick={() => onEnterChart(item)} >
               <div class={s.itemImg}>图片位置</div>
               <div class={s.itemText}>
@@ -50,15 +51,4 @@ export default {
       </div>
     </>)
   },
-  // mounted() {
-  //   console.log(this.udfu)
-
-  //   const allFiles = ref<any[]>([])
-  //   fetch('/api/home/files', {
-  //     method: 'post'
-  //   }).then(res => res.json()).then(res => {
-  //     console.log(res)
-  //     allFiles.value = res
-  //   })
-  // },
 }
