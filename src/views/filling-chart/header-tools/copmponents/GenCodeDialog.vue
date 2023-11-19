@@ -1,23 +1,24 @@
 <template>
-  <el-button type="primary" size="small" @click="onGenCode">出码</el-button>
+  <el-button v-bind="$attrs" type="primary" size="small" @click="onGenCode">出码</el-button>
 
-  <el-dialog v-model="codeGenShow" title="代码生成" width="68%" top="48px">
+  <el-dialog class="dialog-custom" v-model="codeGenShow" title="代码生成" width="68%" top="48px" @opened="openedDialog">
     <el-tabs @tab-click="onSelectTab">
       <el-tab-pane label="Vue2"></el-tab-pane>
       <el-tab-pane label="Vue3"></el-tab-pane>
       <el-tab-pane label="Vue3 setup"></el-tab-pane>
     </el-tabs>
-    <MonacoEditor ref="editorView" />
+    <MonacoEditor v-if="showMonaco" ref="editorView" />
+    <div v-else style="width: 600px;height: 600px;"></div>
   </el-dialog>
 </template>
 
 <script setup lang="ts">
-
 import 'monaco-editor/esm/vs/basic-languages/javascript/javascript.contribution'
 import { onMounted, ref, inject } from 'vue'
 import { genVue2Code, genVue3Code, genVue3SetupCode } from '../tools/genVueCode'
 import MonacoEditor from '@/components/module/MonacoEditor.vue'
 const codeGenShow = ref(false)
+const showMonaco = ref<boolean>()
 const editorView = ref()
 const chartOption = inject('chartOption')
 function onGenCode() {
@@ -36,7 +37,11 @@ function onGenCode() {
 onMounted(() => {
   console.log(chartOption)
 })
+function openedDialog() {
+  console.log(6464)
 
+  showMonaco.value = true
+}
 function onSelectTab(label: any) {
   if (label.props.label === 'Vue2') {
     const code = genVue2Code(chartOption)
@@ -56,18 +61,18 @@ function onValueChange() {
 }
 </script>
 
-<style scoped lang="scss"></style>
-
-<style lang="scss">
-.code-container {
-  .mtk1 {
-    color: #8cdcfe;
-  }
+<!-- <style lang="scss" scoped>
+:deep(.el-dialog) :deep(.el-dialog__body) {
+  padding: 0;
 }
-
-::v-deep .el-dialog {
-  .el-dialog__body {
-    overflow-y: auto;
-  }
+</style> -->
+<style>
+.el-dialog__body {
+  padding: 0;
 }
 </style>
+<!-- <style lang="scss">
+.el-dialog__body {
+  padding: 0;
+}
+</style> -->

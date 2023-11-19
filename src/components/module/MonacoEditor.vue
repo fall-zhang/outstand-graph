@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div ref="codeView" style="height: 460px;width:860px;" class="code-container"></div>
+  <div style="width: 100%;height: 100%;min-height: 600px;">
+    <div ref="codeView" style="height: 100%;width:100%;min-height: 600px;" class="code-container"></div>
   </div>
 </template>
 
@@ -12,7 +12,11 @@ const monacoEditor = shallowRef<editor.IStandaloneCodeEditor>()
 const codeView = ref(null)
 const monacoModel = shallowRef<editor.ITextModel | null>()
 onMounted(() => {
-  if (!codeView.value) return
+  initMonaco()
+})
+
+function initMonaco() {
+  if (!codeView.value || monacoEditor.value) return
   monacoEditor.value = monaco.editor.create(codeView.value, {
     theme: 'vs-dark',
     value: '',
@@ -21,18 +25,19 @@ onMounted(() => {
     scrollBeyondLastLine: true
   })
   monacoModel.value = monacoEditor.value.getModel()
-})
-
-function getEditCode() {
-  return monacoModel.value
 }
-function setEditCode() {
+function getEditCode() {
+  return monacoModel.value?.getValue()
+}
+function setEditCode(newVal: string) {
+  monacoModel.value?.setValue(newVal)
   return monacoModel.value
 }
 
 defineExpose({
   getEditCode,
-  setEditCode
+  setEditCode,
+  initMonaco
 })
 </script>
 
