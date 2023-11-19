@@ -12,7 +12,13 @@ export default defineConfig({
 
   server: {
     port: 6080,
-    host: true // 表示可以通过 ip 进行访问
+    host: true, // 表示可以通过 ip 进行访问
+    proxy: {
+      '/api': {
+        target: 'http://localhost:6000/',
+        rewrite: path => path.replace(/^\/api/, '')
+      }
+    }
   },
   resolve: {
     alias: {
