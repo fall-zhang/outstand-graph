@@ -7,12 +7,7 @@
   <!-- 单行内容使用 on-line -->
   <div class="form-item" :class="basicSetterType.includes(currentSetter) && formOption.keyName.length < 7 && 'on-line'">
     <div class="basic-label">{{ formOption.keyName }}
-      <el-tooltip v-if="formOption.tips" placement="top">
-        <IconHelp theme="filled" class="g-icon-center" />
-        <template #content>
-          <div v-html="formOption.tips"></div>
-        </template>
-      </el-tooltip>
+      <HelpTooltip v-if="formOption.tips" :tip="formOption.tips" :path="path"></HelpTooltip>
     </div>
     <!-- 简单类型的数据处理 -->
     <div v-if="basicSetterType.includes(currentSetter)" class="basic-form-item">
@@ -20,7 +15,6 @@
         @input="onChangeInput"></el-input>
       <div v-else-if="currentSetter == 'color'">
         <el-input v-model="formValue" style="width: 68px;" size="small" type="color" @change="onChangeValue"></el-input>
-        <!-- {{ formValue || '未选择颜色' }} -->
       </div>
       <el-input-number v-else-if="currentSetter == 'number'" v-model="formValue" size="small"
         @change="onChangeValue"></el-input-number>
@@ -56,8 +50,9 @@
 
 <script lang="ts" setup>
 import { deepClone } from '@/utils/utils'
+import HelpTooltip from '@C/more-layer/tooltip/HelpTooltip.vue'
 import FormJSON from './FormItemJSON.vue'
-import { Refresh as IconRefresh, Help as IconHelp } from '@icon-park/vue-next'
+import { Refresh as IconRefresh } from '@icon-park/vue-next'
 const prop = defineProps({
   formOption: {
     type: Object,
@@ -65,6 +60,10 @@ const prop = defineProps({
       type: 'input',
       optional: []
     })
+  },
+  path: {
+    type: Array,
+    default: () => ([])
   },
   receiveValue: {
     require: true,

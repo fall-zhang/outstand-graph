@@ -34,6 +34,7 @@ declare module 'vue' {
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
     ElTabs: typeof import('element-plus/es')['ElTabs']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
+    HelpTooltip: typeof import('./../components/more-layer/tooltip/HelpTooltip.vue')['default']
     IconBaseline: typeof import('./../components/icons/IconBaseline.vue')['default']
     IconClose: typeof import('./../components/icons/IconClose.vue')['default']
     IconCommunity: typeof import('./../components/icons/IconCommunity.vue')['default']
