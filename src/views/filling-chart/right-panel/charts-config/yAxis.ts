@@ -17,7 +17,7 @@ const yAxis: EchartsOption[] = [
   // },
   {
     keyId: 'show',
-    keyName: '显示 x 轴',
+    keyName: '显示 y 轴',
     setters: ['switch'],
     default: true,
   },
@@ -38,7 +38,7 @@ const yAxis: EchartsOption[] = [
   // {
   //   keyId: "position",
   //   // tips: "当前轴为 value 和 log 类型时有效。",
-  //   keyName: "x 轴位置",
+  //   keyName: "y 轴位置",
   //   setters: ['switch'],
   //   default: 0
   // },
@@ -49,8 +49,8 @@ const yAxis: EchartsOption[] = [
     setters: ['select'],
     default: 'left',
     optionalValue: [
-      { label: '上侧', value: 'top' },
-      { label: '下侧', value: 'bottom' },
+      { label: '左侧', value: 'left' },
+      { label: '右侧', value: 'right' },
     ],
   },
   {
