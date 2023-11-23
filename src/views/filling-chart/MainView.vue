@@ -5,7 +5,7 @@
     </template>
     <div style="display: flex;overflow: hidden;">
       <div class="main-graph">
-        <HeaderTools :option="chartOption" @back="onChangeHistory" @next="onChangeHistory"></HeaderTools>
+        <HeaderTools :option="chartOption" @change="onChangeHistory"></HeaderTools>
         <ChartCanvas :option="chartOption" :chartId="chartId"></ChartCanvas>
       </div>
       <!-- 负责修改 chartOption -->
@@ -57,7 +57,7 @@ function onChangeHistory(newVal: any) {
   const newId = uuid()
   chartId.value = newId
   currentKey.value = newId
-  // chartOption = reactive(newVal)
+  chartOption.value = newVal
 }
 </script>
 <script lang="ts">

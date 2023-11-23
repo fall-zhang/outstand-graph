@@ -28,9 +28,9 @@ const currentChart = ref<EChartsType>()
 watch(() => prop.chartId,
   (newVal) => {
     // console.log(newVal);
-    if (currentChart) {
-      currentChart.value?.setOption(prop.option)
-    }
+    // console.log(prop.option);
+    currentChart.value?.clear()
+    currentChart.value?.setOption(deepClone(prop.option))
   })
 onMounted(() => {
   currentChart.value = init(chartZoom.value)
