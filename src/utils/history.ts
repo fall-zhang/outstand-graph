@@ -4,16 +4,15 @@
  * @date 2023/3/27
  */
 
-import produce from 'immer'
 class History {
   private historyArr: Array<any> = []
   private maxStep = 10
-  private currentList = []
+  private current = {}
   private currentIndex = -1
   constructor() {
     this.historyArr = []
     this.maxStep = 10
-    this.currentList = []
+    this.current = {}
     this.currentIndex = -1
   }
   setMaxStep(stepCount: number) {
@@ -32,32 +31,32 @@ class History {
    * @returns
    */
   saveStep(receive: any) {
-    this.currentList = receive
+    this.current = receive
     this.historyArr = this.historyArr.slice(0, this.currentIndex + 1)
-    this.historyArr.push(this.currentList)
+    this.historyArr.push(this.current)
     if (this.historyArr.length > this.maxStep) {
       this.historyArr.shift()
     } else {
       this.currentIndex += 1
     }
-    return this.currentList
+    return this.current
   }
   currentStep() {
-    return this.currentList
+    return this.current
   }
   preStep() {
     if (this.currentIndex > 0) {
       this.currentIndex -= 1
-      this.currentList = this.historyArr[this.currentIndex]
+      this.current = this.historyArr[this.currentIndex]
     }
-    return this.currentList
+    return this.current
   }
   nextStep() {
     if (this.currentIndex < this.historyArr.length - 1) {
       this.currentIndex += 1
-      this.currentList = this.historyArr[this.currentIndex]
+      this.current = this.historyArr[this.currentIndex]
     }
-    return this.currentList
+    return this.current
   }
 }
 export default new History()

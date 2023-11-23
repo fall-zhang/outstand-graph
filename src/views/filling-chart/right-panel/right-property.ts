@@ -13,18 +13,18 @@ import polar from './charts-config/polar'
 import axisPointer from './charts-config/axisPointer'
 const rightProperty: Array<EchartsOption> = [
   {
-    keyId: 'xAxis',
-    keyName: '横轴',
-    setters: ['array'],
-    default: {},
-    children: xAxisConfig
-  },
-  {
     keyId: 'title',
     keyName: '标题',
     setters: ['array'],
     default: {},
     children: titleConfig
+  },
+  {
+    keyId: 'xAxis',
+    keyName: '横轴',
+    setters: ['array'],
+    default: {},
+    children: xAxisConfig
   },
   {
     keyId: 'yAxis',
