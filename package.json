@@ -1,7 +1,7 @@
 {
   "name": "outstand-charts",
   "private": true,
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Redefine your graph flow.",
   "scripts": {
     "serve": "vite",
