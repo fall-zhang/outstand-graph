@@ -52,12 +52,7 @@
           <li v-if="option.children" class="cell-item link-cell" @click="onChangeSetting(option)">
             <span style="display: flex;">
               {{ option.keyName }}
-              <el-tooltip v-if="option.tips" placement="top">
-                <IconHelp theme="filled" class="g-icon-center" />
-                <template #content>
-                  <div v-html="option.tips"></div>
-                </template>
-              </el-tooltip>
+              <HelpTooltip v-if="option.tips" :tip="option.tips" :path="currentPath"></HelpTooltip>
             </span>
             <IconRight class="g-icon-center" size="18px" />
           </li>
@@ -74,7 +69,7 @@
 import FormItem from './components/FormItem.vue'
 import { Right as IconRight, Return as IconReturn, Help as IconHelp, Plus as IconPlus } from '@icon-park/vue-next'
 import formOptionList from './right-series'
-
+import HelpTooltip from './components/HelpTooltip.vue'
 import { ref } from 'vue'
 import { deepClone } from '@/utils/utils'
 import { EchartsOption } from './chart-config'

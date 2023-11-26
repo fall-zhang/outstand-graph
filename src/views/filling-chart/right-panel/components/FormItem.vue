@@ -50,7 +50,7 @@
 
 <script lang="ts" setup>
 import { deepClone } from '@/utils/utils'
-import HelpTooltip from '@C/more-layer/tooltip/HelpTooltip.vue'
+import HelpTooltip from './HelpTooltip.vue'
 import FormJSON from './FormItemJSON.vue'
 import { Refresh as IconRefresh } from '@icon-park/vue-next'
 const prop = defineProps({

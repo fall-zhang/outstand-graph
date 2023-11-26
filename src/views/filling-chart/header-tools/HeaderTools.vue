@@ -35,14 +35,13 @@ const graphAttr = reactive({
 })
 
 const currentSetting = ref()
-const allSetting = ref()
+// const allSetting = ref()
 const nextDisable = ref(true)
 const preDisable = ref(true)
 watch(() => prop.option, (newVal) => {
-  // console.log("🚀 ~ file: HeaderTools.vue:46 ~ watch ~ currentSetting:", currentSetting)
   if (currentSetting.value !== newVal) {
-    // do something
     history.saveStep(toRaw(newVal))
+    preDisable.value = history.isFirst()
   }
 })
 onMounted(() => {
@@ -54,7 +53,7 @@ function onNextStep() {
   // console.log(history.nextStep())
   history.nextStep()
   currentSetting.value = history.getCurrent()
-  allSetting.value = history.getHistory()
+  // allSetting.value = history.getHistory()
   emit('change', currentSetting.value)
   nextDisable.value = history.isLast()
   preDisable.value = history.isFirst()
@@ -63,7 +62,7 @@ function onBackStep() {
   // console.log(history.nextStep())
   history.preStep()
   currentSetting.value = history.getCurrent()
-  allSetting.value = history.getHistory()
+  // allSetting.value = history.getHistory()
   emit('change', currentSetting.value)
   nextDisable.value = history.isLast()
   preDisable.value = history.isFirst()
