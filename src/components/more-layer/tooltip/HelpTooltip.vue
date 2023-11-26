@@ -1,6 +1,6 @@
 <template>
   <el-tooltip placement="top">
-    <IconHelp theme="filled" class="g-icon-center cursor" @click="onClickHelp(option)" />
+    <IconHelp theme="filled" class="g-icon-center cursor" />
     <template #content>
       <div v-html="tip"></div>
     </template>
@@ -21,17 +21,6 @@ const prop = defineProps({
     type: Array
   },
 })
-
-function onClickHelp(option: unknown) {
-  console.log(option)
-  let path = ''
-  prop.path.forEach(item => {
-    path += item.keyId
-  })
-  // console.log(path)
-  toRaw(prop.path)
-  open('https://echarts.apache.org/zh/option.html#' + path)
-}
 
 </script>
 
