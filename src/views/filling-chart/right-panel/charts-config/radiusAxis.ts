@@ -4,7 +4,7 @@
 
 import type { EchartsOption } from '../chart-config.d.ts'
 import setting from './dictionary/commonProperty'
-import { textStyle } from './dictionary/commonOption.js'
+import { textStyle } from './dictionary/commonSubOption.js'
 const radiusAxis: EchartsOption[] = [
   // {
   //   keyId: 'id',

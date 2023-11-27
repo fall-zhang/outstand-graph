@@ -6,11 +6,12 @@ import legendConfig from './charts-config/legend'
 import tooltipConfig from './charts-config/tooltip'
 import radiusAxis from './charts-config/radiusAxis'
 import angleAxis from './charts-config/angleAxis'
-import { textStyle } from './charts-config/dictionary/commonOption'
+import { textStyle } from './charts-config/dictionary/commonSubOption'
 
 import type { EchartsOption } from './chart-config.d.ts'
 import polar from './charts-config/polar'
 import axisPointer from './charts-config/axisPointer'
+import setting from './charts-config/dictionary/commonProperty'
 const rightProperty: Array<EchartsOption> = [
   {
     keyId: 'title',
@@ -23,6 +24,7 @@ const rightProperty: Array<EchartsOption> = [
     keyId: 'xAxis',
     keyName: '横轴',
     setters: ['array'],
+    // maxArrayCount: 2,
     default: {},
     children: xAxisConfig
   },
@@ -30,6 +32,7 @@ const rightProperty: Array<EchartsOption> = [
     keyId: 'yAxis',
     keyName: '纵轴',
     setters: ['array'],
+    // maxArrayCount: 2,
     default: {},
     children: yAxisConfig
   },
@@ -37,7 +40,7 @@ const rightProperty: Array<EchartsOption> = [
     keyId: 'legend',
     tips: '需要数据提供名称（name）属性',
     keyName: '图例',
-    setters: ['array'],
+    setters: ['object'],
     default: {},
     children: legendConfig
   },
@@ -99,11 +102,13 @@ const rightProperty: Array<EchartsOption> = [
     children: axisPointer
   },
   textStyle,
-  {
-    keyId: 'animation',
-    keyName: '动画',
-    setters: ['switch'],
-    default: true
-  }
+  setting.animation,
+  setting.animationDelay,
+  setting.animationDelayUpdate,
+  setting.animationDuration,
+  setting.animationDurationUpdate,
+  setting.animationEasing,
+  setting.animationEasingUpdate,
+  setting.animationThreshold,
 ]
 export default rightProperty

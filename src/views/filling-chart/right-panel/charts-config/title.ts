@@ -1,4 +1,4 @@
-import { textStyle } from './dictionary/commonOption'
+import { textStyle } from './dictionary/commonSubOption'
 import setting from './dictionary/commonProperty'
 import type { EchartsOption } from '../chart-config.d.ts'
 const title: Array<EchartsOption> = [

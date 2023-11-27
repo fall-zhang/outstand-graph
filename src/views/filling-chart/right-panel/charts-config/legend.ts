@@ -1,5 +1,5 @@
 // 图例可以为多个
-import { textStyle } from './dictionary/commonOption'
+import { textStyle } from './dictionary/commonSubOption'
 import setting from './dictionary/commonProperty.js'
 import type { EchartsOption } from '../chart-config.d.ts'
 const legend: EchartsOption[] = [
