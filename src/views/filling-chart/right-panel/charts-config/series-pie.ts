@@ -74,18 +74,8 @@ const seriesPie: EchartsOption[] = [
     setters: ['number'],
     default: 0
   },
-  {
-    keyId: 'clockwise',
-    keyName: '数据顺时针排布',
-    setters: ['switch'],
-    default: true
-  },
-  {
-    keyId: 'startAngle',
-    keyName: '初始角度',
-    setters: ['number'],
-    default: 90
-  },
+  setting.clockwise,
+  setting.startAngle,
   {
     keyId: 'minAngle',
     keyName: '最小扇区角度',

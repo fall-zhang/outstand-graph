@@ -18,12 +18,7 @@ const angleAxis: EchartsOption[] = [
   //   setters: ['number'],
   //   default: '',
   // },
-  {
-    keyId: 'startAngle',
-    keyName: '起始刻度角度',
-    setters: ['number', 'slider'],
-    default: 90,
-  },
+  setting.startAngle,
   {
     keyId: 'clockwise',
     keyName: '顺时针',

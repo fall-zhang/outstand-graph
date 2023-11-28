@@ -394,20 +394,7 @@ const seriesBar: EchartsOption[] = [
     ],
     default: false,
   },
-  {
-    keyId: 'sampling',
-    keyName: '多数据采样策略',
-    tips: '折线图在数据量远大于像素点时候的降采样策略，开启后可以有效的优化图表的绘制效率',
-    setters: ['select'],
-    optionalValue: [
-      { label: 'lttb 算法', value: 'lttb' }, // 采用 Largest-Triangle-Three-Bucket 算法，
-      { label: '过滤点平均值', value: 'avreage' },
-      { label: '过滤点最大值', value: 'max' },
-      { label: '过滤点最小值', value: 'min' },
-      { label: '过滤点和', value: 'sum' },
-    ],
-    default: '',
-  },
+  setting.sampling,
   setting.zlevel,
   setting.z,
   setting.silent,
@@ -432,25 +419,25 @@ const seriesBar: EchartsOption[] = [
     }],
     default: '',
   },
-  {
-    keyId: 'tooltip',
-    keyName: '提示设置',
-    tips: '系列 tooltip 设定',
-    setters: ['object'],
-    children: [
-      {
-        keyId: 'position',
-        keyName: '是否开启',
-        setters: ['select'],
-        optionalValue: [
-          { label: 'auto', value: 'auto' }
-        ],
-        tips: '图形是否不响应和触发鼠标事件',
-        default: false
-      }
-    ],
-    default: '',
-  },
+  // {
+  //   keyId: 'tooltip',
+  //   keyName: '提示设置',
+  //   tips: '系列 tooltip 设定',
+  //   setters: ['object'],
+  //   children: [
+  //     {
+  //       keyId: 'position',
+  //       keyName: '是否开启',
+  //       setters: ['select'],
+  //       optionalValue: [
+  //         { label: 'auto', value: 'auto' }
+  //       ],
+  //       tips: '图形是否不响应和触发鼠标事件',
+  //       default: false
+  //     }
+  //   ],
+  //   default: '',
+  // },
 ]
 
 export default seriesBar

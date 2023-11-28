@@ -224,6 +224,18 @@ const commonProperty: Record<string, EchartsOption> = {
     ],
     default: 'auto'
   },
+  clockwise: {
+    keyId: 'clockwise',
+    keyName: '顺时针排布',
+    setters: ['switch'],
+    default: true,
+  },
+  startAngle: {
+    keyId: 'startAngle',
+    keyName: '初始角度',
+    setters: ['number', 'slider'],
+    default: 90,
+  },
   top: {
     keyId: 'top',
     keyName: '上侧距离',
@@ -432,6 +444,20 @@ const commonProperty: Record<string, EchartsOption> = {
     ],
     default: 'samesign',
   },
+  sampling: {
+    keyId: 'sampling',
+    keyName: '多数据采样策略',
+    tips: '折线图在数据量远大于像素点时候的降采样策略，开启后可以有效的优化图表的绘制效率',
+    setters: ['select'],
+    optionalValue: [
+      { label: 'lttb 算法', value: 'lttb' }, // 采用 Largest-Triangle-Three-Bucket 算法，
+      { label: '过滤点平均值', value: 'avreage' },
+      { label: '过滤点最大值', value: 'max' },
+      { label: '过滤点最小值', value: 'min' },
+      { label: '过滤点和', value: 'sum' },
+    ],
+    default: '',
+  },
   cursor: {
     keyId: 'cursor',
     keyName: '指针悬浮样式',
@@ -478,10 +504,10 @@ const commonProperty: Record<string, EchartsOption> = {
     keyId: 'selectedMode',
     keyName: '选中模式',
     optionalValue: [
-      { label: '开启', value: true },
-      { label: '起始', value: 'start' },
-      { label: '中心', value: 'middle' },
-      { label: '结尾', value: 'end' },
+      { label: '关闭', value: false },
+      { label: '单选', value: 'single' },
+      { label: '多选', value: 'multiple' },
+      { label: '系列', value: 'series' },
     ],
     setters: ['select'],
     default: '',
