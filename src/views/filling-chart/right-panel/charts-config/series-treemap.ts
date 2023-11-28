@@ -351,20 +351,6 @@ const seriesBar: EchartsOption[] = [
     ],
     default: {},
   },
-  {
-    keyId: 'levels',
-    keyName: '多层配置',
-    setters: ['object', 'function'],
-    children: [
-      {
-        keyId: 'visualDimension',
-        keyName: '视觉映射',
-        setters: ['number'],
-        default: 1
-      }
-    ],
-    default: {},
-  },
   setting.silent,
   setting.animationDuration,
   setting.animationEasing,

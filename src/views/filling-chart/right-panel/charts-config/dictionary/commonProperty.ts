@@ -212,6 +212,13 @@ const commonProperty: Record<string, EchartsOption> = {
     setters: ['number'],
     default: 0
   },
+  center: {
+    keyId: 'center',
+    keyName: '中心坐标',
+    tips: '第一项是横坐标，第二项是纵坐标',
+    setters: ['array'],
+    default: ['50%', '50%']
+  },
   left: {
     keyId: 'left',
     keyName: '左侧距离',
