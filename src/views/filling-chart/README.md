@@ -26,35 +26,44 @@
   - [x] 补充 axisPointer 坐标轴指示器
   - [x] 补充 pie
   - [x] 补充 treemap
-  - [ ] 补充 radar
-  - [ ] 补充 sunburst
-  - [ ] 补充 gauge
+  - [x] 补充 radar
+  - [x] 补充 sunburst
+  - [x] 补充 gauge
   - [ ] 补充 pictorialBar
-- [ ] 添加共同的属性，commonOptions
+- [ ] 添加共同的属性，commonSubOptions
   - [ ] label
-  - [ ] labelLine
-  - [ ] labelLayout
-  - [ ] itemStyle
   - [ ] emphasis
   - [ ] blur
+  - [ ] select
   - [ ] markPoint
   - [ ] markLine
   - [ ] markArea
+  - [ ] areaStyle
+  - [ ] lineStyle
+  - [ ] labelLayout
+  - [ ] labelLine
+  - [ ] itemStyle
+  - [ ] endLabel
+  - [ ] axisLine
+  - [ ] progress
+  - [ ] axisTick
+  - [ ] splitLine
   - [ ] 极坐标轴和 x,y 轴有一些共通内容，看是否公用
 - [ ] 配置属性可以清空
 - [ ] hover 目录，可以弹出代码框，提供代码查看
 - [ ] 添加填充按钮，点击可以填充一些默认数据
 - [ ] 左侧弹窗输入名称后，如果不重复，可以添加一个新的属性
 - [ ] 添加属性移除功能，当属性设定为 undefined 时，更新时移除
-
+- [ ] 添加文件上传组件
+ 
 ### 优化
 
 - [ ] （右侧菜单-配置代码）添加代码弹窗，或者是代码编辑，可以进行编辑配置的源代码
-- [ ] 为属性添加类型注解
 - [ ] 注重代码分割，确保分割后的代码加载符合最佳加载策略
 - [ ] 最好注册 service worker，当客户端闲置的时候，将用到的代码推送到客户端（后台加载资源，减少网络多次载入导致体验不佳）
 - [ ] 对异步加载的组件进行处理，如果出错，给用户展示要么反馈，要么重新加载
 - [ ] 对配置添加搜索功能？
+- [ ] 配置链接，点击可以跳转到，series-xAxis tooltip -> 跳转到全局 tooltip
 - [ ] 导入表格，双击编辑，整行（列）选取，选中内容高亮
 - [ ] 选项过滤，对配置进行搜索，获取特定内容
   - [ ] 根据 id 生成图表的功能
@@ -65,6 +74,7 @@
 ### 已完成
 
 - [x] 使用 Vue3，重构应用
+- [x] 为属性添加类型注解
 - [x] 切换的时候，使用类似于 vant 的切换方式，点击进入一个新的页面进行调用，标题处写出对应路由，面包屑导航
 - [x] 切换的时候，只切换配置当前使用的表单和设置层级，根据层级进行编辑
 - [x] 目前只实现在最顶层设置弹窗提示 tooltips，坐标轴指示器 axisPointer
