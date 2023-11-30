@@ -367,6 +367,20 @@ const commonProperty: Record<string, EchartsOption> = {
     ],
     default: 'cartesian2d',
   },
+  xAxisIndex: {
+    keyId: 'xAxisIndex',
+    keyName: 'x轴的 index',
+    tips: '使用的 x 轴的 index，在单个图表实例中存在多个 x 轴的时候有用。',
+    setters: ['select'],
+    default: 0
+  },
+  yAxisIndex: {
+    keyId: 'yAxisIndex',
+    keyName: 'y轴的 index',
+    tips: '使用的 y 轴的 index，在单个图表实例中存在多个 x 轴的时候有用。',
+    setters: ['select'],
+    default: 0
+  },
   showSymbol: {
     keyId: 'showSymbol',
     keyName: '显示标记',
@@ -409,11 +423,55 @@ const commonProperty: Record<string, EchartsOption> = {
     setters: ['switch'],
     default: 0,
   },
+  symbolRepeat: {
+    keyId: 'symbolRepeat',
+    keyName: '标记重复',
+    tips: '可以设置为固定数值，或是仅开启，自适应重复次数',
+    setters: ['select', 'number'],
+    optionalValue: [
+      { label: '一个图形', value: false },
+      { label: '多个图形', value: true },
+      { label: '多个图形，且与数据无关', value: 'fixed' },
+    ],
+    default: [0, 0],
+  },
+  symbolRepeatDirection: {
+    keyId: 'symbolRepeatDirection',
+    keyName: '多元素绘制顺序',
+    tips: '可以设置为固定数值，或是仅开启，自适应重复次数',
+    setters: ['select'],
+    optionalValue: [
+      { label: '开始到结尾', value: 'start' },
+      { label: '结尾到开始', value: 'end' },
+    ],
+    default: 'start',
+  },
+  symbolMargin: {
+    keyId: 'symbolMargin',
+    keyName: '图形之间间隔',
+    tips: '可以设置为固定数值，或是仅开启，自适应重复次数',
+    setters: ['slider', 'input'],
+    default: 'start',
+  },
+  symbolClip: {
+    keyId: 'symbolClip',
+    keyName: '剪裁图形',
+    tips: '设置为 true，或是仅开启，自适应重复次数',
+    setters: ['switch'],
+    default: false,
+  },
   symbolOffset: {
     keyId: 'symbolOffset',
     keyName: '标记偏移',
-    setters: ['array'],
+    setters: ['json'],
     default: [0, 0],
+  },
+  hoverAnimation: {
+    keyId: 'hoverAnimation',
+    keyName: 'hover 动画效果',
+    tips: '鼠标指针悬浮时的动画效果',
+    setters: ['switch'],
+    default: false,
   },
   showAllSymbol: {
     keyId: 'showAllSymbol',
@@ -475,6 +533,52 @@ const commonProperty: Record<string, EchartsOption> = {
       { label: '指针', value: 'none' },
     ],
     default: 'pointer',
+  },
+  barWidth: {
+    keyId: 'barWidth',
+    keyName: '柱条宽度',
+    setters: ['input', 'slider',],
+    default: '',
+  },
+  barMaxWidth: {
+    keyId: 'barMaxWidth',
+    keyName: '柱条最大宽度',
+    setters: ['input', 'slider',],
+    default: '',
+  },
+  barMinWidth: {
+    keyId: 'barMinWidth',
+    keyName: '柱条最小宽度',
+    setters: ['input', 'slider'],
+    default: ''
+  },
+  barMinHeight: {
+    keyId: 'barMinHeight',
+    keyName: '最小柱条高度',
+    tips: '避免因为柱条过低影响交互',
+    setters: ['input', 'slider'],
+    default: ''
+  },
+  barMinAngle: {
+    keyId: 'barMinAngle',
+    keyName: '柱条最小角度',
+    tips: '（仅对极坐标轴有效）避免因为角度过小影响交互',
+    setters: ['input', 'slider'],
+    default: '',
+  },
+  barGap: {
+    keyId: 'barGap',
+    keyName: '不同系列柱间距离',
+    tips: '不同系列柱状图之间的间距',
+    setters: ['input'],
+    default: '30%',
+  },
+  barCategoryGap: {
+    keyId: 'barCategoryGap',
+    keyName: '同系列柱间距离',
+    tips: '同系列柱状图之间的间距',
+    setters: ['input'],
+    default: '20%',
   },
   clip: {
     keyId: 'clip',
