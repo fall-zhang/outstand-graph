@@ -1,41 +1,36 @@
-.selectGroup {
-  display: flex;
-
-  >a {
-    margin: 0 4px 12px 24px;
-    padding: 4px;
-    cursor: pointer;
-    color: #313131;
-
-    // background-color: aqua;
-    &.select {
-      color: #337ecc;
-    }
-  }
-}
-
 .chartFileGroup {
-  display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  padding: 20px;
+  // height: 800px;
 
   .chartItem {
     display: flex;
     border-radius: 8px;
-    height: 180px;
+    // height: 180px;
     flex: 1;
     box-sizing: border-box;
     min-width: 280px;
+    // max-height: 260px;
     border: 1px solid var(--gray-1);
     box-shadow: var(--box-shadow-2);
-    margin: 12px;
     flex-direction: column;
-    max-width: 280px;
+    overflow: hidden;
     cursor: pointer;
+
+    >.headText {
+      padding: 8px 8px 0;
+    }
 
     >.itemImg {
       display: flex;
-      padding: 16px;
+      padding: 12px 0;
+      max-width: 100%;
+      max-height: 100%;
       flex: 1;
     }
 

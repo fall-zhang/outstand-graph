@@ -1,19 +1,38 @@
-.selectGroup {
-  display: flex;
+<template>
+  <div class="chartFileGroup" ref="outContainer" :style="{ gridTemplateColumns: 'repeat(' + rowCount + ',1fr)' }">
+    <slot></slot>
+  </div>
+</template>
 
-  >a {
-    margin: 0 4px 12px 24px;
-    padding: 4px;
-    cursor: pointer;
-    color: #313131;
-
-    // background-color: aqua;
-    &.select {
-      color: #337ecc;
-    }
+<script lang="ts" setup>
+const prop = defineProps({
+  max: {
+    require: true,
+    type: Number,
+    default: 260
+  },
+  width: {
+    require: true,
+    type: Number,
+    default: 260
   }
+})
+const outContainer = ref()
+const rowCount = ref()
+function resizeContainer() {
+  const out = outContainer.value.getBoundingClientRect()
+  rowCount.value = Math.floor(Number(out.width) / prop.width)
 }
+onMounted(() => {
+  window.addEventListener('resize', resizeContainer)
+  resizeContainer()
+})
+onUnmounted(() => {
+  window.removeEventListener('resize', resizeContainer)
+})
 
+</script>
+<style lang="scss" scoped>
 .chartFileGroup {
   flex-wrap: wrap;
   justify-content: flex-start;
@@ -91,3 +110,4 @@
 
   }
 }
+</style>
