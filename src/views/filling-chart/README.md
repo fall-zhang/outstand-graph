@@ -16,20 +16,6 @@
 
 ### 功能
 
-- [ ] 补充图标属性的 options
-  - [x] 补充 tooltip
-  - [x] 补充 line
-  - [x] 补充 grid
-  - [x] 补充 polar
-  - [x] 补充 radiusAxis 极坐标径向轴
-  - [x] 补充 angleAxis 极坐标角度轴
-  - [x] 补充 axisPointer 坐标轴指示器
-  - [x] 补充 pie
-  - [x] 补充 treemap
-  - [x] 补充 radar
-  - [x] 补充 sunburst
-  - [x] 补充 gauge
-  - [ ] 补充 pictorialBar
 - [ ] 添加共同的属性，commonSubOptions
   - [ ] label
   - [ ] emphasis
@@ -48,7 +34,6 @@
   - [ ] progress
   - [ ] axisTick
   - [ ] splitLine
-  - [ ] 极坐标轴和 x,y 轴有一些共通内容，看是否公用
 - [ ] 配置属性可以清空
 - [ ] hover 目录，可以弹出代码框，提供代码查看
 - [ ] 添加填充按钮，点击可以填充一些默认数据
@@ -82,7 +67,20 @@
 - [x] 点击 ？问号时，跳转到（echarts 官网对应的属性配置）
 - [x] 实现历史功能（之后使用 immer 优化）
 - [x] 可以选择并添加多种图表类型
-
+- [x] 补充图标属性的 options
+  - [x] 补充 tooltip
+  - [x] 补充 line
+  - [x] 补充 grid
+  - [x] 补充 polar
+  - [x] 补充 radiusAxis 极坐标径向轴
+  - [x] 补充 angleAxis 极坐标角度轴
+  - [x] 补充 axisPointer 坐标轴指示器
+  - [x] 补充 pie
+  - [x] 补充 treemap
+  - [x] 补充 radar
+  - [x] 补充 sunburst
+  - [x] 补充 gauge
+  - [x] 补充 pictorialBar
 ### 放弃的特性
 
 - ~~更新架构，使用不同的 package 标识不同的项目包~~
