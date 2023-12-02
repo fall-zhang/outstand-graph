@@ -29,6 +29,12 @@
       "@C/*": [
         "src/components/*"
       ],
+      "@A/*": [
+        "src/assets/*"
+      ],
+      "@V/*": [
+        "src/views/*"
+      ],
     }
   },
   "include": [

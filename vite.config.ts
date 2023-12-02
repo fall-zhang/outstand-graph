@@ -24,6 +24,7 @@ export default defineConfig({
     alias: {
       '@': pathResolve(__dirname, 'src'),
       '@C': pathResolve(__dirname, 'src/components'),
+      '@A': pathResolve(__dirname, 'src/assets'),
       '@V': pathResolve(__dirname, 'src/views')
     }
   },
