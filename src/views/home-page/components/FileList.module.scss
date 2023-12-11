@@ -15,14 +15,8 @@
 }
 
 .chartFileGroup {
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  display: grid;
-  width: 100%;
-  grid-template-columns: repeat(4, 1fr);
+  box-sizing: border-box;
   gap: 14px;
-  padding: 20px;
-  // height: 800px;
 
   .chartItem {
     display: flex;

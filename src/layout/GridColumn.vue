@@ -21,7 +21,13 @@ const outContainer = ref()
 const rowCount = ref()
 function resizeContainer() {
   const out = outContainer.value.getBoundingClientRect()
-  rowCount.value = Math.floor(Number(out.width) / prop.width)
+  let columnCount = Math.floor(Number(out.width) / prop.width)
+  if (columnCount === 0) {
+    rowCount.value = 1
+  } else {
+    rowCount.value = columnCount
+
+  }
 }
 onMounted(() => {
   window.addEventListener('resize', resizeContainer)
@@ -34,14 +40,14 @@ onUnmounted(() => {
 </script>
 <style lang="scss" scoped>
 .chartFileGroup {
-  flex-wrap: wrap;
-  justify-content: flex-start;
   display: grid;
   width: 100%;
+  flex-wrap: wrap;
+  justify-content: flex-start;
   grid-template-columns: repeat(4, 1fr);
   gap: 14px;
   padding: 20px;
-  // height: 800px;
+  box-sizing: border-box;
 
   .chartItem {
     display: flex;

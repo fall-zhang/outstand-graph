@@ -2,11 +2,11 @@ import { ref } from 'vue'
 import { Star as IconStar, MoreOne as IconMoreOne } from '@icon-park/vue-next'
 import s from './FileList.module.scss'
 import { usePost } from '@/utils/Request'
-
+import GridColumn from '@/layout/GridColumn.vue'
 
 export default {
   components: {
-    IconStar,
+    IconStar, GridColumn
   },
   setup() {
     // console.log(this.udfu)
@@ -33,7 +33,7 @@ export default {
           {/* 回头制作视图切换的效果 */}
         </div>
       </div>
-      <div class={s.chartFileGroup} >
+      <GridColumn width={280} class={s.chartFileGroup} >
         {
           allFiles.value.map((item) => {
             return <div class={s.chartItem} onClick={() => onEnterChart(item)} >
@@ -48,7 +48,7 @@ export default {
             </div>
           })
         }
-      </div>
+      </GridColumn>
     </>)
   },
 }
